@@ -19,6 +19,7 @@ module com.jwebmp.plugins.graphing.chartjs {
 
     requires com.jwebmp.core;
     requires com.fasterxml.jackson.databind;
+    requires com.guicedee.guicedinjection;
 
 
     opens com.jwebmp.plugins.graphing.chartjs to com.google.guice,com.fasterxml.jackson.databind;

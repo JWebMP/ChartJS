@@ -1,7 +1,7 @@
 package com.jwebmp.plugins.graphing.chartjs.component;
+
 import com.jwebmp.core.base.references.CSSReference;
 import com.jwebmp.core.base.references.JavascriptReference;
-import com.jwebmp.core.htmlbuilder.css.CSS;
 
 public enum ChartJSReferences {
     /**

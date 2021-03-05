@@ -10,6 +10,7 @@
 
 	<artifactId>ChartJS</artifactId>
 	<name>ChartJS</name>
+
 	<description>Java library for use with Chart.js javascript</description>
 	<url>https://www.ceau.be/chart.html</url>
 	<developers>
@@ -33,35 +34,29 @@
 		<system>GitHub</system>
 		<url>https://github.com/mdewilde/chart/issues</url>
 	</issueManagement>
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.guicedee.services</groupId>
 			<artifactId>slf4j</artifactId>
-			<version>${project.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>com.jwebmp.core</groupId>
 			<artifactId>jwebmp-core</artifactId>
-			<version>${project.version}</version>
 		</dependency>
+
 	</dependencies>
+
 	<build>
 		
 	</build>
