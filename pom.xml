@@ -39,6 +39,18 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.guicedee</groupId>
+				<artifactId>fasterxml-bom</artifactId>
+				<type>pom</type>
+				<scope>import</scope>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.guicedee.services</groupId>
@@ -60,4 +72,7 @@
 	<build>
 		
 	</build>
+
+
+
 </project>
