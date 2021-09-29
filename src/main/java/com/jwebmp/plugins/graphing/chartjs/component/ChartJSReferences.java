@@ -7,8 +7,8 @@ public enum ChartJSReferences {
     /**
      * The basic core for the graphing system
      */
-    ChartJSReferences(new JavascriptReference("ChartJS", 2.94, "chartjs/Chart.js", "https://www.jsdelivr.com/package/npm/chart.js?path=dist", 15),
-            new CSSReference("ChartJS",2.94,"chartjs/Chart.css","https://www.jsdelivr.com/package/npm/chart.css?path=dist",15)),
+    ChartJSReferences(new JavascriptReference("ChartJS", 3.51, "chartjs/chart.js", "https://www.jsdelivr.com/package/npm/chart.js?path=dist", 15),
+            new CSSReference("ChartJS",3.51,"chartjs/Chart.css","https://www.jsdelivr.com/package/npm/chart.css?path=dist",15)),
     ;
     private final JavascriptReference reference;
     private final CSSReference cssReference;
