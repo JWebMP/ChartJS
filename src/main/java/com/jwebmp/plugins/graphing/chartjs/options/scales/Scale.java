@@ -27,7 +27,7 @@ import com.jwebmp.plugins.graphing.chartjs.options.ticks.Ticks;
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public abstract class Scale<T extends Scale<T>> {
-
+	
 	/**
 	 * @see #setDisplay(Boolean)
 	 */

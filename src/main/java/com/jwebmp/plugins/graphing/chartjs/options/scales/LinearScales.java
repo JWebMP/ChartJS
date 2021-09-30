@@ -15,13 +15,11 @@
 */
 package com.jwebmp.plugins.graphing.chartjs.options.scales;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.*;
+import com.fasterxml.jackson.annotation.JsonInclude.*;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.util.*;
 
 /**
  * The linear scale is use to chart numerical data. It can be placed on either
@@ -31,44 +29,78 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  */
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
-public class LinearScales {
-
+public class LinearScales
+{
+	
+	private XAxis<?> x;
+	private YAxis<?> y;
+	
 	private final List<LinearScale> xAxes = new ArrayList<LinearScale>();
 	
 	private final List<LinearScale> yAxes = new ArrayList<LinearScale>();
-
-	public List<LinearScale> getxAxes() {
+	
+	public List<LinearScale> getxAxes()
+	{
 		return xAxes;
 	}
-
-	public LinearScales addxAxis(LinearScale xAxis) {
+	
+	public LinearScales addxAxis(LinearScale xAxis)
+	{
 		this.xAxes.add(xAxis);
 		return this;
 	}
-
-	public LinearScales setxAxes(List<LinearScale> xAxes) {
+	
+	public LinearScales setxAxes(List<LinearScale> xAxes)
+	{
 		this.xAxes.clear();
-		if (xAxes != null) {
+		if (xAxes != null)
+		{
 			this.xAxes.addAll(xAxes);
 		}
 		return this;
 	}
-
-	public List<LinearScale> getyAxes() {
+	
+	public List<LinearScale> getyAxes()
+	{
 		return yAxes;
 	}
-
-	public LinearScales addyAxis(LinearScale yAxis) {
+	
+	public LinearScales addyAxis(LinearScale yAxis)
+	{
 		this.yAxes.add(yAxis);
 		return this;
 	}
-
-	public LinearScales setyAxes(List<LinearScale> yAxes) {
+	
+	public LinearScales setyAxes(List<LinearScale> yAxes)
+	{
 		this.yAxes.clear();
-		if (yAxes != null) {
+		if (yAxes != null)
+		{
 			this.yAxes.addAll(yAxes);
 		}
 		return this;
 	}
-
+	
+	
+	public XAxis<?> getX()
+	{
+		return x;
+	}
+	
+	public YAxis<?> getY()
+	{
+		return y;
+	}
+	
+	public LinearScales setX(XAxis<?> x)
+	{
+		this.x = x;
+		return this;
+	}
+	
+	public LinearScales setY(YAxis<?> y)
+	{
+		this.y = y;
+		return this;
+	}
 }

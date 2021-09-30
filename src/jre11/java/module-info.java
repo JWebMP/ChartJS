@@ -24,7 +24,7 @@ module com.jwebmp.plugins.graphing.chartjs {
     requires static java.desktop;
 
 
-    opens com.jwebmp.plugins.graphing.chartjs to com.google.guice,com.fasterxml.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs to com.google.guice,com.fasterxml.jackson.databind,com.jwebmp.core;
     opens com.jwebmp.plugins.graphing.chartjs.component to com.google.guice,com.fasterxml.jackson.databind;
     opens com.jwebmp.plugins.graphing.chartjs.color to com.google.guice,com.fasterxml.jackson.databind;
     opens com.jwebmp.plugins.graphing.chartjs.data to com.google.guice,com.fasterxml.jackson.databind;

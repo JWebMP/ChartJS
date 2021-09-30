@@ -175,5 +175,17 @@ public class BarDataset extends BackgroundBorderHoverDataset<BarDataset, BigDeci
 		this.data.add(new BigDecimal(String.valueOf(data)));
 		return this;
 	}
-
+	
+	private String stack;
+	
+	public String getStack()
+	{
+		return stack;
+	}
+	
+	public BarDataset setStack(String stack)
+	{
+		this.stack = stack;
+		return this;
+	}
 }

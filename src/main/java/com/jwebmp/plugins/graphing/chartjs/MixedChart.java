@@ -15,90 +15,90 @@
 */
 package com.jwebmp.plugins.graphing.chartjs;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-
-import com.jwebmp.plugins.graphing.chartjs.data.BarData;
-import com.jwebmp.plugins.graphing.chartjs.data.Data;
-import com.jwebmp.plugins.graphing.chartjs.dataset.BarDataset;
-import com.jwebmp.plugins.graphing.chartjs.options.BarOptions;
-import com.jwebmp.plugins.graphing.chartjs.options.Options;
-import com.jwebmp.plugins.graphing.chartjs.options.scales.XAxis;
-import com.jwebmp.plugins.graphing.chartjs.options.scales.YAxis;
-import com.jwebmp.plugins.graphing.chartjs.options.ticks.LinearTicks;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.*;
+import com.fasterxml.jackson.annotation.JsonInclude.*;
+import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.databind.*;
+import com.jwebmp.plugins.graphing.chartjs.data.*;
+import com.jwebmp.plugins.graphing.chartjs.dataset.*;
+import com.jwebmp.plugins.graphing.chartjs.options.*;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE)
-public class BarChart extends Chart<BarChart> {
-
+public class MixedChart extends Chart<MixedChart>
+{
+	
 	private static final ObjectWriter WRITER = new ObjectMapper()
 			.writerWithDefaultPrettyPrinter()
-			.forType(BarChart.class);
-
+			.forType(MixedChart.class);
+	
 	/**
 	 * Static factory, constructs an {@link Data} implementation appropriate for
-	 * a {@link BarChart}.
-	 * 
+	 * a {@link MixedChart}.
+	 *
 	 * @return a new {@link BarData} instance
 	 */
-	public static BarData data() {
+	public static Data data()
+	{
 		return new BarData();
 	}
-
+	
 	/**
 	 * Static factory, constructs an {@link Options} implementation appropriate
-	 * for a {@link BarChart}.
-	 * 
+	 * for a {@link MixedChart}.
+	 *
 	 * @return a new {@link BarOptions} instance
 	 */
-	public static BarOptions options() {
+	public static Options options()
+	{
 		return new BarOptions();
 	}
-
+	
 	@JsonIgnore
 	private boolean vertical = true;
-
-	private BarData data;
-
-	private BarOptions options;
-
-	public BarChart() {
+	
+	private Data<?, ?, ?> data;
+	
+	private Options<?> options;
+	
+	public MixedChart()
+	{
 	}
-
-	public BarChart(BarData data) {
+	
+	public MixedChart(Data data)
+	{
 		this.data = data;
 	}
-
-	public BarChart(BarData data, BarOptions options) {
+	
+	public MixedChart(Data data, BarOptions options)
+	{
 		this.data = data;
 		this.options = options;
 	}
-
-	public BarData getData() {
+	
+	public Data getData()
+	{
 		return data;
 	}
-
-	public BarChart setData(BarData data) {
+	
+	public MixedChart setData(Data data)
+	{
 		this.data = data;
 		return this;
 	}
-
-	public BarOptions getOptions() {
+	
+	public Options getOptions()
+	{
 		return options;
 	}
-
-	public BarChart setOptions(BarOptions options) {
+	
+	public MixedChart setOptions(Options options)
+	{
 		this.options = options;
 		return this;
 	}
-
+	
 	/**
 	 * <p>
 	 * Draw this {@code BarChart} horizontally.
@@ -106,23 +106,25 @@ public class BarChart extends Chart<BarChart> {
 	 * <p>
 	 * Default is to draw a vertical {@code BarChart}.
 	 * </p>
-	 * 
-	 * @return this {@link BarChart} for method chaining
+	 *
+	 * @return this {@link MixedChart} for method chaining
 	 * @see #setVertical()
 	 */
-	public BarChart setHorizontal() {
+	public MixedChart setHorizontal()
+	{
 		this.vertical = false;
 		return this;
 	}
-
+	
 	/**
 	 * @return true if this {@code BarChart} is set to be drawn horizontally
 	 * @see #setHorizontal()
 	 */
-	public boolean isHorizontal() {
+	public boolean isHorizontal()
+	{
 		return !this.vertical;
 	}
-
+	
 	/**
 	 * <p>
 	 * Draw this {@code BarChart} vertically.
@@ -130,41 +132,48 @@ public class BarChart extends Chart<BarChart> {
 	 * <p>
 	 * Vertical drawing is the default for {@code BarChart}.
 	 * </p>
-	 * 
-	 * @return this {@link BarChart} for method chaining
+	 *
+	 * @return this {@link MixedChart} for method chaining
 	 * @see #setHorizontal()
 	 */
-	public BarChart setVertical() {
+	public MixedChart setVertical()
+	{
 		this.vertical = true;
 		return this;
 	}
-
+	
 	/**
 	 * @return true if this {@code BarChart} is set to be drawn vertically
 	 * @see #setVertical()
 	 */
-	public boolean isVertical() {
+	public boolean isVertical()
+	{
 		return this.vertical;
 	}
-
+	
 	@Override
 	@JsonProperty("type")
-	public String getType() {
+	public String getType()
+	{
 		return this.vertical ? "bar" : "horizontalBar";
 	}
-
+	
 	@Override
-	public String toJson() {
-		try {
+	public String toJson()
+	{
+		try
+		{
 			return WRITER.writeValueAsString(this);
-		} catch (JsonProcessingException e) {
+		}
+		catch (JsonProcessingException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * <p>
 	 * A {@code BarChart} is drawable if:
 	 * </p>
@@ -176,49 +185,57 @@ public class BarChart extends Chart<BarChart> {
 	 * such an id is set
 	 * <li>there is at least one label in the {@link BarData}
 	 * </ul>
-	 * 
-	 * @return true if this {@link BarChart} is drawable in its current state
+	 *
+	 * @return true if this {@link MixedChart} is drawable in its current state
 	 */
 	@Override
-	public boolean isDrawable() {
-		if (data.getLabels().isEmpty()) {
+	public boolean isDrawable()
+	{
+		if (data.getLabels()
+		        .isEmpty())
+		{
 			return false;
 		}
 		boolean sufficientData = false;
-		for (BarDataset dataset : data.getDatasets()) {
-			if (dataset.getXAxisID() != null && !hasXAxisWithId(dataset.getXAxisID())) {
+		for (Dataset dataset : data.getDatasets())
+		{
+			/*if (dataset.getXAxisID() != null && !hasXAxisWithId(dataset.getXAxisID())) {
 				return false;
 			}
 			if (dataset.getYAxisID() != null && !hasYAxisWithId(dataset.getYAxisID())) {
 				return false;
-			}
-			if (dataset.getData().size() > 0) {
+			}*/
+			if (dataset.getData()
+			           .size() > 0)
+			{
 				sufficientData = true;
 			}
 		}
 		return sufficientData;
 	}
-
-	private boolean hasXAxisWithId(String id) {
-		if (options != null && options.getScales() != null && options.getScales().getxAxes() != null) {
+	
+	private boolean hasXAxisWithId(String id)
+	{
+		/*if (options != null && options.getScales() != null && options.getScales().getxAxes() != null) {
 			for (XAxis<LinearTicks> xAxis : options.getScales().getxAxes()) {
 				if (id.equals(xAxis.getId())) {
 					return true;
 				}
 			}
-		}
-		return false;
+		}*/
+		return true;
 	}
-
-	private boolean hasYAxisWithId(String id) {
-		if (options != null && options.getScales() != null && options.getScales().getyAxes() != null) {
+	
+	private boolean hasYAxisWithId(String id)
+	{
+		/*if (options != null && options.getScales() != null && options.getScales().getyAxes() != null) {
 			for (YAxis<LinearTicks> yAxis : options.getScales().getyAxes()) {
 				if (id.equals(yAxis.getId())) {
 					return true;
 				}
 			}
-		}
-		return false;
+		}*/
+		return true;
 	}
-
+	
 }

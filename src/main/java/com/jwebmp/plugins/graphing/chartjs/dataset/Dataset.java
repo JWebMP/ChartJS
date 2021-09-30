@@ -15,6 +15,8 @@
 */
 package com.jwebmp.plugins.graphing.chartjs.dataset;
 
+import com.fasterxml.jackson.annotation.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,7 +24,21 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Dataset<T extends Dataset<T, O>, O> {
-
+	
+	@JsonProperty
+	private String type;
+	
+	public String getType()
+	{
+		return type;
+	}
+	
+	public Dataset<T, O> setType(String type)
+	{
+		this.type = type;
+		return this;
+	}
+	
 	/**
 	 * @see #setData(Collection)
 	 */

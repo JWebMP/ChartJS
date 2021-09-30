@@ -1,21 +1,31 @@
 package com.jwebmp.plugins.graphing.chartjs;
 
-import com.jwebmp.core.base.html.Canvas;
+import com.jwebmp.core.base.html.*;
 
-public class ChartJS extends Canvas<ChartJS>
+public class ChartJS<O extends Chart<O>> extends Canvas<ChartJS<O>>
 {
-	public ChartJS(String id)
+	private ChartJSFeature feature;
+	
+	public ChartJS(String id,O defaultChartOptions)
 	{
 		setID(id);
+		feature = new ChartJSFeature(this,defaultChartOptions);
+		addFeature(feature);
 	}
 	
-	public ChartJS setWidth(int width)
+	@Override
+	public O getOptions()
+	{
+		return (O) feature.getOptions();
+	}
+	
+	public ChartJS<O> setWidth(int width)
 	{
 		addAttribute("width", width + "");
 		return this;
 	}
 	
-	public ChartJS setHeight(int height)
+	public ChartJS<O> setHeight(int height)
 	{
 		addAttribute("height", height + "");
 		return this;

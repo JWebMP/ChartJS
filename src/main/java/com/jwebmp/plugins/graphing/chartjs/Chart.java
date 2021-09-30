@@ -15,23 +15,25 @@
 */
 package com.jwebmp.plugins.graphing.chartjs;
 
-public interface Chart {
+import com.jwebmp.core.htmlbuilder.javascript.*;
 
+public abstract class Chart<J extends Chart<J>> extends JavaScriptPart<J>
+{
 	/**
 	 * @return type of this {@link Chart} implementation for proper drawing in
-	 *         JavaScript.
+	 * JavaScript.
 	 */
-	public String getType();
-
+	public abstract String getType();
+	
 	/**
 	 * <p>
 	 * Convert {@code this} instance to Json for use with Chart.js library.
 	 * </p>
-	 * 
+	 *
 	 * @return json representation of {@code this} {@link Chart}
 	 */
-	public String toJson();
-
+	public abstract String toJson();
+	
 	/**
 	 * <p>
 	 * Optional check to determine whether the current state of this
@@ -42,10 +44,10 @@ public interface Chart {
 	 * Implementations provide a best-effort evaluation, and can not guarantee
 	 * that the serialized chart will be rendered correctly.
 	 * </p>
-	 * 
+	 *
 	 * @return true if {@code this} {@link Chart} is drawable in its current
-	 *         state
+	 * state
 	 */
-	public boolean isDrawable();
-
+	public abstract boolean isDrawable();
+	
 }
