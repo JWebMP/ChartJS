@@ -133,5 +133,29 @@ public class YAxis<T extends Ticks<T>> {
 		this.stacked = stacked;
 		return this;
 	}
-
+	
+	/**
+	 * If the axis is reversed
+	 */
+	private boolean reversed;
+	
+	/**
+	 * if the axis is reversed
+	 * @return
+	 */
+	public boolean isReversed()
+	{
+		return reversed;
+	}
+	
+	/**
+	 * Reverses the axis
+	 * @param reversed
+	 * @return
+	 */
+	public YAxis<T> setReversed(boolean reversed)
+	{
+		this.reversed = reversed;
+		return this;
+	}
 }

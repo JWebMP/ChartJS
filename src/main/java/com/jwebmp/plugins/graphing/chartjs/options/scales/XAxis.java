@@ -28,6 +28,7 @@ import com.jwebmp.plugins.graphing.chartjs.options.ticks.Ticks;
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public class XAxis<T extends Ticks<T>> {
 
+	
 	/**
 	 * @see #setTicks(Ticks)
 	 */
@@ -241,5 +242,29 @@ public class XAxis<T extends Ticks<T>> {
 		this.gridLines = gridLines;
 		return this;
 	}
-
+	
+	/**
+	 * If the axis is reversed
+	 */
+	private boolean reversed;
+	
+	/**
+	 * if the axis is reversed
+	 * @return
+	 */
+	public boolean isReversed()
+	{
+		return reversed;
+	}
+	
+	/**
+	 * Reverses the axis
+	 * @param reversed
+	 * @return
+	 */
+	public XAxis<T> setReversed(boolean reversed)
+	{
+		this.reversed = reversed;
+		return this;
+	}
 }

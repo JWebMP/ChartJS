@@ -133,5 +133,29 @@ public class Data<D extends Data<D, T, O>, T extends Dataset<T, O>, O> {
 		this.datasets.add(dataset);
 		return (D) this;
 	}
-
+	
+	/**
+	 * x or y
+	 */
+	private char indexAxis;
+	
+	/**
+	 *  x or y
+	 * @return
+	 */
+	public char getIndexAxis()
+	{
+		return indexAxis;
+	}
+	
+	/**
+	 *  x or y
+	 * @param indexAxis
+	 * @return
+	 */
+	public Data<D, T, O> setIndexAxis(char indexAxis)
+	{
+		this.indexAxis = indexAxis;
+		return this;
+	}
 }

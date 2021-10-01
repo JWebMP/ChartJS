@@ -34,6 +34,7 @@ import com.jwebmp.plugins.graphing.chartjs.javascript.JavaScriptFunction;
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public class Ticks<T extends Ticks<T>> {
+	
 
 	/**
 	 * @see #setAutoSkip(Boolean)
@@ -425,5 +426,6 @@ public class Ticks<T extends Ticks<T>> {
 		this.reverse = reverse;
 		return (T) this;
 	}
+	
 
 }
