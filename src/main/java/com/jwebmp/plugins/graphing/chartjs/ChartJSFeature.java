@@ -71,6 +71,11 @@ public class ChartJSFeature
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("if(jw.chartjs === undefined) {jw.chartjs = {};}" +
+		          "" +
+		          "if(jw.chartjs." + getVariableName() + ")" +
+		          "     {try{jw.chartjs" + getVariableName() + ".destroy();}catch(e){}}" +
+		          "" +
+		          "" +
 		          "jw.chartjs." + getVariableName())
 		  .append(" =  new Chart($('" + getComponent().asBase()
 		                                              .getID(true)
