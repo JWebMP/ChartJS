@@ -15,18 +15,19 @@
  */
 package com.jwebmp.plugins.graphing.chartjs.color;
 
-import java.util.Locale;
-import java.util.Random;
+import com.fasterxml.jackson.annotation.*;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.*;
+import java.util.regex.*;
 
 /**
  * Immutable RGBa color model.
  */
-public class Color {
-
+public class Color
+{
+	
 	private static final Random RANDOMIZER = new Random(System.nanoTime());
-
+	
 	public static final Color TRANSPARENT = new Color(0, 0, 0, 0);
 	public static final Color BLACK = new Color(0, 0, 0);
 	public static final Color WHITE = new Color(255, 255, 255);
@@ -89,30 +90,28 @@ public class Color {
 	public static final Color DIM_GRAY = new Color(105, 105, 105);
 	public static final Color DARK_GRAY = new Color(169, 169, 169);
 	public static final Color LIGHT_GRAY = new Color(211, 211, 211);
-
+	
 	private final int r;
 	private final int g;
 	private final int b;
 	private final double alpha;
-
+	
 	/**
 	 * Constructs a new Color instance
-	 * 
-	 * @param r
-	 *            value for Red color channel. Value between 0 and 255
-	 *            (inclusive).
-	 * @param g
-	 *            value for Green color channel. Value between 0 and 255
-	 *            (inclusive).
-	 * @param b
-	 *            value for Blue color channel. Value between 0 and 255
-	 *            (inclusive).
-	 * @param alpha
-	 *            value for alpha transparency. Value between 0 and 1
-	 *            (inclusive), with 0 fully transparent and 1 fully opaque.
+	 *
+	 * @param r     value for Red color channel. Value between 0 and 255
+	 *              (inclusive).
+	 * @param g     value for Green color channel. Value between 0 and 255
+	 *              (inclusive).
+	 * @param b     value for Blue color channel. Value between 0 and 255
+	 *              (inclusive).
+	 * @param alpha value for alpha transparency. Value between 0 and 1
+	 *              (inclusive), with 0 fully transparent and 1 fully opaque.
 	 */
-	public Color(int r, int g, int b, double alpha) {
-		if (!Color.isChannelWithinBounds(r) || !Color.isChannelWithinBounds(g) || !Color.isChannelWithinBounds(b) || !Color.isAlphaWithinBounds(alpha)) {
+	public Color(int r, int g, int b, double alpha)
+	{
+		if (!Color.isChannelWithinBounds(r) || !Color.isChannelWithinBounds(g) || !Color.isChannelWithinBounds(b) || !Color.isAlphaWithinBounds(alpha))
+		{
 			throw new IllegalArgumentException("at least one argument is not within bounds");
 		}
 		this.r = r;
@@ -120,33 +119,34 @@ public class Color {
 		this.b = b;
 		this.alpha = alpha;
 	}
-
+	
 	/**
 	 * Constructs a new Color instance with alpha set fully opaque
-	 * 
-	 * @param r
-	 *            value for Red color channel. Value between 0 and 255
-	 *            (inclusive).
-	 * @param g
-	 *            value for Green color channel. Value between 0 and 255
-	 *            (inclusive).
-	 * @param b
-	 *            value for Blue color channel. Value between 0 and 255
-	 *            (inclusive).
+	 *
+	 * @param r value for Red color channel. Value between 0 and 255
+	 *          (inclusive).
+	 * @param g value for Green color channel. Value between 0 and 255
+	 *          (inclusive).
+	 * @param b value for Blue color channel. Value between 0 and 255
+	 *          (inclusive).
 	 */
-	public Color(int r, int g, int b) {
+	public Color(int r, int g, int b)
+	{
 		this(r, g, b, 1);
 	}
-
+	
 	/**
 	 * Constructs a new Color instance with the RGB values of the Color argument
 	 * and the alpha transparency of the double argument.
 	 */
-	public Color(Color color, double alpha) {
-		if (color == null) {
+	public Color(Color color, double alpha)
+	{
+		if (color == null)
+		{
 			throw new IllegalArgumentException("Color argument may not be null");
 		}
-		if (!Color.isAlphaWithinBounds(alpha)) {
+		if (!Color.isAlphaWithinBounds(alpha))
+		{
 			throw new IllegalArgumentException("alpha double argument is not within allowed bounds: allowed values are between 0 and 1 (inclusive), but value passed is " + alpha);
 		}
 		this.r = color.getR();
@@ -154,95 +154,140 @@ public class Color {
 		this.b = color.getB();
 		this.alpha = alpha;
 	}
-
+	
 	/**
 	 * Constructs and returns a new fully random Color instance.
-	 * 
+	 *
 	 * @return Color
 	 */
-	public static Color random() {
+	public static Color random()
+	{
 		int r = RANDOMIZER.nextInt(256);
 		int g = RANDOMIZER.nextInt(256);
 		int b = RANDOMIZER.nextInt(256);
 		double a = RANDOMIZER.nextDouble();
 		return new Color(r, g, b, a);
 	}
-
+	
 	/**
 	 * <p>
 	 * Verify that argument is valid value for the R, G or B channel.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Any integer between 0 and 255 (inclusive) is valid.
 	 * </p>
-	 * 
+	 *
 	 * @param channel
 	 * @return true if argument is valid R, G or B value
 	 */
-	public static boolean isChannelWithinBounds(int channel) {
+	public static boolean isChannelWithinBounds(int channel)
+	{
 		return channel >= 0 && channel <= 255;
 	}
-
+	
 	/**
 	 * <p>
 	 * Verify that argument is valid value for the alpha channel.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * Any double between 0.0d and 1.0d (inclusive) is valid.
 	 * </p>
-	 * 
+	 *
 	 * @param alpha
 	 * @return true if argument is valid alpha value
 	 */
-	public static boolean isAlphaWithinBounds(double alpha) {
+	public static boolean isAlphaWithinBounds(double alpha)
+	{
 		return Double.compare(0.0d, alpha) <= 0 && Double.compare(1.0d, alpha) >= 0;
 	}
-
+	
 	/**
 	 * @return red channel value, between 0 and 255 (inclusive)
 	 */
-	public int getR() {
+	public int getR()
+	{
 		return r;
 	}
-
+	
 	/**
 	 * @return green channel value, between 0 and 255 (inclusive)
 	 */
-	public int getG() {
+	public int getG()
+	{
 		return g;
 	}
-
+	
 	/**
 	 * @return blue channel value, between 0 and 255 (inclusive)
 	 */
-	public int getB() {
+	public int getB()
+	{
 		return b;
 	}
-
+	
 	/**
 	 * @return alpha channel value, between 0.0d and 1.0d (inclusive)
 	 */
-	public double getAlpha() {
+	public double getAlpha()
+	{
 		return alpha;
 	}
-
+	
 	/**
 	 * @return serialized version of this {@code Color}, as used for JSON.
 	 */
 	@JsonValue
-	public String rgba() {
+	public String rgba()
+	{
 		return "rgba(" + r + "," + g + "," + b + "," + String.format(Locale.US, "%.3f", alpha) + ")";
 	}
-
+	
+	private static final String patternString = "rgba?\\(\\s*(25[0-5]|2[0-4]\\d|1\\d{1,2}|\\d\\d?)\\s*,\\s*(25[0-5]|2[0-4]\\d|1\\d{1,2}|\\d\\d?)\\s*,\\s*(25[0-5]|2[0-4]\\d|1\\d{1,2}|\\d\\d?)\\s*,?\\s*([01\\.]\\.?\\d?)?\\s*\\)";
+	
+	
+	public static Color fromString(String value)
+	{
+		Pattern p = Pattern.compile(patternString);
+		Matcher matcher = p.matcher(value);
+		if (matcher.find())
+		{
+			int groupCount = matcher.groupCount();
+			String gString = matcher.group(0);
+			
+			String g1 = matcher.group(1);
+			String g2 = matcher.group(2);
+			String g3 = matcher.group(3);
+			String g4 = matcher.group(4);
+			if (g4 == null)
+			{
+				g4 = "1.0";
+			}
+			Color color = new Color(Integer.parseInt(g1), Integer.parseInt(g2), Integer.parseInt(g3), Double.parseDouble(g4));
+			return color;
+			
+		}
+		return null;
+	}
+	
+	public static void main(String[] args)
+	{
+		Color c = fromString("rgba(255,99,132)");
+		System.out.println(c);
+		c = fromString("rgba(255,99,132,0.2)");
+		System.out.println(c);
+	}
+	
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return rgba();
 	}
-
+	
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		final int prime = 31;
 		int result = 1;
 		long temp;
@@ -253,25 +298,40 @@ public class Color {
 		result = prime * result + r;
 		return result;
 	}
-
+	
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(Object obj)
+	{
 		if (this == obj)
+		{
 			return true;
+		}
 		if (obj == null)
+		{
 			return false;
+		}
 		if (getClass() != obj.getClass())
+		{
 			return false;
+		}
 		Color other = (Color) obj;
 		if (Double.doubleToLongBits(alpha) != Double.doubleToLongBits(other.alpha))
+		{
 			return false;
+		}
 		if (b != other.b)
+		{
 			return false;
+		}
 		if (g != other.g)
+		{
 			return false;
+		}
 		if (r != other.r)
+		{
 			return false;
+		}
 		return true;
 	}
-
+	
 }

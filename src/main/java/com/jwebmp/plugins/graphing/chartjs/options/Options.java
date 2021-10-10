@@ -189,6 +189,10 @@ public class Options<T extends Options<T>>
 	 */
 	public Title getTitle()
 	{
+		if (title == null)
+		{
+			title = new Title();
+		}
 		return title;
 	}
 	
@@ -209,6 +213,10 @@ public class Options<T extends Options<T>>
 	 */
 	public Legend getLegend()
 	{
+		if (legend == null)
+		{
+			legend = new Legend();
+		}
 		return legend;
 	}
 	
@@ -229,6 +237,10 @@ public class Options<T extends Options<T>>
 	 */
 	public Tooltips getTooltips()
 	{
+		if (tooltips == null)
+		{
+			tooltips = new Tooltips();
+		}
 		return tooltips;
 	}
 	
@@ -255,6 +267,10 @@ public class Options<T extends Options<T>>
 	 */
 	public Hover getHover()
 	{
+		if (hover == null)
+		{
+			hover = new Hover();
+		}
 		return hover;
 	}
 	
@@ -274,6 +290,10 @@ public class Options<T extends Options<T>>
 	 */
 	public Animation<?> getAnimation()
 	{
+		if (animation == null)
+		{
+			animation = new Animation<>();
+		}
 		return animation;
 	}
 	
@@ -293,6 +313,10 @@ public class Options<T extends Options<T>>
 	 */
 	public Layout getLayout()
 	{
+		if (layout == null)
+		{
+			layout = new Layout();
+		}
 		return layout;
 	}
 	
