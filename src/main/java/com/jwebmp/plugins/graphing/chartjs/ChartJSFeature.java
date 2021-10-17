@@ -34,8 +34,9 @@ public class ChartJSFeature
 	 * The graph this feature is linked to
 	 */
 	private ChartJS<?> graph;
+	private boolean ignoreIfCreated = false;
 	
-	public ChartJSFeature(ChartJS<?> forGraph,Chart<?> options)
+	public ChartJSFeature(ChartJS<?> forGraph, Chart<?> options)
 	{
 		super("ChartJSFeature");
 		setComponent(forGraph);
@@ -71,12 +72,14 @@ public class ChartJSFeature
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("if(jw.chartjs === undefined) {jw.chartjs = {};}" +
-		          "" +
-		          "if(jw.chartjs." + getVariableName() + ")" +
-		          "     {try{jw.chartjs" + getVariableName() + ".destroy();}catch(e){}}" +
-		          "" +
-		          "" +
-		          "jw.chartjs." + getVariableName())
+		          "");
+		
+		sb.append(
+				  "if(jw.chartjs." + getVariableName() + ")" +
+				  "     {try{jw.chartjs" + getVariableName() + ".destroy();}catch(e){}}" +
+				  "" +
+				  "" +
+				  "jw.chartjs." + getVariableName())
 		  .append(" =  new Chart($('" + getComponent().asBase()
 		                                              .getID(true)
 		          + "')," + getNewLine() +
@@ -109,4 +112,14 @@ public class ChartJSFeature
 		this.graph = graph;
 	}
 	
+	public boolean isIgnoreIfCreated()
+	{
+		return ignoreIfCreated;
+	}
+	
+	public ChartJSFeature setIgnoreIfCreated(boolean ignoreIfCreated)
+	{
+		this.ignoreIfCreated = ignoreIfCreated;
+		return this;
+	}
 }
