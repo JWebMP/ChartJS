@@ -4,12 +4,12 @@ import com.jwebmp.core.base.html.*;
 
 public class ChartJS<O extends Chart<O>> extends Canvas<ChartJS<O>>
 {
-	private ChartJSFeature feature;
+	private final ChartJSFeature feature;
 	
-	public ChartJS(String id,O defaultChartOptions)
+	public ChartJS(String id, O defaultChartOptions)
 	{
 		setID(id);
-		feature = new ChartJSFeature(this,defaultChartOptions);
+		feature = new ChartJSFeature(this, defaultChartOptions);
 		addFeature(feature);
 	}
 	
@@ -17,6 +17,11 @@ public class ChartJS<O extends Chart<O>> extends Canvas<ChartJS<O>>
 	public O getOptions()
 	{
 		return (O) feature.getOptions();
+	}
+	
+	public ChartJSFeature getFeature()
+	{
+		return feature;
 	}
 	
 	public ChartJS<O> setWidth(int width)

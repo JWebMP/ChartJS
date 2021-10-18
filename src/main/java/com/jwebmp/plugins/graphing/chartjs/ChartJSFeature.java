@@ -71,13 +71,19 @@ public class ChartJSFeature
 	public void assignFunctionsToComponent()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("if(jw.chartjs === undefined) {jw.chartjs = {};}" +
-		          "");
 		
 		sb.append(
-				  "if(jw.chartjs." + getVariableName() + ")" +
-				  "     {try{jw.chartjs" + getVariableName() + ".destroy();}catch(e){}}" +
-				  "" +
+				"if(jw.chartjs === undefined) {jw.chartjs = {};}" +
+				"" +
+				"" +
+				"" +
+				"" +
+				"if(jw.chartjs." + getVariableName() + ")" +
+				"     {try{jw.chartjs" + getVariableName() + ".destroy();}catch(e){}}" +
+				"" +
+				"");
+		
+		sb.append(
 				  "" +
 				  "jw.chartjs." + getVariableName())
 		  .append(" =  new Chart($('" + getComponent().asBase()
@@ -89,6 +95,8 @@ public class ChartJSFeature
 		          "" + getNewLine() +
 		          ""
 		  );
+		
+		
 		addQuery(sb.toString());
 	}
 	

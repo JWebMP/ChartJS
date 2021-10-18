@@ -9,6 +9,9 @@ public enum ChartJSReferences {
      */
     ChartJSReferences(new JavascriptReference("ChartJS", 3.51, "chartjs/chart.js", "https://www.jsdelivr.com/package/npm/chart.js?path=dist", 15),
             new CSSReference("ChartJS",3.51,"chartjs/Chart.css","https://www.jsdelivr.com/package/npm/chart.css?path=dist",15)),
+    
+    ChartDataLabelReference(new JavascriptReference("ChartJSDataLabels",2.0,"datalabels/chartjs-plugin-datalabels.min.js","https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"),null)
+    
     ;
     private final JavascriptReference reference;
     private final CSSReference cssReference;
