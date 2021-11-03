@@ -11,7 +11,7 @@
     <groupId>com.jwebmp.plugins.graphing</groupId>
     <artifactId>jwebmp-chartjs</artifactId>
     <name>ChartJS</name>
-
+    <version>0.0.0_0-SNAPSHOT</version>
     <description>Java library for use with Chart.js javascript</description>
     <url>https://www.ceau.be/chart.html</url>
     <developers>
