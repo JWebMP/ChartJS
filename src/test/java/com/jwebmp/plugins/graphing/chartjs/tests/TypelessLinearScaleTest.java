@@ -6,7 +6,7 @@ import com.jwebmp.plugins.graphing.chartjs.LineChart;
 import com.jwebmp.plugins.graphing.chartjs.data.LineData;
 import com.jwebmp.plugins.graphing.chartjs.dataset.LineDataset;
 import com.jwebmp.plugins.graphing.chartjs.enums.FontStyle;
-import com.jwebmp.plugins.graphing.chartjs.options.LineOptions;
+import com.jwebmp.plugins.graphing.chartjs.options.*;
 import com.jwebmp.plugins.graphing.chartjs.options.scales.LinearScale;
 import com.jwebmp.plugins.graphing.chartjs.options.scales.LinearScales;
 import com.jwebmp.plugins.graphing.chartjs.tests.util.Opener;
@@ -35,7 +35,8 @@ public class TypelessLinearScaleTest {
 				.addLabel("March")
 				.addDataset(dataset);
 
-		LinearTicks ticks = new LinearTicks().setFontStyle(FontStyle.BOLD);
+		LinearTicks ticks = new LinearTicks();
+		ticks.setFont(new Font().setStyle(FontStyle.BOLD));
 		LinearScale axis = new LinearScale().setTicks(ticks);
 		LinearScales scales = new LinearScales().addxAxis(axis);
 		LineOptions options = new LineOptions().setScales(scales);

@@ -1,3 +1,5 @@
+import com.jwebmp.plugins.graphing.chartjs.angularjs.*;
+
 module com.jwebmp.plugins.graphing.chartjs {
     exports com.jwebmp.plugins.graphing.chartjs;
     exports com.jwebmp.plugins.graphing.chartjs.color;
@@ -16,15 +18,18 @@ module com.jwebmp.plugins.graphing.chartjs {
 
     provides com.jwebmp.core.services.IPageConfigurator with com.jwebmp.plugins.graphing.chartjs.component.ChartJSPageConfigurator;
     provides com.guicedee.guicedinjection.interfaces.IGuiceScanModuleInclusions with com.jwebmp.plugins.graphing.chartjs.component.ChartJSInclusionsModule;
-
+    provides com.jwebmp.core.base.angular.services.IAngularDirective with ChartsJSDirective;
+    
     requires com.jwebmp.core;
     requires com.fasterxml.jackson.databind;
     requires com.guicedee.guicedinjection;
+    requires com.jwebmp.core.angularjs;
     
     requires static java.desktop;
 
 
     opens com.jwebmp.plugins.graphing.chartjs to com.google.guice,com.fasterxml.jackson.databind,com.jwebmp.core;
+    opens com.jwebmp.plugins.graphing.chartjs.angularjs to com.google.guice,com.fasterxml.jackson.databind,com.jwebmp.core.angularjs,com.jwebmp.core;
     opens com.jwebmp.plugins.graphing.chartjs.component to com.google.guice,com.fasterxml.jackson.databind;
     opens com.jwebmp.plugins.graphing.chartjs.color to com.google.guice,com.fasterxml.jackson.databind;
     opens com.jwebmp.plugins.graphing.chartjs.data to com.google.guice,com.fasterxml.jackson.databind;

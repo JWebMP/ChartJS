@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.jwebmp.plugins.graphing.chartjs.color.Color;
 import com.jwebmp.plugins.graphing.chartjs.enums.FontStyle;
 import com.jwebmp.plugins.graphing.chartjs.javascript.JavaScriptFunction;
+import com.jwebmp.plugins.graphing.chartjs.options.*;
 
 /**
  * The grid line configuration is nested under the scale configuration in the
@@ -55,26 +56,8 @@ public class Ticks<T extends Ticks<T>> {
 	 * @see #setDisplay(Boolean)
 	 */
 	private Boolean display;
-
-	/**
-	 * @see #setFontColor(Color)
-	 */
-	private Color fontColor;
-
-	/**
-	 * @see #setFontFamily(String)
-	 */
-	private String fontFamily;
-
-	/**
-	 * @see #setFontSize(BigDecimal)
-	 */
-	private BigDecimal fontSize;
-
-	/**
-	 * @see #setFontStyle(FontStyle)
-	 */
-	private FontStyle fontStyle;
+	
+	private Font font;
 
 	/**
 	 * @see #setLabelOffset(BigDecimal)
@@ -195,95 +178,6 @@ public class Ticks<T extends Ticks<T>> {
 	@SuppressWarnings("unchecked")
 	public T setDisplay(Boolean display) {
 		this.display = display;
-		return (T) this;
-	}
-
-	/**
-	 * @see #setFontColor(Color)
-	 */
-	public Color getFontColor() {
-		return this.fontColor;
-	}
-
-	/**
-	 * <p>
-	 * Font color for the tick labels.
-	 * </p>
-	 * 
-	 * <p>
-	 * Default {@code "#666"}
-	 * </p>
-	 */
-	@SuppressWarnings("unchecked")
-	public T setFontColor(Color fontColor) {
-		this.fontColor = fontColor;
-		return (T) this;
-	}
-
-	/**
-	 * @see #setFontFamily(String)
-	 */
-	public String getFontFamily() {
-		return this.fontFamily;
-	}
-
-	/**
-	 * <p>
-	 * Font family for the tick labels, follows CSS font-family options.
-	 * </p>
-	 * 
-	 * <p>
-	 * Default {@code "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"}
-	 * </p>
-	 */
-	@SuppressWarnings("unchecked")
-	public T setFontFamily(String fontFamily) {
-		this.fontFamily = fontFamily;
-		return (T) this;
-	}
-
-	/**
-	 * @see #setFontSize(BigDecimal)
-	 */
-	public BigDecimal getFontSize() {
-		return this.fontSize;
-	}
-
-	/**
-	 * <p>
-	 * Font size for the tick labels.
-	 * </p>
-	 * 
-	 * <p>
-	 * Default {@code 12}
-	 * </p>
-	 */
-	@SuppressWarnings("unchecked")
-	public T setFontSize(BigDecimal fontSize) {
-		this.fontSize = fontSize;
-		return (T) this;
-	}
-
-	/**
-	 * @see #setFontStyle(FontStyle)
-	 */
-	public FontStyle getFontStyle() {
-		return this.fontStyle;
-	}
-
-	/**
-	 * <p>
-	 * Font style for the tick labels, follows CSS font-style options (i.e.
-	 * normal, italic, oblique, initial, inherit).
-	 * </p>
-	 * 
-	 * <p>
-	 * Default {@code "normal"}
-	 * </p>
-	 */
-	@SuppressWarnings("unchecked")
-	public T setFontStyle(FontStyle fontStyle) {
-		this.fontStyle = fontStyle;
 		return (T) this;
 	}
 
@@ -427,5 +321,14 @@ public class Ticks<T extends Ticks<T>> {
 		return (T) this;
 	}
 	
-
+	public Font getFont()
+	{
+		return font;
+	}
+	
+	public Ticks<T> setFont(Font font)
+	{
+		this.font = font;
+		return this;
+	}
 }

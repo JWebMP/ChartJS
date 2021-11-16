@@ -4,24 +4,42 @@ import com.jwebmp.core.base.html.*;
 
 public class ChartJS<O extends Chart<O>> extends Canvas<ChartJS<O>>
 {
-	private final ChartJSFeature feature;
+	private final  Chart<?> options;
+	private String dataFetchUrl;
+	private Integer dataFetchTimeout;
 	
 	public ChartJS(String id, O defaultChartOptions)
 	{
+		this(id, defaultChartOptions, null, null);
+	}
+	
+	public ChartJS(String id, O defaultChartOptions, String dataFetchUrl, Integer dataFetchTimeout)
+	{
 		setID(id);
-		feature = new ChartJSFeature(this, defaultChartOptions);
-		addFeature(feature);
+		this.dataFetchUrl = dataFetchUrl;
+		options = defaultChartOptions;
+		this.dataFetchTimeout = dataFetchTimeout;
+	}
+	
+	@Override
+	public void init()
+	{
+		if(!isInitialized())
+		{
+			addAttribute("chart-js", "");
+			addAttribute("options", options.toString(true));
+			addAttribute("url", dataFetchUrl);
+			addAttribute("delay", dataFetchTimeout + "");
+			setInvertColonRender(true);
+		}
+		
+		super.init();
 	}
 	
 	@Override
 	public O getOptions()
 	{
-		return (O) feature.getOptions();
-	}
-	
-	public ChartJSFeature getFeature()
-	{
-		return feature;
+		return (O) options;
 	}
 	
 	public ChartJS<O> setWidth(int width)
@@ -33,6 +51,28 @@ public class ChartJS<O extends Chart<O>> extends Canvas<ChartJS<O>>
 	public ChartJS<O> setHeight(int height)
 	{
 		addAttribute("height", height + "");
+		return this;
+	}
+	
+	public String getDataFetchUrl()
+	{
+		return dataFetchUrl;
+	}
+	
+	public ChartJS<O> setDataFetchUrl(String dataFetchUrl)
+	{
+		this.dataFetchUrl = dataFetchUrl;
+		return this;
+	}
+	
+	public Integer getDataFetchTimeout()
+	{
+		return dataFetchTimeout;
+	}
+	
+	public ChartJS<O> setDataFetchTimeout(Integer dataFetchTimeout)
+	{
+		this.dataFetchTimeout = dataFetchTimeout;
 		return this;
 	}
 }

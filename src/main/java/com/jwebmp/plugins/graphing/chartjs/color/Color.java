@@ -16,6 +16,7 @@
 package com.jwebmp.plugins.graphing.chartjs.color;
 
 import com.fasterxml.jackson.annotation.*;
+import com.google.common.base.*;
 
 import java.util.*;
 import java.util.regex.*;
@@ -249,6 +250,14 @@ public class Color
 	
 	public static Color fromString(String value)
 	{
+		if (Strings.isNullOrEmpty(value))
+		{
+			return BLACK;
+		}
+		if(value.startsWith("#"))
+		{
+			value = Color.HexToColor(value);
+		}
 		Pattern p = Pattern.compile(patternString);
 		Matcher matcher = p.matcher(value);
 		if (matcher.find())
@@ -276,6 +285,8 @@ public class Color
 		Color c = fromString("rgba(255,99,132)");
 		System.out.println(c);
 		c = fromString("rgba(255,99,132,0.2)");
+		System.out.println(c);
+		c = fromString("#FFFFFF");
 		System.out.println(c);
 	}
 	
@@ -334,4 +345,32 @@ public class Color
 		return true;
 	}
 	
+	/**
+	 * Converts a hex string to a color. If it can't be converted null is returned.
+	 * @param hex (i.e. #CCCCCCFF or CCCCCC)
+	 * @return Color
+	 */
+	public static String HexToColor(String hex)
+	{
+		hex = hex.replace("#", "");
+		String rgba = "";
+		switch (hex.length()) {
+			case 6:
+				rgba += "rgba(";
+				rgba += Integer.valueOf(hex.substring(0, 2), 16) + ",";
+				rgba += Integer.valueOf(hex.substring(2, 4), 16) + ",";
+				rgba += Integer.valueOf(hex.substring(4, 6), 16) + ",";
+				rgba += "1)";
+				break;
+			case 8:
+				rgba += "rgba(";
+				rgba += Integer.valueOf(hex.substring(0, 2), 16) + ",";
+				rgba += Integer.valueOf(hex.substring(2, 4), 16) + ",";
+				rgba += Integer.valueOf(hex.substring(4, 6), 16) + ",";
+				rgba += Integer.valueOf(hex.substring(6, 8), 16) + "";
+				rgba += ")";
+				break;
+		}
+		return rgba;
+	}
 }

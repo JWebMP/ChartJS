@@ -137,13 +137,13 @@ public class Data<D extends Data<D, T, O>, T extends Dataset<T, O>, O> {
 	/**
 	 * x or y
 	 */
-	private char indexAxis;
+	private Character indexAxis;
 	
 	/**
 	 *  x or y
 	 * @return
 	 */
-	public char getIndexAxis()
+	public Character getIndexAxis()
 	{
 		return indexAxis;
 	}

@@ -42,26 +42,8 @@ public class Title {
 	 * @see #setFullWidth(Boolean)
 	 */
 	private Boolean fullWidth;
-
-	/**
-	 * @see #setFontSize(Integer)
-	 */
-	private Integer fontSize;
-
-	/**
-	 * @see #setFontFamily(String)
-	 */
-	private String fontFamily;
-
-	/**
-	 * @see #setFontColor(Color)
-	 */
-	private Color fontColor;
-
-	/**
-	 * @see #setFontStyle(FontStyle)
-	 */
-	private FontStyle fontStyle;
+	
+	private Font font;
 
 	/**
 	 * @see #setPadding(Integer)
@@ -138,91 +120,6 @@ public class Title {
 	}
 
 	/**
-	 * @see #setFontSize(Integer)
-	 */
-	public Integer getFontSize() {
-		return this.fontSize;
-	}
-
-	/**
-	 * <p>
-	 * Font size inherited from global configuration
-	 * </p>
-	 * 
-	 * <p>
-	 * Default {@code 12}
-	 * </p>
-	 */
-	public Title setFontSize(Integer fontSize) {
-		this.fontSize = fontSize;
-	    return this;
-	}
-
-	/**
-	 * @see #setFontFamily(String)
-	 */
-	public String getFontFamily() {
-		return this.fontFamily;
-	}
-
-	/**
-	 * <p>
-	 * Font family inherited from global configuration
-	 * </p>
-	 * 
-	 * <p>
-	 * Default {@code "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif"}
-	 * </p>
-	 */
-	public Title setFontFamily(String fontFamily) {
-		this.fontFamily = fontFamily;
-	    return this;
-	}
-
-	/**
-	 * @see #setFontColor(Color)
-	 */
-	public Color getFontColor() {
-		return this.fontColor;
-	}
-
-	/**
-	 * <p>
-	 * Font color inherited from global configuration
-	 * </p>
-	 * 
-	 * <p>
-	 * Default {@code "#666"}
-	 * </p>
-	 */
-	public Title setFontColor(Color fontColor) {
-		this.fontColor = fontColor;
-	    return this;
-	}
-
-	/**
-	 * @see #setFontStyle(FontStyle)
-	 */
-	public FontStyle getFontStyle() {
-		return this.fontStyle;
-	}
-
-	/**
-	 * <p>
-	 * Font styling of the title, follows CSS font-style options (i.e. normal,
-	 * italic, oblique, initial, inherit).
-	 * </p>
-	 * 
-	 * <p>
-	 * Default {@code 'bold'}
-	 * </p>
-	 */
-	public Title setFontStyle(FontStyle fontStyle) {
-		this.fontStyle = fontStyle;
-	    return this;
-	}
-
-	/**
 	 * @see #setPadding(Integer)
 	 */
 	public Integer getPadding() {
@@ -263,5 +160,15 @@ public class Title {
 		this.text = text;
 	    return this;
 	}
-
+	
+	public Font getFont()
+	{
+		return font;
+	}
+	
+	public Title setFont(Font font)
+	{
+		this.font = font;
+		return this;
+	}
 }
