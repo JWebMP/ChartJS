@@ -4,8 +4,7 @@ JW_APP_NAME.directive('chartJs', ['$rootScope','$interval','$timeout', function 
         scope: {
             options: '@options',
             url: '@url',
-            delay: '@delay',
-            websocketGroup: '@websocket'
+            delay: '@delay'
         },
         controllerAs: 'vm',
         //bindToController: true,
@@ -25,7 +24,7 @@ JW_APP_NAME.directive('chartJs', ['$rootScope','$interval','$timeout', function 
             {
                 var id = element.attr('id');
                 if($scope.url !== undefined) {
-                    if ($('#' + id + ':visible')) {
+                    if ($('#' + id).is(':visible')) {
                         $.get($scope.url, function (data) {
                             data.data.datasets.forEach(function (currentValue, index, arr) {
                                 if ($scope.chart.data.datasets === undefined || $scope.chart.data.datasets.length < data.data.datasets.length) {

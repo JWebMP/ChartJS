@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import com.jwebmp.plugins.graphing.chartjs.options.ticks.Ticks;
+import com.jwebmp.plugins.graphing.chartjs.options.ticks.*;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
@@ -86,7 +86,20 @@ public class XAxis<T extends Ticks<T>> {
 	 * @see #setGridLines(GridLines gridLines)
 	 */
 	private GridLines gridLines;
-
+	
+	private String position;
+	
+	public String getPosition()
+	{
+		return position;
+	}
+	
+	public XAxis<T> setPosition(String position)
+	{
+		this.position = position;
+		return this;
+	}
+	
 	/**
 	 * @see #setTicks(Ticks)
 	 */
