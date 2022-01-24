@@ -26,6 +26,6 @@ import com.jwebmp.plugins.graphing.chartjs.dataset.BarDataset;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
-public class BarData extends Data<BarData, BarDataset, BigDecimal> {
+public class BarData extends Data<BarData, BarDataset, XDataPoint> {
 
 }

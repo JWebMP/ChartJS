@@ -24,9 +24,9 @@ public class TypelessLinearScaleTest {
 
 		LineDataset dataset = new LineDataset()
 				.setLabel("typelessLinearScaleTest")
-				.addData(65)
-				.addData(59)
-				.addData(80)
+			//	.addData(65)
+			//	.addData(59)
+			//	.addData(80)
 				.setBorderWidth(1);
 
 		LineData data = LineChart.data()

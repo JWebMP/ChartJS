@@ -122,7 +122,7 @@ public abstract class Scale<T extends Scale<T>> {
 	 * @see #setScaleLabel(ScaleLabel)
 	 */
 	private ScaleLabel scaleLabel;
-
+	
 	/**
 	 * @see #setDisplay(Boolean)
 	 */
@@ -562,4 +562,5 @@ public abstract class Scale<T extends Scale<T>> {
 
 	public abstract Ticks<?> getTicks();
 
+	
 }

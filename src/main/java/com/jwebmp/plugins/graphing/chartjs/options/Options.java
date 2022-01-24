@@ -44,6 +44,9 @@ public class Options<T extends Options<T>>
 	private Animation<?> animation;
 	private Layout layout;
 	private Map<String, Object> plugins;
+	private Interaction interaction;
+	private boolean parsing;
+	
 	
 	/**
 	 * @see #setResponsive(Boolean)
@@ -355,5 +358,26 @@ public class Options<T extends Options<T>>
 		this.plugins = plugins;
 		return (T) this;
 	}
+
+	public Interaction getInteraction()
+	{
+		return interaction;
+	}
 	
+	public Options<T> setInteraction(Interaction interaction)
+	{
+		this.interaction = interaction;
+		return this;
+	}
+	
+	public boolean isParsing()
+	{
+		return parsing;
+	}
+	
+	public Options<T> setParsing(boolean parsing)
+	{
+		this.parsing = parsing;
+		return this;
+	}
 }

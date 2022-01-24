@@ -148,7 +148,8 @@ public class LineTest extends ChartTest {
 	            .addPointRadius(1)
 	            .addPointHitRadius(10)
 	            .setSpanGaps(false)
-	            .setData(65, 59, 80, 81, 56, 55, 40);
+	            //.setData(65, 59, 80, 81, 56, 55, 40)
+				;
 	}
 	
 }

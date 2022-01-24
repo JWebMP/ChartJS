@@ -21,9 +21,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import com.jwebmp.plugins.graphing.chartjs.dataset.Dataset;
@@ -31,10 +30,9 @@ import com.jwebmp.plugins.graphing.chartjs.dataset.Dataset;
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public class Data<D extends Data<D, T, O>, T extends Dataset<T, O>, O> {
-
 	private final List<String> labels = new ArrayList<String>();
 	private final List<T> datasets = new ArrayList<T>();
-
+	
 	/**
 	 * @return unmodifiable list of all labels, never {@code null}
 	 */

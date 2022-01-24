@@ -6,8 +6,7 @@ import java.util.Arrays;
 import com.jwebmp.plugins.graphing.chartjs.BarChart;
 import com.jwebmp.plugins.graphing.chartjs.LineChart;
 import com.jwebmp.plugins.graphing.chartjs.color.Color;
-import com.jwebmp.plugins.graphing.chartjs.data.BarData;
-import com.jwebmp.plugins.graphing.chartjs.data.LineData;
+import com.jwebmp.plugins.graphing.chartjs.data.*;
 import com.jwebmp.plugins.graphing.chartjs.dataset.BarDataset;
 import com.jwebmp.plugins.graphing.chartjs.dataset.LineDataset;
 import com.jwebmp.plugins.graphing.chartjs.options.BarOptions;
@@ -49,8 +48,9 @@ public class ElementsTest {
 	@Test
 	public void linechartElements() throws IOException {
 
+		@SuppressWarnings("RedundantArrayCreation")
 		LineDataset dataset = new LineDataset()
-				.setData(129, 510, 239, 122);
+				.setData(new XDataPoint[]{new XDataPoint(1,129),new XDataPoint(2,510), new XDataPoint(3, 239), new XDataPoint(4,122)});
 
 		LineData data = LineChart.data()
 				.addLabels("monday", "tuesday", "wednesday", "thursday")

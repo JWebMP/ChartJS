@@ -9,12 +9,16 @@ JW_APP_NAME.directive('chartJs', ['$rootScope','$interval','$timeout', function 
         controllerAs: 'vm',
         //bindToController: true,
         controller: ['$http', '$rootScope',  '$scope', function ($http, $rootScope, $scope) {
-
             $scope.ctrlFn = function (element) {
+
                 var opts = JSON.parse($scope.options);
                 $scope.chart = new Chart(element.attr('id'), opts);
-            };
 
+                $(element).on("beforePrint", function(){
+                    $scope.chart.resize();
+                });
+
+            };
         }],
 
         link: function ($scope, element, attrs) {
@@ -32,8 +36,8 @@ JW_APP_NAME.directive('chartJs', ['$rootScope','$interval','$timeout', function 
                                 } else {
                                     $scope.chart.data.datasets[index].data = data.data.datasets[index].data;
                                 }
-                                $scope.chart.update();
-                            })
+                            });
+                            $scope.chart.update();
                         });
                     }
                 }
@@ -51,7 +55,6 @@ JW_APP_NAME.directive('chartJs', ['$rootScope','$interval','$timeout', function 
                     $scope.chart = undefined;
                 });
             }
-
         }
     };
 }]);

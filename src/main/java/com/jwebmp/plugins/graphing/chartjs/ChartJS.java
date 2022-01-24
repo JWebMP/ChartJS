@@ -1,6 +1,7 @@
 package com.jwebmp.plugins.graphing.chartjs;
 
 import com.jwebmp.core.base.html.*;
+import com.jwebmp.plugins.graphing.chartjs.javascript.*;
 
 public class ChartJS<O extends Chart<O>> extends Canvas<ChartJS<O>>
 {
@@ -75,4 +76,7 @@ public class ChartJS<O extends Chart<O>> extends Canvas<ChartJS<O>>
 		this.dataFetchTimeout = dataFetchTimeout;
 		return this;
 	}
+	
+	
+	
 }

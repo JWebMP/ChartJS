@@ -1,7 +1,7 @@
 package com.jwebmp.plugins.graphing.chartjs.component;
 
 import com.jwebmp.core.*;
-import com.jwebmp.core.base.html.*;
+import com.jwebmp.core.base.references.*;
 import com.jwebmp.core.services.*;
 import jakarta.validation.constraints.*;
 
@@ -21,6 +21,9 @@ public class ChartJSPageConfigurator implements IPageConfigurator<ChartJSPageCon
 		
 		page.getBody()
 		    .addJavaScriptReference(ChartJSReferences.ChartDataLabelReference.getReference());
+		
+		page.getBody()
+		    .addJavaScriptReference(new JavascriptReference("chartjs.page.print", 1.0, "charts/chart.page.min.js"));
 		
 		return page;
 	}

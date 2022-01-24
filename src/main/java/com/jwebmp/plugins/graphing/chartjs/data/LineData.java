@@ -26,6 +26,6 @@ import com.jwebmp.plugins.graphing.chartjs.dataset.LineDataset;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
-public class LineData extends Data<LineData, LineDataset, BigDecimal> {
+public class LineData extends Data<LineData, LineDataset, XDataPoint> {
 
 }

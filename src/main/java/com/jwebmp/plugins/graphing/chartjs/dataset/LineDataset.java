@@ -15,70 +15,39 @@
 */
 package com.jwebmp.plugins.graphing.chartjs.dataset;
 
-import java.math.BigDecimal;
-import java.util.Collection;
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.*;
+import com.fasterxml.jackson.annotation.JsonInclude.*;
+import com.jwebmp.plugins.graphing.chartjs.data.*;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.util.*;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
-public class LineDataset extends BaseLineDataset<LineDataset, BigDecimal> {
-
-	/**
-	 * Sets the backing data list to the argument, replacing any data already
-	 * added or set
-	 * 
-	 * @param data
-	 *            The data to plot in a line
-	 */
-	public LineDataset setData(int... data) {
+public class LineDataset extends BaseLineDataset<LineDataset, XDataPoint>
+{
+	
+	public LineDataset setData(XDataPoint<?>... data)
+	{
 		clearData();
-		if (data != null) {
-			for (int i = 0; i < data.length; i++) {
-				this.data.add(new BigDecimal(data[i]));
+		if (data != null)
+		{
+			for (int i = 0; i < data.length; i++)
+			{
+				this.data.add(data[i]);
 			}
 		}
 		return this;
 	}
-
-	/**
-	 * Sets the backing data list to the argument, replacing any data already
-	 * added or set
-	 * 
-	 * @param data
-	 *            The data to plot in a line
-	 */
-	public LineDataset setData(double... data) {
-		clearData();
-		if (data != null) {
-			for (int i = 0; i < data.length; i++) {
-				this.data.add(new BigDecimal(String.valueOf(data[i])));
-			}
-		}
-		return this;
-	}
-
-	/**
-	 * Add the data point to this {@code Dataset}
-	 * 
-	 * @see #setData(Collection)
-	 */
-	public LineDataset addData(int data) {
-		this.data.add(new BigDecimal(data));
-		return this;
-	}
-
+	
 	/**
 	 * Add the data point to this {@code Dataset}
 	 *
 	 * @see #setData(Collection)
 	 */
-	public LineDataset addData(double data) {
-		this.data.add(new BigDecimal(String.valueOf(data)));
+	public LineDataset addData(XDataPoint<?> data)
+	{
+		this.data.add(data);
 		return this;
 	}
-
 }

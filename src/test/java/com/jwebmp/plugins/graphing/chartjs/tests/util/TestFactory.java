@@ -240,7 +240,8 @@ public class TestFactory {
 		LineDataset dataset = randomInstance(LineDataset.class);
 		for (Entry<String, BigDecimal> entry : Generator.generateData().entrySet()) {
 			data.addLabel(entry.getKey());
-			dataset.addData(entry.getValue());
+			//dataset.addData(entry.getValue())
+			;
 		}
 		data.addDataset(dataset);
 		return data;
@@ -304,7 +305,7 @@ public class TestFactory {
 		data.addDataset(dataset);
 		for (Entry<String, BigDecimal> entry : Generator.generateData().entrySet()) {
 			data.addLabel(entry.getKey());
-			dataset.addData(entry.getValue());
+			//dataset.addData(entry.getValue());
 			dataset.addBackgroundColor(Color.random());
 			dataset.addBorderColor(Color.random());
 			dataset.addBorderSkipped(any(BorderSkipped.class));

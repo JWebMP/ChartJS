@@ -79,7 +79,10 @@ public abstract class Dataset<T extends Dataset<T, O>, O> {
 	public T setData(O... data) {
 		clearData();
 		if (data != null) {
-			this.data.addAll(Arrays.asList(data));
+			for (O datum : data)
+			{
+				addData(datum);
+			}
 		}
 		return (T) this;
 	}
