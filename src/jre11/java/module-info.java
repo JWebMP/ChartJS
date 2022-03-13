@@ -23,7 +23,7 @@ module com.jwebmp.plugins.graphing.chartjs {
     requires com.jwebmp.core;
     requires com.fasterxml.jackson.databind;
     requires com.guicedee.guicedinjection;
-    requires com.jwebmp.core.angularjs;
+    requires com.jwebmp.core.angular;
     
     requires static java.desktop;
 
