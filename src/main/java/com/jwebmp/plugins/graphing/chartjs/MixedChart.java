@@ -26,7 +26,7 @@ import com.jwebmp.plugins.graphing.chartjs.options.*;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE)
-public class MixedChart extends Chart<MixedChart>
+public class MixedChart extends Chart<Data,MixedChart>
 {
 	
 	private static final ObjectWriter WRITER = new ObjectMapper()
@@ -71,7 +71,7 @@ public class MixedChart extends Chart<MixedChart>
 		this.data = data;
 	}
 	
-	public MixedChart(Data data, BarOptions options)
+	public MixedChart(Data data, Options<?> options)
 	{
 		this.data = data;
 		this.options = options;

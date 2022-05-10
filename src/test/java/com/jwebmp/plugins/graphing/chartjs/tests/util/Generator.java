@@ -32,7 +32,7 @@ public class Generator {
 
 	public static Map<String, BigDecimal> generateData() {
 		
-		Map<String, BigDecimal> data = new LinkedHashMap<String, BigDecimal>();
+		Map<String, BigDecimal> data = new LinkedHashMap<>();
 		
 		// first choose random number of points we will generate - 0 minimum - more than 20 is overkill
 		int datapoints = RANDOM.nextInt(20) + MINIMUM + 1;

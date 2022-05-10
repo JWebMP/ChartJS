@@ -35,7 +35,7 @@ public class BarScale extends CategoryScale
 	 */
 	public static XAxis<LinearTicks> xAxis()
 	{
-		return new XAxis<LinearTicks>();
+		return new XAxis<>();
 	}
 	
 	/**
@@ -46,18 +46,18 @@ public class BarScale extends CategoryScale
 	 */
 	public static YAxis<LinearTicks> yAxis()
 	{
-		return new YAxis<LinearTicks>();
+		return new YAxis<>();
 	}
 	
 	/**
 	 * @see #setxAxes(List)
 	 */
-	private final List<XAxis<LinearTicks>> xAxes = new ArrayList<XAxis<LinearTicks>>();
+	private final List<XAxis<LinearTicks>> xAxes = new ArrayList<>();
 	
 	/**
 	 * @see #setyAxes(List)
 	 */
-	private final List<YAxis<LinearTicks>> yAxes = new ArrayList<YAxis<LinearTicks>>();
+	private final List<YAxis<LinearTicks>> yAxes = new ArrayList<>();
 	
 	/**
 	 * @see #setxAxes(List)

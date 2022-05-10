@@ -26,32 +26,32 @@ public abstract class BackgroundBorderHoverDataset<T extends BackgroundBorderHov
 	/**
 	 * @see #setBackgroundColor(List)
 	 */
-	protected final List<Color> backgroundColor = new OptionalArray<Color>();
+	protected final List<Color> backgroundColor = new OptionalArray<>();
 
 	/**
 	 * @see #setBorderColor(List)
 	 */
-	protected final List<Color> borderColor = new OptionalArray<Color>();
+	protected final List<Color> borderColor = new OptionalArray<>();
 
 	/**
 	 * @see #setBorderWidth(List)
 	 */
-	protected final List<Integer> borderWidth = new OptionalArray<Integer>();
+	protected final List<Integer> borderWidth = new OptionalArray<>();
 
 	/**
 	 * @see #setHoverBackgroundColor(List)
 	 */
-	protected final List<Color> hoverBackgroundColor = new OptionalArray<Color>();
+	protected final List<Color> hoverBackgroundColor = new OptionalArray<>();
 
 	/**
 	 * @see #setHoverBorderColor(List)
 	 */
-	protected final List<Color> hoverBorderColor = new OptionalArray<Color>();
+	protected final List<Color> hoverBorderColor = new OptionalArray<>();
 
 	/**
 	 * @see #setHoverBorderWidth(List)
 	 */
-	protected final List<Integer> hoverBorderWidth = new OptionalArray<Integer>();
+	protected final List<Integer> hoverBorderWidth = new OptionalArray<>();
 
 	/**
 	 * @see #setBackgroundColor(List)

@@ -15,17 +15,16 @@
 */
 package com.jwebmp.plugins.graphing.chartjs.data;
 
-import java.math.BigDecimal;
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import com.jwebmp.plugins.graphing.chartjs.datapoint.*;
 import com.jwebmp.plugins.graphing.chartjs.dataset.LineDataset;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
-public class LineData extends Data<LineData, LineDataset, XDataPoint> {
+public class LineData extends Data<LineData, LineDataset, YDataPoint<?>> {
 
 }

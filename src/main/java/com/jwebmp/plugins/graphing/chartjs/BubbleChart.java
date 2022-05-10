@@ -30,7 +30,7 @@ import com.jwebmp.plugins.graphing.chartjs.options.Options;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE)
-public class BubbleChart extends Chart<BubbleChart> {
+public class BubbleChart extends Chart<BubbleData, BubbleChart> {
 
 	private static final ObjectWriter WRITER = new ObjectMapper()
 			.writerWithDefaultPrettyPrinter()

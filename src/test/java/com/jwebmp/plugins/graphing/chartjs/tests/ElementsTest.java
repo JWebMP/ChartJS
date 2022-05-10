@@ -7,6 +7,7 @@ import com.jwebmp.plugins.graphing.chartjs.BarChart;
 import com.jwebmp.plugins.graphing.chartjs.LineChart;
 import com.jwebmp.plugins.graphing.chartjs.color.Color;
 import com.jwebmp.plugins.graphing.chartjs.data.*;
+import com.jwebmp.plugins.graphing.chartjs.datapoint.*;
 import com.jwebmp.plugins.graphing.chartjs.dataset.BarDataset;
 import com.jwebmp.plugins.graphing.chartjs.dataset.LineDataset;
 import com.jwebmp.plugins.graphing.chartjs.options.BarOptions;

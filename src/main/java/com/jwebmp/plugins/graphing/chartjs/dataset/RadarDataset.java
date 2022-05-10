@@ -32,7 +32,7 @@ public class RadarDataset extends PointDataset<RadarDataset, BigDecimal> {
 	/**
 	 * @see #setHitRadius(List)
 	 */
-	private final List<Integer> hitRadius = new ArrayList<Integer>();
+	private final List<Integer> hitRadius = new ArrayList<>();
 
 	/**
 	 * @see #setHitRadius(List)

@@ -30,7 +30,7 @@ import com.jwebmp.plugins.graphing.chartjs.options.Options;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE)
-public class DoughnutChart extends Chart<DoughnutChart> {
+public class DoughnutChart extends Chart<DoughnutData,DoughnutChart> {
 
 	private static final ObjectWriter WRITER = new ObjectMapper()
 			.writerWithDefaultPrettyPrinter()

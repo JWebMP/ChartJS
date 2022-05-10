@@ -16,14 +16,17 @@
 package com.jwebmp.plugins.graphing.chartjs;
 
 import com.jwebmp.core.htmlbuilder.javascript.*;
+import com.jwebmp.plugins.graphing.chartjs.data.*;
 
-public abstract class Chart<J extends Chart<J>> extends JavaScriptPart<J>
+public abstract class Chart<D, J extends Chart<D, J>> extends JavaScriptPart<J>
 {
 	/**
 	 * @return type of this {@link Chart} implementation for proper drawing in
 	 * JavaScript.
 	 */
 	public abstract String getType();
+	
+	public abstract D getData();
 	
 	/**
 	 * <p>

@@ -42,7 +42,9 @@ public abstract class Dataset<T extends Dataset<T, O>, O> {
 	/**
 	 * @see #setData(Collection)
 	 */
-	protected final List<O> data = new ArrayList<O>();
+	@SuppressWarnings("DefaultAnnotationParam")
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	protected final List<O> data = new ArrayList<>();
 
 	/**
 	 * @return an unmodifiable view of the data held in this {@code Dataset},

@@ -41,7 +41,7 @@ public abstract class BaseLineDataset<T extends PointDataset<T, O>, O> extends P
 	/**
 	 * @see #setPointHitRadius(List)
 	 */
-	private final List<Integer> pointHitRadius = new OptionalArray<Integer>();
+	private final List<Integer> pointHitRadius = new OptionalArray<>();
 
 	/**
 	 * @see #setShowLine(Boolean)

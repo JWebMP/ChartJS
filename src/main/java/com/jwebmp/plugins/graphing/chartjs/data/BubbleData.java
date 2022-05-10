@@ -15,6 +15,7 @@
 */
 package com.jwebmp.plugins.graphing.chartjs.data;
 
+import java.math.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -25,13 +26,14 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import com.jwebmp.plugins.graphing.chartjs.datapoint.*;
 import com.jwebmp.plugins.graphing.chartjs.dataset.BubbleDataset;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
-public class BubbleData {
+public class BubbleData  extends Data<BubbleData,BubbleDataset, BubbleDataPoint>{
 
-	private final List<BubbleDataset> datasets = new ArrayList<BubbleDataset>();
+	private final List<BubbleDataset> datasets = new ArrayList<>();
 	
 	/**
 	 * @return unmodifiable list of all {@link BubbleDataset} objects, never

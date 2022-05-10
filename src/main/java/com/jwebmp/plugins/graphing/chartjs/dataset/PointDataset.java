@@ -65,7 +65,7 @@ public abstract class PointDataset<T extends Dataset<T, O>, O> extends Dataset<T
 	/**
 	 * @see #setBorderDash(List)
 	 */
-	private final List<Integer> borderDash = new ArrayList<Integer>();
+	private final List<Integer> borderDash = new ArrayList<>();
 
 	/**
 	 * @see #setBorderDashOffset(Float)
@@ -80,52 +80,52 @@ public abstract class PointDataset<T extends Dataset<T, O>, O> extends Dataset<T
 	/**
 	 * @see #setPointBorderColor(List)
 	 */
-	private final List<Color> pointBorderColor = new OptionalArray<Color>();
+	private final List<Color> pointBorderColor = new OptionalArray<>();
 
 	/**
 	 * @see #setPointBackgroundColor(List)
 	 */
-	private final List<Color> pointBackgroundColor = new OptionalArray<Color>();
+	private final List<Color> pointBackgroundColor = new OptionalArray<>();
 
 	/**
 	 * @see #setPointBorderWidth(List)
 	 */
-	private final List<Integer> pointBorderWidth = new OptionalArray<Integer>();
+	private final List<Integer> pointBorderWidth = new OptionalArray<>();
 
 	/**
 	 * @see #setPointRadius(List)
 	 */
-	private final List<Integer> pointRadius = new OptionalArray<Integer>();
+	private final List<Integer> pointRadius = new OptionalArray<>();
 
 	/**
 	 * @see #setPointHoverRadius(List)
 	 */
-	private final List<Integer> pointHoverRadius = new OptionalArray<Integer>();
+	private final List<Integer> pointHoverRadius = new OptionalArray<>();
 
 	/**
 	 * @see #setPointHitRadius(List)
 	 */
-	private final List<Integer> pointHitRadius = new OptionalArray<Integer>();
+	private final List<Integer> pointHitRadius = new OptionalArray<>();
 
 	/**
 	 * @see #setPointHoverBackgroundColor(List)
 	 */
-	private final List<Color> pointHoverBackgroundColor = new OptionalArray<Color>();
+	private final List<Color> pointHoverBackgroundColor = new OptionalArray<>();
 
 	/**
 	 * @see #setPointHoverBorderColor(List)
 	 */
-	private final List<Color> pointHoverBorderColor = new OptionalArray<Color>();
+	private final List<Color> pointHoverBorderColor = new OptionalArray<>();
 
 	/**
 	 * @see #setPointHoverBorderWidth(List)
 	 */
-	private final List<Integer> pointHoverBorderWidth = new OptionalArray<Integer>();
+	private final List<Integer> pointHoverBorderWidth = new OptionalArray<>();
 
 	/**
 	 * @see #setPointStyle(List)
 	 */
-	private final List<PointStyle> pointStyle = new OptionalArray<PointStyle>();
+	private final List<PointStyle> pointStyle = new OptionalArray<>();
 
 	/**
 	 * @see #setLabel(String)

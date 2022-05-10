@@ -18,16 +18,20 @@ package com.jwebmp.plugins.graphing.chartjs.dataset;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.*;
 import com.fasterxml.jackson.annotation.JsonInclude.*;
-import com.jwebmp.plugins.graphing.chartjs.data.*;
+import com.jwebmp.plugins.graphing.chartjs.datapoint.*;
 
 import java.util.*;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
-public class LineDataset extends BaseLineDataset<LineDataset, XDataPoint>
+public class LineDataset extends BaseLineDataset<LineDataset, YDataPoint<?>>
 {
+	public LineDataset()
+	{
+		setType("line");
+	}
 	
-	public LineDataset setData(XDataPoint<?>... data)
+	public LineDataset setData(YDataPoint<?>... data)
 	{
 		clearData();
 		if (data != null)
@@ -40,12 +44,26 @@ public class LineDataset extends BaseLineDataset<LineDataset, XDataPoint>
 		return this;
 	}
 	
+	public LineDataset setData(Double... data)
+	{
+		clearData();
+		if (data != null)
+		{
+			for (int i = 0; i < data.length; i++)
+			{
+				this.data.add(new YDataPoint<>(data[i]));
+			}
+		}
+		return this;
+	}
+	
+	
 	/**
 	 * Add the data point to this {@code Dataset}
 	 *
 	 * @see #setData(Collection)
 	 */
-	public LineDataset addData(XDataPoint<?> data)
+	public LineDataset addData(YDataPoint<?> data)
 	{
 		this.data.add(data);
 		return this;

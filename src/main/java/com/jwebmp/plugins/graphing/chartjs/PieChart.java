@@ -31,7 +31,7 @@ import com.jwebmp.plugins.graphing.chartjs.options.PieOptions;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE)
-public class PieChart extends Chart<PieChart> {
+public class PieChart extends Chart<PieData,PieChart> {
 
 	private static final ObjectWriter WRITER = new ObjectMapper()
 			.writerWithDefaultPrettyPrinter()

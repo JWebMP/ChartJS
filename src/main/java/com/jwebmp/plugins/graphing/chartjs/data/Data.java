@@ -30,8 +30,8 @@ import com.jwebmp.plugins.graphing.chartjs.dataset.Dataset;
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
 public class Data<D extends Data<D, T, O>, T extends Dataset<T, O>, O> {
-	private final List<String> labels = new ArrayList<String>();
-	private final List<T> datasets = new ArrayList<T>();
+	private final List<String> labels = new ArrayList<>();
+	private final List<T> datasets = new ArrayList<>();
 	
 	/**
 	 * @return unmodifiable list of all labels, never {@code null}

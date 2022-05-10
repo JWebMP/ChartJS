@@ -1,4 +1,4 @@
-package com.jwebmp.plugins.graphing.chartjs.data;
+package com.jwebmp.plugins.graphing.chartjs.datapoint;
 
 import com.fasterxml.jackson.annotation.*;
 
@@ -7,15 +7,15 @@ import java.math.*;
 @SuppressWarnings({"unchecked", "unused"})
 public class XDataPoint<T extends XDataPoint<T>> extends YDataPoint<T>
 {
-	private Object x;
+	private Number x;
 	
-	public XDataPoint(Object x, Number y)
+	public XDataPoint(Number x, Number y)
 	{
 		super(y);
 		this.x = x;
 	}
 	
-	public T setX(String x)
+	public T setX(Number x)
 	{
 		this.x = x;
 		return (T) this;
@@ -60,11 +60,14 @@ public class XDataPoint<T extends XDataPoint<T>> extends YDataPoint<T>
 		return (BigDecimal) x;
 	}
 	
-	
 	@JsonValue
 	@JsonRawValue
 	public String toString()
 	{
+		if (x == null)
+		{
+			return getY() + "";
+		}
 		return "{\"x\":" + "\"" + x + "\"" + ",\"y\":" + getY() + "}";
 	}
 	

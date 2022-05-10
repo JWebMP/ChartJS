@@ -35,9 +35,9 @@ public class LinearScales
 	private XAxis<?> x;
 	private YAxis<?> y;
 	
-	private final List<LinearScale> xAxes = new ArrayList<LinearScale>();
+	private final List<LinearScale> xAxes = new ArrayList<>();
 	
-	private final List<LinearScale> yAxes = new ArrayList<LinearScale>();
+	private final List<LinearScale> yAxes = new ArrayList<>();
 	
 	public List<LinearScale> getxAxes()
 	{

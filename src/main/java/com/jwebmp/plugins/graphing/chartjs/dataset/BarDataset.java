@@ -18,7 +18,7 @@ package com.jwebmp.plugins.graphing.chartjs.dataset;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.*;
 import com.fasterxml.jackson.annotation.JsonInclude.*;
-import com.jwebmp.plugins.graphing.chartjs.data.*;
+import com.jwebmp.plugins.graphing.chartjs.datapoint.*;
 import com.jwebmp.plugins.graphing.chartjs.enums.*;
 import com.jwebmp.plugins.graphing.chartjs.objects.*;
 
@@ -27,7 +27,7 @@ import java.util.*;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE)
-public class BarDataset extends BackgroundBorderHoverDataset<BarDataset, XDataPoint>
+public class BarDataset extends BackgroundBorderHoverDataset<BarDataset, YDataPoint<?>>
 {
 	
 	/**
@@ -48,7 +48,12 @@ public class BarDataset extends BackgroundBorderHoverDataset<BarDataset, XDataPo
 	/**
 	 * @see #setBorderSkipped(List)
 	 */
-	private final List<BorderSkipped> borderSkipped = new OptionalArray<BorderSkipped>();
+	private final List<BorderSkipped> borderSkipped = new OptionalArray<>();
+	
+	public BarDataset()
+	{
+		setType("bar");
+	}
 	
 	/**
 	 * @see #setLabel(String)
@@ -144,7 +149,7 @@ public class BarDataset extends BackgroundBorderHoverDataset<BarDataset, XDataPo
 		{
 			for (int i = 0; i < data.length; i++)
 			{
-				this.data.add(new XDataPoint<>(getLabel(), new BigDecimal(data[i])));
+				this.data.add(new YDataPoint<>(new BigDecimal(data[i])));
 			}
 		}
 		return this;
@@ -163,7 +168,7 @@ public class BarDataset extends BackgroundBorderHoverDataset<BarDataset, XDataPo
 		{
 			for (int i = 0; i < data.length; i++)
 			{
-				this.data.add(new XDataPoint<>(getLabel(), (new BigDecimal(String.valueOf(data[i])))));
+				this.data.add(new YDataPoint<>(new BigDecimal(String.valueOf(data[i]))));
 			}
 		}
 		return this;
@@ -176,7 +181,7 @@ public class BarDataset extends BackgroundBorderHoverDataset<BarDataset, XDataPo
 	 */
 	public BarDataset addData(int data)
 	{
-		this.data.add(new XDataPoint<>(getLabel(), new BigDecimal(data)));
+		this.data.add(new YDataPoint<>(new BigDecimal(data)));
 		return this;
 	}
 	
@@ -187,7 +192,7 @@ public class BarDataset extends BackgroundBorderHoverDataset<BarDataset, XDataPo
 	 */
 	public BarDataset addData(double data)
 	{
-		this.data.add(new XDataPoint<>(getLabel(), new BigDecimal(String.valueOf(data))));
+		this.data.add(new YDataPoint<>(new BigDecimal(String.valueOf(data))));
 		return this;
 	}
 	
@@ -198,7 +203,7 @@ public class BarDataset extends BackgroundBorderHoverDataset<BarDataset, XDataPo
 	 */
 	public BarDataset addData(String label, double data)
 	{
-		this.data.add(new XDataPoint<>(label, new BigDecimal(String.valueOf(data))));
+		this.data.add(new YDataPoint<>(new BigDecimal(String.valueOf(data))));
 		return this;
 	}
 	
@@ -209,7 +214,7 @@ public class BarDataset extends BackgroundBorderHoverDataset<BarDataset, XDataPo
 	 */
 	public BarDataset addData(String label, int data)
 	{
-		this.data.add(new XDataPoint<>(label, new BigDecimal(String.valueOf(data))));
+		this.data.add(new YDataPoint<>(new BigDecimal(String.valueOf(data))));
 		return this;
 	}
 	

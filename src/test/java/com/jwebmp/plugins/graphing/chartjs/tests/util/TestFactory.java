@@ -82,7 +82,7 @@ public class TestFactory {
 	}
 
 	public static List<BubbleDataPoint> generateBubbleDataPoints() {
-		List<BubbleDataPoint> list = new ArrayList<BubbleDataPoint>();
+		List<BubbleDataPoint> list = new ArrayList<>();
 		
 		// first choose random number of points we will generate - 4 minimum - more than 20 is overkill
 		int datapoints = Generator.nextInt(20) + 5;

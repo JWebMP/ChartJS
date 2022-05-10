@@ -36,7 +36,7 @@ import com.jwebmp.plugins.graphing.chartjs.options.ticks.LinearTicks;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE)
-public class BarChart extends Chart<BarChart> {
+public class BarChart extends Chart<BarData,BarChart> {
 
 	private static final ObjectWriter WRITER = new ObjectMapper()
 			.writerWithDefaultPrettyPrinter()

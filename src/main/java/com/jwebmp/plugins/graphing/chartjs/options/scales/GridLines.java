@@ -42,12 +42,12 @@ public class GridLines {
 	/**
 	 * @see #setColor(List)
 	 */
-	private final List<Color> color = new OptionalArray<Color>();
+	private final List<Color> color = new OptionalArray<>();
 
 	/**
 	 * @see #setLineWidth(List)
 	 */
-	private List<Integer> lineWidth = new OptionalArray<Integer>();
+	private List<Integer> lineWidth = new OptionalArray<>();
 
 	/**
 	 * @see #setDrawBorder(Boolean)

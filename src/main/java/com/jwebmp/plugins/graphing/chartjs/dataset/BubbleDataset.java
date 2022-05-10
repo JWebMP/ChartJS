@@ -44,7 +44,7 @@ public class BubbleDataset extends RoundDataset<BubbleDataset, BubbleDataPoint> 
 	/**
 	 * @see #setHoverRadius(List)
 	 */
-	private final List<Integer> hoverRadius = new OptionalArray<Integer>();
+	private final List<Integer> hoverRadius = new OptionalArray<>();
 
 	/**
 	 * <p>

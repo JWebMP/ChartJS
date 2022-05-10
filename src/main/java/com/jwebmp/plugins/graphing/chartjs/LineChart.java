@@ -32,7 +32,7 @@ import com.jwebmp.plugins.graphing.chartjs.options.scales.LinearScale;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE)
-public class LineChart extends Chart<LineChart> {
+public class LineChart extends Chart<LineData,LineChart> {
 
 	private static final ObjectWriter WRITER = new ObjectMapper()
 			.writerWithDefaultPrettyPrinter()
