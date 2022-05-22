@@ -15,8 +15,6 @@ public class ChartJSPageConfigurator implements IPageConfigurator<ChartJSPageCon
 	@Override
 	public @NotNull Page<?> configure(Page page)
 	{
-		page.getBody()
-		    .addJavaScriptReference(new JavascriptReference("chartjs.page.print", 1.0, "charts/chart.page.min.js"));
 		return page;
 	}
 	
