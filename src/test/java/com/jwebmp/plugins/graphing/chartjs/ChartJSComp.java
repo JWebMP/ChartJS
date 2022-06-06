@@ -1,6 +1,6 @@
 package com.jwebmp.plugins.graphing.chartjs;
 
-import com.jwebmp.core.base.angular.services.annotations.*;
+import com.jwebmp.core.base.angular.client.annotations.angular.*;
 import com.jwebmp.plugins.graphing.chartjs.data.*;
 import com.jwebmp.plugins.graphing.chartjs.dataset.*;
 

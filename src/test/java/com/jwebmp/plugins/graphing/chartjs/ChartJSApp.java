@@ -1,15 +1,16 @@
 package com.jwebmp.plugins.graphing.chartjs;
 
 import com.guicedee.guicedinjection.*;
+import com.jwebmp.core.base.angular.client.annotations.angular.*;
+import com.jwebmp.core.base.angular.client.services.interfaces.*;
 import com.jwebmp.core.base.angular.services.*;
-import com.jwebmp.core.base.angular.services.annotations.*;
 import com.jwebmp.core.base.angular.services.compiler.*;
-import com.jwebmp.core.base.angular.services.interfaces.*;
+
 import org.junit.jupiter.api.*;
 
 import java.io.*;
 
-import static com.jwebmp.core.base.angular.services.interfaces.ITSComponent.*;
+import static com.jwebmp.core.base.angular.client.services.interfaces.AnnotationUtils.*;
 
 @NgApp(name = "chartjsapp", bootComponent = ChartJSKitchenSink.class)
 public class ChartJSApp extends NGApplication<ChartJSApp>
@@ -30,7 +31,7 @@ public class ChartJSApp extends NGApplication<ChartJSApp>
 			JWebMPTypeScriptCompiler compiler = new JWebMPTypeScriptCompiler(app);
 			
 			System.out.println("Generating @NgApp (" + getTsFilename(app.getClass()) + ") " +
-			                   "in folder " + getClassDirectory(app.getClass()));
+			                   "in folder " + IComponent.getClassDirectory(app.getClass()));
 			System.out.println("================");
 			//	compiler.renderAppTS(app);
 			System.out.println("================");

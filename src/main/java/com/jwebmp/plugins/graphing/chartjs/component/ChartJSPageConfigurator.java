@@ -1,8 +1,8 @@
 package com.jwebmp.plugins.graphing.chartjs.component;
 
 import com.jwebmp.core.*;
-import com.jwebmp.core.base.angular.services.annotations.*;
-import com.jwebmp.core.base.references.*;
+
+import com.jwebmp.core.base.angular.client.annotations.typescript.*;
 import com.jwebmp.core.services.*;
 import jakarta.validation.constraints.*;
 

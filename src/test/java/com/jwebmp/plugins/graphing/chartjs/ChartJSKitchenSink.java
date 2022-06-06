@@ -1,7 +1,7 @@
 package com.jwebmp.plugins.graphing.chartjs;
 
-import com.jwebmp.core.base.angular.services.annotations.*;
-import com.jwebmp.core.base.angular.services.interfaces.*;
+import com.jwebmp.core.base.angular.client.annotations.angular.*;
+import com.jwebmp.core.base.angular.client.services.interfaces.*;
 import com.jwebmp.core.base.html.*;
 
 @NgComponent("chartjs-kitchen-sink")

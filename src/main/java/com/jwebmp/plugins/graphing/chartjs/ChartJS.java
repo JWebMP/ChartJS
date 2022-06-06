@@ -1,17 +1,17 @@
 package com.jwebmp.plugins.graphing.chartjs;
 
-import com.jwebmp.core.base.angular.modules.services.*;
-import com.jwebmp.core.base.angular.services.annotations.functions.*;
-import com.jwebmp.core.base.angular.services.annotations.references.*;
-import com.jwebmp.core.base.angular.services.annotations.structures.*;
-import com.jwebmp.core.base.angular.services.interfaces.*;
+import com.jwebmp.core.base.angular.client.annotations.functions.*;
+import com.jwebmp.core.base.angular.client.annotations.references.*;
+import com.jwebmp.core.base.angular.client.annotations.structures.*;
+import com.jwebmp.core.base.angular.client.services.*;
+import com.jwebmp.core.base.angular.client.services.interfaces.*;
 import com.jwebmp.core.base.html.*;
 
 import java.util.List;
 import java.util.*;
 
-@NgImportReference(name = "Chart,Point,ChartDataset,DefaultDataPoint,registerables,ChartConfiguration", reference = "chart.js")
-@NgImportReference(name = "AfterViewInit, ElementRef, ViewChild", reference = "@angular/core")
+@NgImportReference(value = "Chart,Point,ChartDataset,DefaultDataPoint,registerables,ChartConfiguration", reference = "chart.js")
+@NgImportReference(value = "AfterViewInit, ElementRef, ViewChild", reference = "@angular/core")
 
 @NgField("@ViewChild('chart')\n" +
          "  private chartRef? : ElementRef;")
@@ -24,17 +24,16 @@ import java.util.*;
 
 @NgField("private dataSourceSubscription: Subscription;")
 
-@NgOnDestroy(onDestroy = {"this.dataSourceSubscription.unsubscribe();",
-		"this.socketClientService.deregisterListener(this.listenerName);",
-		"this.chart?.destroy();",
-		"this.datasets = [];"
-})
+@NgOnDestroy("this.dataSourceSubscription.unsubscribe();")
+@NgOnDestroy("this.socketClientService.deregisterListener(this.listenerName);")
+@NgOnDestroy("this.chart?.destroy();")
+@NgOnDestroy("this.datasets = [];")
 
 
 @NgComponentReference(SocketClientService.class)
-@NgImportReference(name = "Injectable", reference = "@angular/core")
-@NgImportReference(name = "Observable,Observer,Subscription", reference = "rxjs")
-@NgImportReference(name = "Subject,bufferTime", reference = "rxjs")
+@NgImportReference(value = "Injectable", reference = "@angular/core")
+@NgImportReference(value = "Observable,Observer,Subscription", reference = "rxjs")
+@NgImportReference(value = "Subject,bufferTime", reference = "rxjs")
 
 public class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, J>> extends Canvas<J> implements INgComponent<J>
 {
@@ -47,17 +46,12 @@ public class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, J>> exten
 	}
 	
 	@Override
-	public List<String> interfaces()
-	{
-		return List.of("AfterViewInit");
-	}
-	
-	@Override
 	public List<String> componentConstructorBody()
 	{
-		return List.of("Chart.register(...registerables);",
-				"this.chartConfiguration = " + getOptions().toJson() + ";",
-				"this.datasets = this.chartConfiguration.data.datasets;",
+		List<String> out = INgComponent.super.componentConstructorBody();
+		out.add("Chart.register(...registerables);" +
+				"this.chartConfiguration = " + getOptions().toJson() + ";" +
+				"this.datasets = this.chartConfiguration.data.datasets;" +
 				"this.dataSourceSubscription = this.socketClientService.registerListener(this.listenerName)\n" +
 				"            .pipe(bufferTime(1500))\n" +
 				"            .subscribe((message: ChartDataset[]) => {\n" +
@@ -70,21 +64,23 @@ public class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, J>> exten
 				"                    }\n" +
 				"                }\n" +
 				"            }\n" +
-				"        });"
-		);
+				"        });");
+		return out;
+	}
+	
+	@Override
+	public List<String> afterViewInit()
+	{
+		List<String> out = INgComponent.super.afterViewInit();
+		out.add("if(this.chartRef){\n" +
+		        "\tthis.chart = new Chart(this.chartRef.nativeElement, this.chartConfiguration);\n");
+		return out;
 	}
 	
 	@Override
 	public List<String> componentMethods()
 	{
-		List<String> out = new ArrayList<>();
-		//getOptions().getData().
-		out.add("ngAfterViewInit() {\n" +
-		        "if(this.chartRef){\n" +
-		        "\tthis.chart = new Chart(this.chartRef.nativeElement, this.chartConfiguration);\n" +
-		        "\t}\n" +
-		        "}\n");
-		
+		List<String> out = INgComponent.super.componentMethods();
 		out.add("updateDataset(label : string, dataset: ChartDataset )\n" +
 		        "    {\n" +
 		        "       let found : boolean = false;" +
@@ -108,7 +104,9 @@ public class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, J>> exten
 	@Override
 	public List<String> componentFields()
 	{
-		return List.of("private listenerName : string = \"" + getID() + "\";");
+		List<String> out = INgComponent.super.componentFields();
+		out.add("private listenerName : string = \"" + getID() + "\";");
+		return out;
 	}
 	
 	@Override
