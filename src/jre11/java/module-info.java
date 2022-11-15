@@ -22,8 +22,9 @@ module com.jwebmp.plugins.graphing.chartjs {
     requires transitive com.jwebmp.core.angular;
     
     requires static java.desktop;
-    
-    opens com.jwebmp.plugins.graphing.chartjs to com.google.guice,com.fasterxml.jackson.databind,com.jwebmp.core;
+	requires com.guicedee.guicedservlets.websockets;
+	
+	opens com.jwebmp.plugins.graphing.chartjs to com.google.guice,com.fasterxml.jackson.databind,com.jwebmp.core;
    // opens com.jwebmp.plugins.graphing.chartjs.angularjs to com.google.guice,com.fasterxml.jackson.databind,com.jwebmp.core.angular,com.jwebmp.core;
     opens com.jwebmp.plugins.graphing.chartjs.component to com.google.guice,com.fasterxml.jackson.databind;
     opens com.jwebmp.plugins.graphing.chartjs.color to com.google.guice,com.fasterxml.jackson.databind;

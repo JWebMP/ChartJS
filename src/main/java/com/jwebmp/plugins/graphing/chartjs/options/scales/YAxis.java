@@ -154,14 +154,14 @@ public class YAxis<T extends Ticks<T>>
 	/**
 	 * If the axis is reversed
 	 */
-	private boolean reversed;
+	private Boolean reversed;
 	
 	/**
 	 * if the axis is reversed
 	 *
 	 * @return
 	 */
-	public boolean isReversed()
+	public Boolean isReversed()
 	{
 		return reversed;
 	}
@@ -172,7 +172,7 @@ public class YAxis<T extends Ticks<T>>
 	 * @param reversed
 	 * @return
 	 */
-	public YAxis<T> setReversed(boolean reversed)
+	public YAxis<T> setReversed(Boolean reversed)
 	{
 		this.reversed = reversed;
 		return this;

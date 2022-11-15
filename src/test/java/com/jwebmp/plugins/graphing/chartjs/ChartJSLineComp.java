@@ -10,13 +10,17 @@ public class ChartJSLineComp extends ChartJS<LineData, LineChart, ChartJSLineCom
 	public ChartJSLineComp()
 	{
 		super("chline");
-		setOptions(new LineChart(new LineData().addLabel("Category 1")
-		                                     .addLabel("Category 2")
-		                                     .addLabel("Category 3")
-		                                     .addDataset(new LineDataset()
-		                                                                 .setLabel("Data Label 1"))
-				)
-		);
+	}
+	
+	@Override
+	public Chart<LineData, LineChart> getInitialOptions()
+	{
+		return new LineChart(new LineData().addLabel("Category 1")
+		                                   .addLabel("Category 2")
+		                                   .addLabel("Category 3")
+		                                   .addDataset(new LineDataset()
+				                                   .setLabel("Data Label 1")
+		));
 	}
 	
 	@Override

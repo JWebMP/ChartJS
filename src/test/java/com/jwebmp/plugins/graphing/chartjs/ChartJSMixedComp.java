@@ -10,19 +10,7 @@ public class ChartJSMixedComp extends ChartJS<Data, MixedChart, ChartJSMixedComp
 	public ChartJSMixedComp()
 	{
 		super("chmixed");
-		setOptions(new MixedChart(new Data().addLabel("Category 1")
-		                                        .addLabel("Category 2")
-		                                        .addLabel("Category 3")
-		                                        .addDataset(new LineDataset()
-				                                        .setLabel("Data Label 1")
-				                                        .setData(4.0,2.0,3.0)
-		                                        )
-		                                    .addDataset(new BarDataset()
-				                                    .setLabel("Data Label 1")
-				                                    .setData(2.0,3.0,4.0)
-		                                    )
-				)
-		);
+		
 	}
 	
 	@Override
@@ -30,5 +18,22 @@ public class ChartJSMixedComp extends ChartJS<Data, MixedChart, ChartJSMixedComp
 	{
 		
 		super.init();
+	}
+	
+	@Override
+	public Chart<Data, MixedChart> getInitialOptions()
+	{
+		return new MixedChart(new Data().addLabel("Category 1")
+		                                .addLabel("Category 2")
+		                                .addLabel("Category 3")
+		                                .addDataset(new LineDataset()
+				                                .setLabel("Data Label 1")
+				                                .setData(4.0,2.0,3.0)
+		                                )
+		                                .addDataset(new BarDataset()
+				                                .setLabel("Data Label 1")
+				                                .setData(2.0,3.0,4.0)
+		                                )
+		);
 	}
 }

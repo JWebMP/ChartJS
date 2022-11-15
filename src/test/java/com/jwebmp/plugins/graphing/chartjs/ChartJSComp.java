@@ -10,13 +10,6 @@ public class ChartJSComp extends ChartJS<BarData, BarChart, ChartJSComp>
 	public ChartJSComp()
 	{
 		super("ch");
-		setOptions(new BarChart(new BarData().addLabel("Category 1")
-		                                     .addLabel("Category 2")
-		                                     .addLabel("Category 3")
-		                                     .addDataset(new BarDataset()
-		                                                                 .setLabel("Data Label 1"))
-				)
-		);
 	}
 	
 	@Override
@@ -24,5 +17,17 @@ public class ChartJSComp extends ChartJS<BarData, BarChart, ChartJSComp>
 	{
 		
 		super.init();
+	}
+	
+	@Override
+	public Chart<BarData, BarChart> getInitialOptions()
+	{
+		return new BarChart(new BarData().addLabel("Category 1")
+		                                 .addLabel("Category 2")
+		                                 .addLabel("Category 3")
+		                                 .addDataset(new BarDataset()
+				                                 .setLabel("Data Label 1"))
+		)
+				;
 	}
 }

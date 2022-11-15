@@ -259,13 +259,13 @@ public class XAxis<T extends Ticks<T>> {
 	/**
 	 * If the axis is reversed
 	 */
-	private boolean reversed;
+	private Boolean reversed;
 	
 	/**
 	 * if the axis is reversed
 	 * @return
 	 */
-	public boolean isReversed()
+	public Boolean isReversed()
 	{
 		return reversed;
 	}
@@ -275,7 +275,7 @@ public class XAxis<T extends Ticks<T>> {
 	 * @param reversed
 	 * @return
 	 */
-	public XAxis<T> setReversed(boolean reversed)
+	public XAxis<T> setReversed(Boolean reversed)
 	{
 		this.reversed = reversed;
 		return this;
