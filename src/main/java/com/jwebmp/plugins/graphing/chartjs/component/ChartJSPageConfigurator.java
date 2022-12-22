@@ -6,7 +6,7 @@ import com.jwebmp.core.base.angular.client.annotations.typescript.*;
 import com.jwebmp.core.services.*;
 import jakarta.validation.constraints.*;
 
-@TsDependency(value = "chart.js", version = "*")
+@TsDependency(value = "chart.js", version = "^4.1.1")
 public class ChartJSPageConfigurator implements IPageConfigurator<ChartJSPageConfigurator>
 {
 	

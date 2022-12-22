@@ -53,7 +53,8 @@ import java.util.List;
 @NgConstructorBody("Chart.register(...registerables);")
 @NgAfterViewInit("""
                    this.subscription = this.socketClientService.registerListener(this.listenerName)
-                               .pipe(bufferTime(100)).subscribe((message: any) => {
+                               .pipe(bufferTime(100))
+                               .subscribe((message: any) => {
                                    //   alert('message for chart config - ' + JSON.stringify(message));
                                    if (message) {
                                        if (Array.isArray(message)) {
@@ -72,9 +73,9 @@ import java.util.List;
                                                                    this.datasets = this.chart?.data.datasets;
                                                                } else {
                                                              //      alert('update datasets');
-                                                                   this.chart?.data.datasets.forEach((dataset) => {
-                                                                       dataset.data.pop();
-                                                                   });
+                                                             //      this.chart?.data.datasets.forEach((dataset) => {
+                                                             //          dataset.data.pop();
+                                                             //      });
 
                                                                    this.datasets = this.chartConfiguration?.data.datasets;
                                                                    for (const dataset of this.datasets) {
@@ -99,9 +100,9 @@ import java.util.List;
                                                            this.datasets = this.chartConfiguration?.data.datasets;
                                                        } else {
                                                          //  alert('update datasets');
-                                                           this.chart?.data.datasets.forEach((dataset) => {
-                                                               dataset.data.pop();
-                                                           });
+                                                   //        this.chart?.data.datasets.forEach((dataset) => {
+                                                    //           dataset.data.pop();
+                                                   //        });
 
                                                            this.datasets = this.chartConfiguration?.data.datasets;
                                                            for (const dataset of this.datasets) {
@@ -224,36 +225,28 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
 		                            break;
 		                        }
 		                    }
-		
+		        		
 		                if (dataset.data.length != existingDataSet?.data.length) {
 		                //    console.log('lengths are not equal incoming = ' + dataset.data.length + ' / existing in array = ' + existingDataSet?.data.length);
 		                }
 		        //
-		                console.log('found dataset [' + label + '] - ' + found + ' - ' + index);
+		              //  console.log('found dataset [' + label + '] - ' + found + ' - ' + index);
 		                if (found && existingDataSet) {
-		
+		        		
 		                   // this.chart?.data.datasets[index].data.splice(0, this.chart?.data.datasets[index].data.length, ...dataset.data);
 		                    for (let i = 0; i < dataset.data.length; i++) {
-		                        const d = existingDataSet.data[i];
+		                        let d = existingDataSet.data[i];
 		                        let d2 = dataset.data[i];
-		                        if(d2)
-		                        if (d !== d2) {
-		                            if(existingDataSet.data.length < dataset.data.length && i >= existingDataSet.data.length)
-		                            {
-		                        //        console.log('adding value from [' + d2 + '] to [' + d + ']');
-		                                this.chart?.data.datasets[index].data.push(d2);
-		                            }else {
-		                          //      console.log('updating changed value from [' + d + '] to [' + d2 + ']');
-		                                this.chart?.data.datasets[index].data.splice(i, 1, d2);
-		                            }
-		                        //    console.log('lengths are now = ' + dataset.data.length + ' / existing in array = ' + existingDataSet?.data.length);
-		                            //    ds.data.splice(i, 1, d2);
-		                        }
+		                        if (d2)
+                                   if (d !== d2) {
+                                       console.log('updating [' + label + '][' + i + '] to ' + d2);
+                                       this.chart?.data.datasets[index].data.splice(i, 1, d2);
+                                   }
 		                    }
 		                    if (dataset.data.length != existingDataSet?.data.length) {
-		                   //     console.log('lengths are not equal  = ' + dataset.data.length + ' / existing in array = ' + existingDataSet?.data.length);
+		                        console.log('lengths are not equal  = ' + dataset.data.length + ' / existing in array = ' + existingDataSet?.data.length);
 		                    }
-		
+		        		
 		                    //   alert('updating');
 		                    this.chart?.update();
 		                }
