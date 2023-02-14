@@ -55,16 +55,11 @@ import java.util.List;
                    this.subscription = this.socketClientService.registerListener(this.listenerName)
                                .pipe(bufferTime(100))
                                .subscribe((message: any) => {
-                                   //   alert('message for chart config - ' + JSON.stringify(message));
                                    if (message) {
                                        if (Array.isArray(message)) {
-                                           // alert('is array - message for chart config - ');
                                            for (let m of message) {
-                                               //   alert('is array - message for chart config - m - ' + JSON.stringify(m));
                                                if (m && m.out && m.out[0]) {
-                                                   //       alert('apply chart config - m - ' + JSON.stringify(m.out[0]));
                                                    if (this.chartRef) {
-                                                       //   alert('create chart - ' + JSON.stringify(message.out[0]));
                                                        this.chartConfiguration = m.out[0];
                                                        setTimeout(() => {
                                                            if (this.chartConfiguration) {
@@ -72,11 +67,6 @@ import java.util.List;
                                                                    this.chart = new Chart(this.chartRef?.nativeElement, this.chartConfiguration);
                                                                    this.datasets = this.chart?.data.datasets;
                                                                } else {
-                                                             //      alert('update datasets');
-                                                             //      this.chart?.data.datasets.forEach((dataset) => {
-                                                             //          dataset.data.pop();
-                                                             //      });
-
                                                                    this.datasets = this.chartConfiguration?.data.datasets;
                                                                    for (const dataset of this.datasets) {
                                                                        if (dataset && dataset.label) {
@@ -91,7 +81,6 @@ import java.util.List;
                                            }
                                        } else if (message.out && message.out[0]) {
                                            if (this.chartRef) {
-                                               //   alert('create chart - ' + JSON.stringify(message.out[0]));
                                                this.chartConfiguration = message.out[0];
                                                setTimeout(() => {
                                                    if (this.chartConfiguration) {
@@ -99,11 +88,6 @@ import java.util.List;
                                                            this.chart = new Chart(this.chartRef?.nativeElement, this.chartConfiguration);
                                                            this.datasets = this.chartConfiguration?.data.datasets;
                                                        } else {
-                                                         //  alert('update datasets');
-                                                   //        this.chart?.data.datasets.forEach((dataset) => {
-                                                    //           dataset.data.pop();
-                                                   //        });
-
                                                            this.datasets = this.chartConfiguration?.data.datasets;
                                                            for (const dataset of this.datasets) {
                                                                if (dataset && dataset.label) {
@@ -125,9 +109,7 @@ import java.util.List;
                                .subscribe((message: any) => {
                                    if (message) {
                                        if (Array.isArray(message)) {
-                                           // alert('is array - message for chart config - ');
                                            for (let m of message) {
-                                               //   alert('is array - message for chart config - m - ' + JSON.stringify(m));
                                                if (m && m.out && m.out[0]) {
                                                    if (m.length > 0) {
                                                        for (const messageElement of m.out[0]) {
@@ -219,36 +201,32 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
 		                    for (let i = 0; i < this.chart?.data.datasets.length; i++) {
 		                        const dataset1 = this.chart?.data.datasets[i];
 		                        if (dataset1.label == label) {
+		                        	console.log('dataset equals [' + dataset1.label+ ']/[' + label+ ']');
 		                            index = i;
 		                            existingDataSet = dataset1;
 		                            found = true;
 		                            break;
 		                        }
 		                    }
-		        		
-		                if (dataset.data.length != existingDataSet?.data.length) {
-		                //    console.log('lengths are not equal incoming = ' + dataset.data.length + ' / existing in array = ' + existingDataSet?.data.length);
-		                }
-		        //
-		              //  console.log('found dataset [' + label + '] - ' + found + ' - ' + index);
 		                if (found && existingDataSet) {
-		        		
-		                   // this.chart?.data.datasets[index].data.splice(0, this.chart?.data.datasets[index].data.length, ...dataset.data);
 		                    for (let i = 0; i < dataset.data.length; i++) {
 		                        let d = existingDataSet.data[i];
 		                        let d2 = dataset.data[i];
-		                        if (d2)
-                                   if (d !== d2) {
-                                       console.log('updating [' + label + '][' + i + '] to ' + d2);
+		                        //if (d2)
+                                   if (d != d2 && index != -1) {
+                                       console.log('updating [' + label + '][' + index + '] to ' + d2 + '[' + i + ']');
                                        this.chart?.data.datasets[index].data.splice(i, 1, d2);
                                    }
 		                    }
 		                    if (dataset.data.length != existingDataSet?.data.length) {
 		                        console.log('lengths are not equal  = ' + dataset.data.length + ' / existing in array = ' + existingDataSet?.data.length);
 		                    }
-		        		
-		                    //   alert('updating');
-		                    this.chart?.update();
+		                    try {
+		                    	this.chart?.update();
+		                    }catch(e)
+		                    {
+		                    	console.log(e);
+		                    }
 		                }
 		            }""");
 		return out;
