@@ -1,24 +1,33 @@
 package com.jwebmp.plugins.graphing.chartjs;
 
-import com.guicedee.guicedinjection.*;
-import com.guicedee.guicedservlets.websockets.*;
-import com.jwebmp.core.base.ajax.*;
-import com.jwebmp.core.base.angular.client.*;
-import com.jwebmp.core.base.angular.client.annotations.constructors.*;
-import com.jwebmp.core.base.angular.client.annotations.functions.*;
-import com.jwebmp.core.base.angular.client.annotations.references.*;
-import com.jwebmp.core.base.angular.client.annotations.structures.*;
-import com.jwebmp.core.base.angular.client.services.*;
-import com.jwebmp.core.base.angular.client.services.interfaces.*;
-import com.jwebmp.core.base.angular.implementations.*;
-import com.jwebmp.core.base.html.*;
-import com.jwebmp.plugins.graphing.chartjs.dataset.*;
+import com.guicedee.guicedinjection.GuiceContext;
+import com.guicedee.guicedservlets.websockets.GuicedWebSocket;
+import com.jwebmp.core.base.ajax.AjaxCall;
+import com.jwebmp.core.base.ajax.AjaxResponse;
+import com.jwebmp.core.base.angular.client.DynamicData;
+import com.jwebmp.core.base.angular.client.annotations.constructors.NgConstructorBody;
+import com.jwebmp.core.base.angular.client.annotations.functions.NgAfterViewInit;
+import com.jwebmp.core.base.angular.client.annotations.functions.NgOnDestroy;
+import com.jwebmp.core.base.angular.client.annotations.references.NgComponentReference;
+import com.jwebmp.core.base.angular.client.annotations.references.NgImportReference;
+import com.jwebmp.core.base.angular.client.annotations.structures.NgField;
+import com.jwebmp.core.base.angular.client.annotations.structures.NgMethod;
+import com.jwebmp.core.base.angular.client.services.SocketClientService;
+import com.jwebmp.core.base.angular.client.services.interfaces.INgComponent;
+import com.jwebmp.core.base.angular.implementations.WebSocketAbstractCallReceiver;
+import com.jwebmp.core.base.html.Canvas;
 
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @NgImportReference(value = "Chart,Point,ChartDataset,DefaultDataPoint,registerables,ChartConfiguration", reference = "chart.js")
 @NgImportReference(value = "AfterViewInit, ElementRef, ViewChild,HostListener,HostBinding", reference = "@angular/core")
+@NgImportReference(value = "Injectable", reference = "@angular/core")
+@NgImportReference(value = "Observable,Observer,Subscription", reference = "rxjs")
+@NgImportReference(value = "Subject,bufferTime", reference = "rxjs")
+@NgComponentReference(SocketClientService.class)
+@NgComponentReference(DynamicData.class)
+
 
 @NgField("@ViewChild('chart')\n" +
          "  private chartRef? : ElementRef;")
@@ -28,18 +37,11 @@ import java.util.List;
 @NgField("private chartConfiguration? : ChartConfiguration;")
 
 @NgField("private datasets?: ChartDataset[];")
+@NgField("private labels?: string[];")
 
 @NgOnDestroy("this.chart?.destroy();")
 @NgOnDestroy("this.datasets = [];")
 
-@NgImportReference(value = "Injectable", reference = "@angular/core")
-@NgImportReference(value = "Observable,Observer,Subscription", reference = "rxjs")
-@NgImportReference(value = "Subject,bufferTime", reference = "rxjs")
-
-
-//===========================
-@NgComponentReference(SocketClientService.class)
-@NgComponentReference(DynamicData.class)
 
 
 @NgField("private subscription?: Subscription;")
@@ -66,6 +68,7 @@ import java.util.List;
                                                                if (!this.chart) {
                                                                    this.chart = new Chart(this.chartRef?.nativeElement, this.chartConfiguration);
                                                                    this.datasets = this.chart?.data.datasets;
+                                                                   this.labels = this.chart?.data.labels as string[];
                                                                } else {
                                                                    this.datasets = this.chartConfiguration?.data.datasets;
                                                                    for (const dataset of this.datasets) {
@@ -193,42 +196,62 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
 	{
 		List<String> out = INgComponent.super.componentMethods();
 		out.add("""
-		        updateDataset(label: string, dataset: ChartDataset) {
-		                let found: boolean = false;
-		                let index: number = -1;
-		                let existingDataSet = undefined;
-		                if (this.chart?.data.datasets)
-		                    for (let i = 0; i < this.chart?.data.datasets.length; i++) {
-		                        const dataset1 = this.chart?.data.datasets[i];
-		                        if (dataset1.label == label) {
-		                        	console.log('dataset equals [' + dataset1.label+ ']/[' + label+ ']');
-		                            index = i;
-		                            existingDataSet = dataset1;
-		                            found = true;
-		                            break;
-		                        }
-		                    }
-		                if (found && existingDataSet) {
-		                    for (let i = 0; i < dataset.data.length; i++) {
-		                        let d = existingDataSet.data[i];
-		                        let d2 = dataset.data[i];
-		                        //if (d2)
-                                   if (d != d2 && index != -1) {
-                                       console.log('updating [' + label + '][' + index + '] to ' + d2 + '[' + i + ']');
-                                       this.chart?.data.datasets[index].data.splice(i, 1, d2);
-                                   }
-		                    }
-		                    if (dataset.data.length != existingDataSet?.data.length) {
-		                        console.log('lengths are not equal  = ' + dataset.data.length + ' / existing in array = ' + existingDataSet?.data.length);
-		                    }
-		                    try {
-		                    	this.chart?.update();
-		                    }catch(e)
-		                    {
-		                    	console.log(e);
-		                    }
-		                }
-		            }""");
+						\t\t\tupdateDataset(label: string, dataset: ChartDataset) {
+						             let found: boolean = false;
+						             let index: number = -1;
+						             let existingDataSet = undefined;
+						             if (this.chart?.data.datasets)
+						                 for (let i = 0; i < this.chart?.data.datasets.length; i++) {
+						                     const dataset1 = this.chart?.data.datasets[i];
+						                     if (dataset1.label == label) {
+						                     	console.log('dataset equals [' + dataset1.label+ ']/[' + label+ ']');
+						                         index = i;
+						                         existingDataSet = dataset1;
+						                         found = true;
+						                         break;
+						                     }
+						                 }
+						             if (found && existingDataSet) {
+						                 for (let i = 0; i < dataset.data.length; i++) {
+						     
+						                     if(this.labels && this.chartConfiguration?.data?.labels) {
+						                         for (let j = 0; j < this.labels.length; j++) {
+						                             var labelPositionJ = this.labels[j];
+						     
+						                             for (let k = 0; k < this.chartConfiguration?.data?.labels?.length; k++) {
+						                                 var labelPositionK = this.chartConfiguration?.data?.labels[k];
+						                                 if(labelPositionJ == labelPositionK)
+						                                 {
+						                                     console.log('match station label update - ' + labelPositionJ + "/" + labelPositionK);
+						                                     let d = existingDataSet.data[j];
+						                                     let d2 = dataset.data[k];
+						                                     if (d != d2 && index != -1) {
+						                                         console.log('updating [' + label + '][' + index + '] to ' + d2 + '[' + j + ']');
+						                                         this.chart?.data.datasets[index].data.splice(j, 1, d2);
+						                                     }
+						                                     break;
+						                                 }
+						                             }
+						     
+						                         }
+						                     }else {
+						                         console.log('no labels and chart data labels to compare');
+						                     }
+						     
+						                     //if (d2)
+						     
+						                 }
+						                 if (dataset.data.length != existingDataSet?.data.length) {
+						                     console.log('lengths are not equal  = ' + dataset.data.length + ' / existing in array = ' + existingDataSet?.data.length);
+						                 }
+						                 try {
+						                 	this.chart?.update();
+						                 }catch(e)
+						                 {
+						                 	console.log(e);
+						                 }
+						             }
+						         }""");
 		return out;
 	}
 	
