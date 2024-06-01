@@ -1,7 +1,8 @@
 package com.jwebmp.plugins.graphing.chartjs;
 
 import com.guicedee.client.IGuiceContext;
-import com.guicedee.guicedservlets.websockets.GuicedWebSocket;
+import com.guicedee.guicedservlets.websockets.options.IGuicedWebSocket;
+import com.guicedee.vertx.websockets.GuicedWebSocket;
 import com.jwebmp.core.base.ajax.AjaxCall;
 import com.jwebmp.core.base.ajax.AjaxResponse;
 import com.jwebmp.core.base.angular.client.DynamicData;
@@ -20,7 +21,8 @@ import com.jwebmp.core.base.html.Canvas;
 import java.util.ArrayList;
 import java.util.List;
 
-@NgImportReference(value = "Chart,Point,ChartDataset,DefaultDataPoint,registerables,ChartConfiguration", reference = "chart.js")
+@NgImportReference(value = "Chart,Point,ChartDataset,DefaultDataPoint,registerables,ChartConfiguration",
+                   reference = "chart.js")
 @NgImportReference(value = "AfterViewInit, ElementRef, ViewChild,HostListener,HostBinding", reference = "@angular/core")
 @NgImportReference(value = "Injectable", reference = "@angular/core")
 @NgImportReference(value = "Observable,Observer,Subscription", reference = "rxjs")
@@ -151,7 +153,8 @@ import java.util.List;
          }""")
 
 @NgAfterViewInit("")
-public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, J>> extends Canvas<J> implements INgComponent<J>
+public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, J>> extends Canvas<J> implements
+                                                                                                      INgComponent<J>
 {
     private Chart<D, O> options;
 
@@ -195,62 +198,62 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
     {
         List<String> out = INgComponent.super.componentMethods();
         out.add("""
-                \t\t\tupdateDataset(label: string, dataset: ChartDataset) {
-                             let found: boolean = false;
-                             let index: number = -1;
-                             let existingDataSet = undefined;
-                             if (this.chart?.data.datasets)
-                                 for (let i = 0; i < this.chart?.data.datasets.length; i++) {
-                                     const dataset1 = this.chart?.data.datasets[i];
-                                     if (dataset1.label == label) {
-                                     	console.log('dataset equals [' + dataset1.label+ ']/[' + label+ ']');
-                                         index = i;
-                                         existingDataSet = dataset1;
-                                         found = true;
-                                         break;
-                                     }
-                                 }
-                             if (found && existingDataSet) {
-                                 for (let i = 0; i < dataset.data.length; i++) {
-                     
-                                     if(this.labels && this.chartConfiguration?.data?.labels) {
-                                         for (let j = 0; j < this.labels.length; j++) {
-                                             var labelPositionJ = this.labels[j];
-                     
-                                             for (let k = 0; k < this.chartConfiguration?.data?.labels?.length; k++) {
-                                                 var labelPositionK = this.chartConfiguration?.data?.labels[k];
-                                                 if(labelPositionJ == labelPositionK)
-                                                 {
-                                                     console.log('match station label update - ' + labelPositionJ + "/" + labelPositionK);
-                                                     let d = existingDataSet.data[j];
-                                                     let d2 = dataset.data[k];
-                                                     if (d != d2 && index != -1) {
-                                                         console.log('updating [' + label + '][' + index + '] to ' + d2 + '[' + j + ']');
-                                                         this.chart?.data.datasets[index].data.splice(j, 1, d2);
-                                                     }
-                                                     break;
-                                                 }
+                        \t\t\tupdateDataset(label: string, dataset: ChartDataset) {
+                                     let found: boolean = false;
+                                     let index: number = -1;
+                                     let existingDataSet = undefined;
+                                     if (this.chart?.data.datasets)
+                                         for (let i = 0; i < this.chart?.data.datasets.length; i++) {
+                                             const dataset1 = this.chart?.data.datasets[i];
+                                             if (dataset1.label == label) {
+                                             	console.log('dataset equals [' + dataset1.label+ ']/[' + label+ ']');
+                                                 index = i;
+                                                 existingDataSet = dataset1;
+                                                 found = true;
+                                                 break;
                                              }
-                     
                                          }
-                                     }else {
-                                         console.log('no labels and chart data labels to compare');
+                                     if (found && existingDataSet) {
+                                         for (let i = 0; i < dataset.data.length; i++) {
+                             
+                                             if(this.labels && this.chartConfiguration?.data?.labels) {
+                                                 for (let j = 0; j < this.labels.length; j++) {
+                                                     var labelPositionJ = this.labels[j];
+                             
+                                                     for (let k = 0; k < this.chartConfiguration?.data?.labels?.length; k++) {
+                                                         var labelPositionK = this.chartConfiguration?.data?.labels[k];
+                                                         if(labelPositionJ == labelPositionK)
+                                                         {
+                                                             console.log('match station label update - ' + labelPositionJ + "/" + labelPositionK);
+                                                             let d = existingDataSet.data[j];
+                                                             let d2 = dataset.data[k];
+                                                             if (d != d2 && index != -1) {
+                                                                 console.log('updating [' + label + '][' + index + '] to ' + d2 + '[' + j + ']');
+                                                                 this.chart?.data.datasets[index].data.splice(j, 1, d2);
+                                                             }
+                                                             break;
+                                                         }
+                                                     }
+                             
+                                                 }
+                                             }else {
+                                                 console.log('no labels and chart data labels to compare');
+                                             }
+                             
+                                             //if (d2)
+                             
+                                         }
+                                         if (dataset.data.length != existingDataSet?.data.length) {
+                                             console.log('lengths are not equal  = ' + dataset.data.length + ' / existing in array = ' + existingDataSet?.data.length);
+                                         }
+                                         try {
+                                         	this.chart?.update();
+                                         }catch(e)
+                                         {
+                                         	console.log(e);
+                                         }
                                      }
-                     
-                                     //if (d2)
-                     
-                                 }
-                                 if (dataset.data.length != existingDataSet?.data.length) {
-                                     console.log('lengths are not equal  = ' + dataset.data.length + ' / existing in array = ' + existingDataSet?.data.length);
-                                 }
-                                 try {
-                                 	this.chart?.update();
-                                 }catch(e)
-                                 {
-                                 	console.log(e);
-                                 }
-                             }
-                         }""");
+                                 }""");
         return out;
     }
 
@@ -258,13 +261,14 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
 
     protected void registerWebSocketListeners()
     {
-        if (!GuicedWebSocket.isWebSocketReceiverRegistered(getListenerName()))
+        GuicedWebSocket webSocket = (GuicedWebSocket) IGuiceContext.get(IGuicedWebSocket.class);
+        if (!webSocket.isWebSocketReceiverRegistered(getListenerName()))
         {
-            GuicedWebSocket.addWebSocketMessageReceiver(new InitialOptionsReceiver(getListenerName(), getClass()));
+            webSocket.addWebSocketMessageReceiver(new InitialOptionsReceiver(getListenerName(), getClass()));
         }
-        if (!GuicedWebSocket.isWebSocketReceiverRegistered(getListenerNameDataSets()))
+        if (!webSocket.isWebSocketReceiverRegistered(getListenerNameDataSets()))
         {
-            GuicedWebSocket.addWebSocketMessageReceiver(new DataSetsReceiver(getListenerNameDataSets(), getClass()));
+            webSocket.addWebSocketMessageReceiver(new DataSetsReceiver(getListenerNameDataSets(), getClass()));
         }
 
     }
@@ -274,9 +278,9 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
     {
         List<String> out = INgComponent.super.afterViewInit();
         out.add("this.socketClientService.send(this.listenerName, {\n" +
-                "            className: '" + getClass().getCanonicalName() + "',\n" +
-                "            listenerName: this.listenerName\n" +
-                "        }, this.listenerName);\n");
+                        "            className: '" + getClass().getCanonicalName() + "',\n" +
+                        "            listenerName: this.listenerName\n" +
+                        "        }, this.listenerName);\n");
         return out;
     }
 
@@ -285,9 +289,9 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
     {
         List<String> out = INgComponent.super.styles();
         out.add(":host {" +
-                "display: inline-block;" +
-                "position: relative;" +
-                "}");
+                        "display: inline-block;" +
+                        "position: relative;" +
+                        "}");
         return out;
     }
 
