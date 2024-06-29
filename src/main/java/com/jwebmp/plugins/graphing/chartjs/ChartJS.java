@@ -2,7 +2,6 @@ package com.jwebmp.plugins.graphing.chartjs;
 
 import com.guicedee.client.IGuiceContext;
 import com.guicedee.guicedservlets.websockets.options.IGuicedWebSocket;
-import com.guicedee.vertx.websockets.GuicedWebSocket;
 import com.jwebmp.core.base.ajax.AjaxCall;
 import com.jwebmp.core.base.ajax.AjaxResponse;
 import com.jwebmp.core.base.angular.client.DynamicData;
@@ -261,14 +260,13 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
 
     protected void registerWebSocketListeners()
     {
-        GuicedWebSocket webSocket = (GuicedWebSocket) IGuiceContext.get(IGuicedWebSocket.class);
-        if (!webSocket.isWebSocketReceiverRegistered(getListenerName()))
+        if (!IGuicedWebSocket.isWebSocketReceiverRegistered(getListenerName()))
         {
-            webSocket.addWebSocketMessageReceiver(new InitialOptionsReceiver(getListenerName(), getClass()));
+            IGuicedWebSocket.addWebSocketMessageReceiver(new InitialOptionsReceiver(getListenerName(), getClass()));
         }
-        if (!webSocket.isWebSocketReceiverRegistered(getListenerNameDataSets()))
+        if (!IGuicedWebSocket.isWebSocketReceiverRegistered(getListenerNameDataSets()))
         {
-            webSocket.addWebSocketMessageReceiver(new DataSetsReceiver(getListenerNameDataSets(), getClass()));
+            IGuicedWebSocket.addWebSocketMessageReceiver(new DataSetsReceiver(getListenerNameDataSets(), getClass()));
         }
 
     }
