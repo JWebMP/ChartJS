@@ -7,27 +7,27 @@ import com.jwebmp.plugins.graphing.chartjs.dataset.*;
 @NgComponent("chart-comp")
 public class ChartJSComp extends ChartJS<BarData, BarChart, ChartJSComp>
 {
-	public ChartJSComp()
-	{
-		super("ch");
-	}
-	
-	@Override
-	public void init()
-	{
-		
-		super.init();
-	}
-	
-	@Override
-	public Chart<BarData, BarChart> getInitialOptions()
-	{
-		return new BarChart(new BarData().addLabel("Category 1")
-		                                 .addLabel("Category 2")
-		                                 .addLabel("Category 3")
-		                                 .addDataset(new BarDataset()
-				                                 .setLabel("Data Label 1"))
-		)
-				;
-	}
+    public ChartJSComp()
+    {
+        super("ch");
+    }
+
+    @Override
+    protected void init()
+    {
+
+        super.init();
+    }
+
+    @Override
+    public Chart<BarData, BarChart> getInitialOptions()
+    {
+        return new BarChart(new BarData().addLabel("Category 1")
+                                         .addLabel("Category 2")
+                                         .addLabel("Category 3")
+                                         .addDataset(new BarDataset()
+                                                             .setLabel("Data Label 1"))
+        )
+                ;
+    }
 }

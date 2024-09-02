@@ -6,6 +6,7 @@ import com.jwebmp.core.base.ajax.AjaxCall;
 import com.jwebmp.core.base.ajax.AjaxResponse;
 import com.jwebmp.core.base.angular.client.DynamicData;
 import com.jwebmp.core.base.angular.client.annotations.constructors.NgConstructorBody;
+import com.jwebmp.core.base.angular.client.annotations.constructors.NgConstructorParameter;
 import com.jwebmp.core.base.angular.client.annotations.functions.NgAfterViewInit;
 import com.jwebmp.core.base.angular.client.annotations.functions.NgOnDestroy;
 import com.jwebmp.core.base.angular.client.annotations.references.NgComponentReference;
@@ -27,6 +28,7 @@ import java.util.List;
 @NgImportReference(value = "Observable,Observer,Subscription", reference = "rxjs")
 @NgImportReference(value = "Subject,bufferTime", reference = "rxjs")
 @NgComponentReference(SocketClientService.class)
+@NgConstructorParameter("private socketClientService : SocketClientService")
 @NgComponentReference(DynamicData.class)
 
 
@@ -143,7 +145,7 @@ import java.util.List;
                  Chart.instances[id].resize(800, 350);
              }
          }
-         
+        
          @HostListener('window:afterprint')
          afterPrintHandler() {
              for (let id in Chart.instances) {
@@ -151,7 +153,6 @@ import java.util.List;
              }
          }""")
 
-@NgAfterViewInit("")
 public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, J>> extends Canvas<J> implements
                                                                                                       INgComponent<J>
 {
@@ -174,16 +175,16 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
     }
 
     @Override
-    public void init()
+    protected void init()
     {
         registerWebSocketListeners();
         super.init();
     }
 
     @Override
-    public List<String> componentFields()
+    public List<String> fields()
     {
-        List<String> out = INgComponent.super.componentFields();
+        List<String> out = INgComponent.super.fields();
         if (out == null)
         {
             out = new ArrayList<>();
@@ -193,9 +194,9 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
     }
 
     @Override
-    public List<String> componentMethods()
+    public List<String> methods()
     {
-        List<String> out = INgComponent.super.componentMethods();
+        List<String> out = INgComponent.super.methods();
         out.add("""
                         \t\t\tupdateDataset(label: string, dataset: ChartDataset) {
                                      let found: boolean = false;
@@ -214,11 +215,11 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
                                          }
                                      if (found && existingDataSet) {
                                          for (let i = 0; i < dataset.data.length; i++) {
-                             
+                        
                                              if(this.labels && this.chartConfiguration?.data?.labels) {
                                                  for (let j = 0; j < this.labels.length; j++) {
                                                      var labelPositionJ = this.labels[j];
-                             
+                        
                                                      for (let k = 0; k < this.chartConfiguration?.data?.labels?.length; k++) {
                                                          var labelPositionK = this.chartConfiguration?.data?.labels[k];
                                                          if(labelPositionJ == labelPositionK)
@@ -233,14 +234,14 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
                                                              break;
                                                          }
                                                      }
-                             
+                        
                                                  }
                                              }else {
                                                  console.log('no labels and chart data labels to compare');
                                              }
-                             
+                        
                                              //if (d2)
-                             
+                        
                                          }
                                          if (dataset.data.length != existingDataSet?.data.length) {
                                              console.log('lengths are not equal  = ' + dataset.data.length + ' / existing in array = ' + existingDataSet?.data.length);

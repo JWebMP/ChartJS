@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ChartJSTest
 {
-	
-	@Test
-	public void init()
-	{
-		
-	}
+
+    @Test
+    protected void init()
+    {
+
+    }
 }
