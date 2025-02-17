@@ -17,99 +17,108 @@ package com.jwebmp.plugins.graphing.chartjs.dataset;
 
 import com.fasterxml.jackson.annotation.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class Dataset<T extends Dataset<T, O>, O> {
-	
-	@JsonProperty
-	private String type;
-	
-	public String getType()
-	{
-		return type;
-	}
-	
-	public Dataset<T, O> setType(String type)
-	{
-		this.type = type;
-		return this;
-	}
-	
-	/**
-	 * @see #setData(Collection)
-	 */
-	@SuppressWarnings("DefaultAnnotationParam")
-	@JsonInclude(JsonInclude.Include.ALWAYS)
-	protected final List<O> data = new ArrayList<>();
+public abstract class Dataset<T extends Dataset<T, O>, O> implements Serializable
+{
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * @return an unmodifiable view of the data held in this {@code Dataset},
-	 *         never {@code null}
-	 */
-	public List<O> getData() {
-		return Collections.unmodifiableList(this.data);
-	}
+    @JsonProperty
+    private String type;
 
-	/**
-	 * Sets the backing data list to the argument, replacing any data already
-	 * added or set
-	 * 
-	 * @param data
-	 *            The data to plot in a line
-	 */
-	@SuppressWarnings("unchecked")
-	public T setData(Collection<O> data) {
-		clearData();
-		if (data != null) {
-			this.data.addAll(data);
-		}
-		return (T) this;
-	}
+    public String getType()
+    {
+        return type;
+    }
 
-	/**
-	 * Sets the backing data list to the argument, replacing any data already
-	 * added or set
-	 * 
-	 * @param data
-	 *            The data to plot in a line
-	 */
-	@SuppressWarnings("unchecked")
-	public T setData(O... data) {
-		clearData();
-		if (data != null) {
-			for (O datum : data)
-			{
-				addData(datum);
-			}
-		}
-		return (T) this;
-	}
+    public Dataset<T, O> setType(String type)
+    {
+        this.type = type;
+        return this;
+    }
 
-	/**
-	 * Remove all data held by this {@code Dataset}
-	 */
-	@SuppressWarnings("unchecked")
-	public T clearData() {
-		this.data.clear();
-		return (T) this;
-	}
+    /**
+     * @see #setData(Collection)
+     */
+    @SuppressWarnings("DefaultAnnotationParam")
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    protected final List<O> data = new ArrayList<>();
 
-	/**
-	 * Add the data point to this {@code Dataset}
-	 * 
-	 * @param data
-	 *            a {@code O}, can be {@code null} to signify absence of data
-	 *            for a given point
-	 * @see #setData(Collection)
-	 */
-	@SuppressWarnings("unchecked")
-	public T addData(O data) {
-		this.data.add(data);
-		return (T) this;
-	}
+    /**
+     * @return an unmodifiable view of the data held in this {@code Dataset},
+     * never {@code null}
+     */
+    public List<O> getData()
+    {
+        return Collections.unmodifiableList(this.data);
+    }
+
+    /**
+     * Sets the backing data list to the argument, replacing any data already
+     * added or set
+     *
+     * @param data The data to plot in a line
+     */
+    @SuppressWarnings("unchecked")
+    public T setData(Collection<O> data)
+    {
+        clearData();
+        if (data != null)
+        {
+            this.data.addAll(data);
+        }
+        return (T) this;
+    }
+
+    /**
+     * Sets the backing data list to the argument, replacing any data already
+     * added or set
+     *
+     * @param data The data to plot in a line
+     */
+    @SuppressWarnings("unchecked")
+    public T setData(O... data)
+    {
+        clearData();
+        if (data != null)
+        {
+            for (O datum : data)
+            {
+                addData(datum);
+            }
+        }
+        return (T) this;
+    }
+
+    /**
+     * Remove all data held by this {@code Dataset}
+     */
+    @SuppressWarnings("unchecked")
+    public T clearData()
+    {
+        this.data.clear();
+        return (T) this;
+    }
+
+    /**
+     * Add the data point to this {@code Dataset}
+     *
+     * @param data a {@code O}, can be {@code null} to signify absence of data
+     *             for a given point
+     * @see #setData(Collection)
+     */
+    @SuppressWarnings("unchecked")
+    public T addData(O data)
+    {
+        this.data.add(data);
+        return (T) this;
+    }
 
 }

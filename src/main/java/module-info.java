@@ -25,7 +25,7 @@ module com.jwebmp.plugins.graphing.chartjs {
     requires com.jwebmp.core.angular;
 
     requires static java.desktop;
-    requires com.guicedee.vertx.sockets;
+    requires com.jwebmp.vertx;
     //requires com.guicedee.guicedservlets.websockets;
 
     opens com.jwebmp.plugins.graphing.chartjs to com.google.guice, com.fasterxml.jackson.databind, com.jwebmp.core;

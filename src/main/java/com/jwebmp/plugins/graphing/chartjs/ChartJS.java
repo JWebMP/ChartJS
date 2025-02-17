@@ -6,14 +6,13 @@ import com.jwebmp.core.base.ajax.AjaxCall;
 import com.jwebmp.core.base.ajax.AjaxResponse;
 import com.jwebmp.core.base.angular.client.DynamicData;
 import com.jwebmp.core.base.angular.client.annotations.constructors.NgConstructorBody;
-import com.jwebmp.core.base.angular.client.annotations.constructors.NgConstructorParameter;
 import com.jwebmp.core.base.angular.client.annotations.functions.NgAfterViewInit;
 import com.jwebmp.core.base.angular.client.annotations.functions.NgOnDestroy;
 import com.jwebmp.core.base.angular.client.annotations.references.NgComponentReference;
 import com.jwebmp.core.base.angular.client.annotations.references.NgImportReference;
 import com.jwebmp.core.base.angular.client.annotations.structures.NgField;
 import com.jwebmp.core.base.angular.client.annotations.structures.NgMethod;
-import com.jwebmp.core.base.angular.client.services.SocketClientService;
+import com.jwebmp.core.base.angular.client.services.EventBusService;
 import com.jwebmp.core.base.angular.client.services.interfaces.INgComponent;
 import com.jwebmp.core.base.angular.implementations.WebSocketAbstractCallReceiver;
 import com.jwebmp.core.base.html.Canvas;
@@ -27,8 +26,12 @@ import java.util.List;
 @NgImportReference(value = "Injectable", reference = "@angular/core")
 @NgImportReference(value = "Observable,Observer,Subscription", reference = "rxjs")
 @NgImportReference(value = "Subject,bufferTime", reference = "rxjs")
-@NgComponentReference(SocketClientService.class)
-@NgConstructorParameter("private socketClientService : SocketClientService")
+
+@NgComponentReference(EventBusService.class)
+@NgImportReference(value = "inject", reference = "@angular/core")
+@NgField(value = "private readonly eventBusService = inject(EventBusService); // Injected EventBus service.")
+
+//@NgConstructorParameter("private socketClientService : SocketClientService")
 @NgComponentReference(DynamicData.class)
 
 
@@ -51,92 +54,75 @@ import java.util.List;
 
 @NgOnDestroy("this.subscription?.unsubscribe();")
 @NgOnDestroy("this.subscriptionDataSets?.unsubscribe();")
-@NgOnDestroy("this.socketClientService.deregisterListener(this.listenerName);")
-@NgOnDestroy("this.socketClientService.deregisterListener(this.listenerName + 'DataSets');")
+@NgOnDestroy("this.eventBusService.unregisterListener(this.listenerName);")
+@NgOnDestroy("this.eventBusService.unregisterListener(this.listenerName + 'DataSets');")
 
 @NgConstructorBody("Chart.register(...registerables);")
 @NgAfterViewInit("""
-        this.subscription = this.socketClientService.registerListener(this.listenerName)
-                    .pipe(bufferTime(100))
-                    .subscribe((message: any) => {
-                        if (message) {
-                            if (Array.isArray(message)) {
-                                for (let m of message) {
-                                    if (m && m.out && m.out[0]) {
-                                        if (this.chartRef) {
-                                            this.chartConfiguration = m.out[0];
-                                            setTimeout(() => {
-                                                if (this.chartConfiguration) {
-                                                    if (!this.chart) {
-                                                        this.chart = new Chart(this.chartRef?.nativeElement, this.chartConfiguration);
-                                                        this.datasets = this.chart?.data.datasets;
-                                                        this.labels = this.chart?.data.labels as string[];
-                                                    } else {
-                                                        this.datasets = this.chartConfiguration?.data.datasets;
-                                                        for (const dataset of this.datasets) {
-                                                            if (dataset && dataset.label) {
-                                                                this.updateDataset(dataset.label, dataset);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }, 50);
-                                        }
-                                    }
-                                }
-                            } else if (message.out && message.out[0]) {
-                                if (this.chartRef) {
-                                    this.chartConfiguration = message.out[0];
-                                    setTimeout(() => {
-                                        if (this.chartConfiguration) {
-                                            if (!this.chart) {
-                                                this.chart = new Chart(this.chartRef?.nativeElement, this.chartConfiguration);
-                                                this.datasets = this.chartConfiguration?.data.datasets;
-                                            } else {
-                                                this.datasets = this.chartConfiguration?.data.datasets;
-                                                for (const dataset of this.datasets) {
-                                                    if (dataset && dataset.label) {
-                                                        this.updateDataset(dataset.label, dataset);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }, 50);
-                                }
-                            }
-                        }
-                    });
+        this.subscription = this.eventBusService.listen(this.listenerName)
+                                   .pipe(bufferTime(100))
+                                   .subscribe((message: any) => {
+                                       if (message) {
+                                           if (Array.isArray(message)) {
+                                               for (let m of message) {
+                       							this.chartConfiguration = m;
+                       								if (this.chartConfiguration) {
+                       									if (!this.chart) {
+                       										this.chart = new Chart(this.chartRef?.nativeElement, this.chartConfiguration);
+                       										this.datasets = this.chart?.data.datasets;
+                       										this.labels = this.chart?.data.labels as string[];
+                       									} else {
+                       										this.datasets = this.chartConfiguration?.data.datasets;
+                       										for (const dataset of this.datasets) {
+                       											if (dataset && dataset.label) {
+                       												this.updateDataset(dataset.label, dataset);
+                       											}
+                       										}
+                       									}
+                       								}
+        
+                                               }
+                                           } else {
+                                               if (this.chartRef) {
+                       							if (this.chartConfiguration) {
+                       								if (!this.chart) {
+                       									this.chart = new Chart(this.chartRef?.nativeElement, this.chartConfiguration);
+                       									this.datasets = this.chartConfiguration?.data.datasets;
+                       								} else {
+                       									this.chartConfiguration = message;
+                       									this.datasets = this.chartConfiguration?.data.datasets;
+                       									if(this.datasets)
+                       									for (const dataset of this.datasets) {
+                       										if (dataset && dataset.label) {
+                       											this.updateDataset(dataset.label, dataset);
+                       										}
+                       									}
+                       								}
+                       							}
+                                               }
+                                           }
+                                       }
+                                   });
         """)
 
 @NgAfterViewInit("""
-        this.subscriptionDataSets = this.socketClientService.registerListener(this.listenerName + 'DataSets')
-                    .pipe(bufferTime(100))
-                    .subscribe((message: any) => {
-                        if (message) {
-                            if (Array.isArray(message)) {
-                                for (let m of message) {
-                                    if (m && m.out && m.out[0]) {
-                                        if (m.length > 0) {
-                                            for (const messageElement of m.out[0]) {
-                                                if (messageElement && messageElement.label) {
-                                                    this.updateDataset(messageElement.label, messageElement);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-                                if (message.out && message.out[0])
-                                    if (message.length > 0) {
-                                        for (const messageElement of message.out[0]) {
-                                            if (messageElement && messageElement.label) {
-                                                this.updateDataset(messageElement.label, messageElement);
-                                            }
-                                        }
-                                    }
-                            }
-                        }
-                    });
+        this.subscriptionDataSets = this.eventBusService.listen(this.listenerName + 'DataSets')
+                                   .pipe(bufferTime(100))
+                                   .subscribe((message: any) => {
+                                       if (message) {
+                                           if (Array.isArray(message)) {
+                                               for (let m of message) {
+                       							for (const messageElement of message) {
+                       								if (messageElement && messageElement.label) {
+                       									this.updateDataset(messageElement.label, messageElement);
+                       								}
+                       							}
+                                               }
+                                           } else {
+                       							this.updateDataset(message.label, message);
+                                           }
+                                       }
+                                   });
         """)
 @NgMethod("""
         @HostListener('window:beforeprint')
@@ -275,7 +261,7 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
     public List<String> afterViewInit()
     {
         List<String> out = INgComponent.super.afterViewInit();
-        out.add("this.socketClientService.send(this.listenerName, {\n" +
+        out.add("this.eventBusService.send(this.listenerName, {\n" +
                 "            className: '" + getClass().getCanonicalName() + "',\n" +
                 "            listenerName: this.listenerName\n" +
                 "        }, this.listenerName);\n");
