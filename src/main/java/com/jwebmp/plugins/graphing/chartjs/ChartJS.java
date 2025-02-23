@@ -54,18 +54,21 @@ import java.util.List;
 
 @NgOnDestroy("this.subscription?.unsubscribe();")
 @NgOnDestroy("this.subscriptionDataSets?.unsubscribe();")
-@NgOnDestroy("this.eventBusService.unregisterListener(this.listenerName);")
-@NgOnDestroy("this.eventBusService.unregisterListener(this.listenerName + 'DataSets');")
+//@NgOnDestroy("this.eventBusService.unregisterListener(this.listenerName);")
+//@NgOnDestroy("this.eventBusService.unregisterListener(this.listenerName + 'DataSets');")
 
 @NgConstructorBody("Chart.register(...registerables);")
 @NgAfterViewInit("""
         this.subscription = this.eventBusService.listen(this.listenerName)
-                                   .pipe(bufferTime(100))
+                           //        .pipe(bufferTime(100))
                                    .subscribe((message: any) => {
                                        if (message) {
                                            if (Array.isArray(message)) {
                                                for (let m of message) {
-                       							this.chartConfiguration = m;
+                       							if(typeof m == 'string')
+                                                    this.chartConfiguration = JSON.parse(m);
+                                               else
+                                                   this.chartConfiguration = m;
                        								if (this.chartConfiguration) {
                        									if (!this.chart) {
                        										this.chart = new Chart(this.chartRef?.nativeElement, this.chartConfiguration);
@@ -89,7 +92,10 @@ import java.util.List;
                        									this.chart = new Chart(this.chartRef?.nativeElement, this.chartConfiguration);
                        									this.datasets = this.chartConfiguration?.data.datasets;
                        								} else {
-                       									this.chartConfiguration = message;
+                       									if(typeof message == 'string')
+                                                           this.chartConfiguration = JSON.parse(message);
+                                                       else
+                                                        this.chartConfiguration = message;
                        									this.datasets = this.chartConfiguration?.data.datasets;
                        									if(this.datasets)
                        									for (const dataset of this.datasets) {
@@ -99,6 +105,26 @@ import java.util.List;
                        									}
                        								}
                        							}
+                       							else {
+                                                      if (typeof message == 'string')
+                                                          this.chartConfiguration = JSON.parse(message);
+                                                      else
+                                                          this.chartConfiguration = message;
+                                                      if (this.chartConfiguration) {
+                                                          if (!this.chart) {
+                                                              this.chart = new Chart(this.chartRef?.nativeElement, this.chartConfiguration);
+                                                              this.datasets = this.chart?.data.datasets;
+                                                              this.labels = this.chart?.data.labels as string[];
+                                                          } else {
+                                                              this.datasets = this.chartConfiguration?.data.datasets;
+                                                              for (const dataset of this.datasets) {
+                                                                  if (dataset && dataset.label) {
+                                                                      this.updateDataset(dataset.label, dataset);
+                                                                  }
+                                                              }
+                                                          }
+                                                      }
+                                                  }
                                                }
                                            }
                                        }
@@ -107,19 +133,29 @@ import java.util.List;
 
 @NgAfterViewInit("""
         this.subscriptionDataSets = this.eventBusService.listen(this.listenerName + 'DataSets')
-                                   .pipe(bufferTime(100))
+                             //      .pipe(bufferTime(100))
                                    .subscribe((message: any) => {
                                        if (message) {
                                            if (Array.isArray(message)) {
                                                for (let m of message) {
                        							for (const messageElement of message) {
-                       								if (messageElement && messageElement.label) {
-                       									this.updateDataset(messageElement.label, messageElement);
+                       							let m;
+                                                  if (typeof messageElement == 'string') {
+                                                      m = JSON.parse(messageElement);
+                                                  } else {
+                                                      m = messageElement;
+                                                  }
+                       								if (m && m.label) {
+                       									this.updateDataset(m.label, m);
                        								}
                        							}
                                                }
                                            } else {
-                       							this.updateDataset(message.label, message);
+                                           let m;
+                                               if(typeof message == 'string')
+                                                   m = JSON.parse(message);
+                                               else m = message;
+                       							this.updateDataset(m.label, m);
                                            }
                                        }
                                    });
