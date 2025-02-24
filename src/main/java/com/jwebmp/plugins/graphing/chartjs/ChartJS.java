@@ -52,14 +52,33 @@ import java.util.List;
 @NgField("private subscription?: Subscription;")
 @NgField("private subscriptionDataSets?: Subscription;")
 
+@NgField("private handlerId :string;")
+@NgField("private datasetHandlerId :string;")
+@NgConstructorBody("this.datasetHandlerId = this.generateHandlerId();")
+@NgConstructorBody("this.handlerId = this.generateHandlerId();")
+
 @NgOnDestroy("this.subscription?.unsubscribe();")
 @NgOnDestroy("this.subscriptionDataSets?.unsubscribe();")
 //@NgOnDestroy("this.eventBusService.unregisterListener(this.listenerName);")
 //@NgOnDestroy("this.eventBusService.unregisterListener(this.listenerName + 'DataSets');")
 
 @NgConstructorBody("Chart.register(...registerables);")
+
+@NgMethod("""
+            /**
+             * Generates a unique handler ID for each listener.
+             */
+            private generateHandlerId(): string {
+                return `${this.listenerName}-${Date.now()}-${Math.random()
+                    .toString(36)
+                    .substring(2, 15)}`;
+            }
+        
+        """)
+
+
 @NgAfterViewInit("""
-        this.subscription = this.eventBusService.listen(this.listenerName)
+        this.subscription = this.eventBusService.listen(this.listenerName,this.handlerId)
                            //        .pipe(bufferTime(100))
                                    .subscribe((message: any) => {
                                        if (message) {
@@ -132,7 +151,7 @@ import java.util.List;
         """)
 
 @NgAfterViewInit("""
-        this.subscriptionDataSets = this.eventBusService.listen(this.listenerName + 'DataSets')
+        this.subscriptionDataSets = this.eventBusService.listen(this.listenerName + 'DataSets',this.datasetHandlerId)
                              //      .pipe(bufferTime(100))
                                    .subscribe((message: any) => {
                                        if (message) {
@@ -174,6 +193,10 @@ import java.util.List;
                  Chart.instances[id].resize();
              }
          }""")
+@NgOnDestroy("""
+        \tthis.eventBusService.unregisterListener(this.listenerName, this.handlerId);
+                  this.eventBusService.unregisterListener(this.listenerName +'Datasets', this.datasetHandlerId);
+        """)
 
 public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, J>> extends Canvas<J> implements
         INgComponent<J>
