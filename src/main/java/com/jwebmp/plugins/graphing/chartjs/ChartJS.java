@@ -28,8 +28,8 @@ import java.util.List;
 @NgImportReference(value = "Subject,bufferTime", reference = "rxjs")
 
 @NgComponentReference(EventBusService.class)
-@NgImportReference(value = "inject", reference = "@angular/core")
-@NgField(value = "private readonly eventBusService = inject(EventBusService); // Injected EventBus service.")
+//@NgImportReference(value = "inject", reference = "@angular/core")
+//@NgField(value = "private readonly eventBusService = inject(EventBusService); // Injected EventBus service.")
 
 //@NgConstructorParameter("private socketClientService : SocketClientService")
 @NgComponentReference(DynamicData.class)
