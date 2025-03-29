@@ -9,6 +9,7 @@ import com.jwebmp.core.base.angular.services.compiler.JWebMPTypeScriptCompiler;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import static com.jwebmp.core.base.angular.client.services.interfaces.AnnotationUtils.getTsFilename;
 
@@ -26,7 +27,7 @@ public class ChartJSApp extends NGApplication<ChartJSApp>
     }
 
     @Test
-    public void testAppSearch() throws IOException
+    public void testAppSearch() throws IOException, InterruptedException
     {
         System.out.println("Chart : " + new ChartJSComp().toString(0));
         for (INgApp<?> app : JWebMPTypeScriptCompiler.getAllApps())
@@ -39,5 +40,7 @@ public class ChartJSApp extends NGApplication<ChartJSApp>
             //	compiler.renderAppTS(app);
             System.out.println("================");
         }
+
+        TimeUnit.SECONDS.sleep(2L);
     }
 }
