@@ -9,10 +9,13 @@ import com.jwebmp.core.base.angular.client.annotations.constructors.NgConstructo
 import com.jwebmp.core.base.angular.client.annotations.functions.NgAfterViewInit;
 import com.jwebmp.core.base.angular.client.annotations.functions.NgOnDestroy;
 import com.jwebmp.core.base.angular.client.annotations.references.NgComponentReference;
+import com.jwebmp.core.base.angular.client.annotations.references.NgImportModule;
 import com.jwebmp.core.base.angular.client.annotations.references.NgImportReference;
 import com.jwebmp.core.base.angular.client.annotations.structures.NgField;
 import com.jwebmp.core.base.angular.client.annotations.structures.NgMethod;
+import com.jwebmp.core.base.angular.client.annotations.structures.NgSignal;
 import com.jwebmp.core.base.angular.client.services.EventBusService;
+import com.jwebmp.core.base.angular.client.services.interfaces.AnnotationUtils;
 import com.jwebmp.core.base.angular.client.services.interfaces.INgComponent;
 import com.jwebmp.core.base.angular.implementations.WebSocketAbstractCallReceiver;
 import com.jwebmp.core.base.html.Canvas;
@@ -20,40 +23,43 @@ import com.jwebmp.core.base.html.Canvas;
 import java.util.ArrayList;
 import java.util.List;
 
-@NgImportReference(value = "Chart,Point,ChartDataset,DefaultDataPoint,registerables,ChartConfiguration",
-        reference = "chart.js")
-@NgImportReference(value = "AfterViewInit, ElementRef, ViewChild,HostListener,HostBinding", reference = "@angular/core")
-@NgImportReference(value = "Injectable", reference = "@angular/core")
-@NgImportReference(value = "Observable,Observer,Subscription", reference = "rxjs")
-@NgImportReference(value = "Subject,bufferTime", reference = "rxjs")
+//@NgImportReference(value = "Chart,Point,ChartDataset,DefaultDataPoint,registerables,ChartConfiguration",
+//        reference = "chart.js")
+//@NgImportReference(value = "AfterViewInit", reference = "@angular/core")
+//@NgImportReference(value = "ElementRef", reference = "@angular/core")
+@NgImportReference(value = "ViewChild", reference = "@angular/core")
+@NgImportReference(value = "HostListener", reference = "@angular/core")
+//@NgImportReference(value = "HostBinding", reference = "@angular/core")
+//@NgImportReference(value = "Injectable", reference = "@angular/core")
+//@NgImportReference(value = "Observable", reference = "rxjs")
+//@NgImportReference(value = "Observer", reference = "rxjs")
+@NgImportReference(value = "Subscription", reference = "rxjs")
+//@NgImportReference(value = "Subject", reference = "rxjs")
+//@NgImportReference(value = "bufferTime", reference = "rxjs")
 
-@NgComponentReference(EventBusService.class)
+
 //@NgImportReference(value = "inject", reference = "@angular/core")
 //@NgField(value = "private readonly eventBusService = inject(EventBusService); // Injected EventBus service.")
 
 //@NgConstructorParameter("private socketClientService : SocketClientService")
-@NgComponentReference(DynamicData.class)
+//@NgComponentReference(DynamicData.class)
+
+//@NgField("private chart?: Chart;")
+
+//@NgField("private chartConfiguration? : ChartConfiguration;")
+
+//@NgField("private datasets?: ChartDataset[];")
+//@NgField("private labels?: string[];")
+
+//@NgOnDestroy("this.chart?.destroy();")
+//@NgOnDestroy("this.datasets = [];")
 
 
-@NgField("@ViewChild('chart')\n" +
-        "  private chartRef? : ElementRef;")
+@NgField("readonly subscription?: Subscription;")
+@NgField("readonly subscriptionDataSets?: Subscription;")
 
-@NgField("private chart?: Chart;")
-
-@NgField("private chartConfiguration? : ChartConfiguration;")
-
-@NgField("private datasets?: ChartDataset[];")
-@NgField("private labels?: string[];")
-
-@NgOnDestroy("this.chart?.destroy();")
-@NgOnDestroy("this.datasets = [];")
-
-
-@NgField("private subscription?: Subscription;")
-@NgField("private subscriptionDataSets?: Subscription;")
-
-@NgField("private handlerId :string;")
-@NgField("private datasetHandlerId :string;")
+@NgField("readonly handlerId :string;")
+@NgField("readonly datasetHandlerId :string;")
 @NgConstructorBody("this.datasetHandlerId = this.generateHandlerId();")
 @NgConstructorBody("this.handlerId = this.generateHandlerId();")
 
@@ -62,21 +68,16 @@ import java.util.List;
 //@NgOnDestroy("this.eventBusService.unregisterListener(this.listenerName);")
 //@NgOnDestroy("this.eventBusService.unregisterListener(this.listenerName + 'DataSets');")
 
-@NgConstructorBody("Chart.register(...registerables);")
+//@NgConstructorBody("Chart.register(...registerables);")
 
+@NgImportReference(value = "v4 as uuidv4", reference = "uuid")
 @NgMethod("""
-            /**
-             * Generates a unique handler ID for each listener.
-             */
-            private generateHandlerId(): string {
-                return `${this.listenerName}-${Date.now()}-${Math.random()
-                    .toString(36)
-                    .substring(2, 15)}`;
-            }
-        
+        private generateHandlerId(): string {
+            return `${this.listenerName}-${uuidv4()}`;
+        }
         """)
 
-
+/*
 @NgAfterViewInit("""
         this.subscription = this.eventBusService.listen(this.listenerName,this.handlerId)
                            //        .pipe(bufferTime(100))
@@ -148,9 +149,9 @@ import java.util.List;
                                            }
                                        }
                                    });
-        """)
+        """)*/
 
-@NgAfterViewInit("""
+/*@NgAfterViewInit("""
         this.subscriptionDataSets = this.eventBusService.listen(this.listenerName + 'DataSets',this.datasetHandlerId)
                              //      .pipe(bufferTime(100))
                                    .subscribe((message: any) => {
@@ -178,7 +179,7 @@ import java.util.List;
                                            }
                                        }
                                    });
-        """)
+        """)*/
 @NgMethod("""
         @HostListener('window:beforeprint')
          beforePrintHandler() {
@@ -198,7 +199,138 @@ import java.util.List;
                   this.eventBusService.unregisterListener(this.listenerName +'Datasets', this.datasetHandlerId);
         """)
 
+
 @NgImportReference(value = "BaseChartDirective", reference = "ng2-charts")
+@NgImportModule("BaseChartDirective")
+
+@NgComponentReference(EventBusService.class)
+@NgField("@ViewChild('chart')\n" +
+        "\t\tprivate chart! : BaseChartDirective;")
+
+
+@NgField("readonly chartData = computed(()=>this.chartConfiguration()?.data);")
+@NgField("readonly chartOptions = computed(()=>this.chartConfiguration()?.options);")
+@NgField("readonly labels = computed(()=>this.chartConfiguration()?.data?.labels);")
+@NgImportReference(value = "Chart", reference = "chart.js")
+@NgImportReference(value = "ChartConfiguration", reference = "chart.js")
+@NgImportReference(value = "ChartDataset", reference = "chart.js")
+@NgImportReference(value = "ChartType", reference = "chart.js")
+@NgImportReference(value = "ChartEvent", reference = "chart.js")
+@NgSignal(type = "ChartConfiguration | undefined", referenceName = "chartConfiguration", value = "undefined")
+
+@NgConstructorBody("""
+        this.subscription = this.eventBusService.listen(this.listenerName, this.handlerId)
+              .subscribe({
+                  next: (message: any) => {
+                      if (message) {
+                          if (Array.isArray(message)) {
+                              for (let m of message) {
+                                  if (typeof m == 'string')
+                                      this.chartConfiguration.set(JSON.parse(m));
+                                  else
+                                      this.chartConfiguration.set(m);
+                              }
+                          }
+                      }else {
+                          if (typeof message == 'string')
+                              this.chartConfiguration.set(JSON.parse(message));
+                          else
+                              this.chartConfiguration.set(message);
+                      }
+                  },
+                  error: (error: any) => {
+                      console.log(error);
+                  },
+              })
+        """)
+@NgConstructorBody("""
+        this.subscriptionDataSets = this.eventBusService.listen(this.listenerName + 'DataSets',this.datasetHandlerId)
+            .subscribe({
+                next: (message: any) => {
+                    if (message) {
+                        if (Array.isArray(message)) {
+                            for (let m of message) {
+                                for (const messageElement of message) {
+                                    let m;
+                                    if (typeof messageElement == 'string') {
+                                        m = JSON.parse(messageElement);
+                                    } else {
+                                        m = messageElement;
+                                    }
+                                    if (m && m.label) {
+                                        this.updateDataset(m.label, m);
+                                    }
+                                }
+                            }
+                        } else {
+                            let m;
+                            if(typeof message == 'string')
+                                m = JSON.parse(message);
+                            else m = message;
+                            this.updateDataset(m.label, m);
+                        }
+                    }
+                },
+                error: (error: any) => {
+                    console.log(error);
+                },
+            })""")
+@NgAfterViewInit("""
+        this.eventBusService.send(this.listenerName, {
+                    className: 'com.jwebmp.plugins.graphing.chartjs.ChartJSLineComp',
+                    listenerName: this.listenerName
+                }, this.listenerName);""")
+@NgMethod("""
+        updateDataset(label: string, dataset: ChartDataset) {
+            let found: boolean = false;
+            let index: number = -1;
+            let existingDataSet = undefined;
+        
+            if (this.chart && this.chart.chart && this.chart.chart.config) {
+                if (this.chart.chart.data.datasets)
+                    for (let i = 0; i < this.chart.chart.data.datasets.length; i++) {
+                        const dataset1 = this.chart.chart.data.datasets[i];
+                        if (dataset1.label == label) {
+                            //console.log('dataset equals [' + dataset1.label+ ']/[' + label+ ']');
+                            index = i;
+                            existingDataSet = dataset1;
+                            found = true;
+                            break;
+                        }
+                    }
+                const labels = this.labels();
+                if (labels) {
+                    if (found && existingDataSet) {
+                        for (let i = 0; i < dataset.data.length; i++) {
+                            if (this.labels() && this.chart.chart.config.data.labels) {
+                                for (let j = 0; j < labels.length; j++) {
+                                    const labelPositionJ = labels[j];
+        
+                                    for (let k = 0; k < this.chart.chart.config.data.labels?.length; k++) {
+                                        const labelPositionK = this.chart.chart.config.data.labels[k];
+                                        if (labelPositionJ == labelPositionK) {
+                                            let d = existingDataSet.data[j];
+                                            let d2 = dataset.data[k];
+                                            if (d != d2 && index != -1) {
+                                                //console.log('updating [' + label + '][' + index + '] to ' + d2 + '[' + j + ']');
+                                                this.chart.chart.config.data.datasets[index].data.splice(j, 1, d2);
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            } else {
+                                console.log('no labels and chart data labels to compare');
+                            }
+                        }
+                        if (dataset.data.length != existingDataSet?.data.length) {
+                            //console.log('lengths are not equal  = ' + dataset.data.length + ' / existing in array = ' + existingDataSet?.data.length);
+                        }
+                        this.chart.chart.update();
+                    }
+                }
+            }
+        }""")
 public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, J>> extends Canvas<J> implements
         INgComponent<J>
 {
@@ -208,6 +340,13 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
     {
         setID(id);
         addAttribute("#chart", "");
+        addAttribute("baseChart", "");
+
+        addAttribute("[data]", "chartData()");
+        addAttribute("[options]", "chartOptions()");
+        addAttribute("[labels]", "labels()");
+        addAttribute("[type]", "chartType");
+        addAttribute("*ngIf", "chartConfiguration() && chartData() && chartOptions() && labels() && chartType");
     }
 
     protected String getListenerName()
@@ -220,10 +359,19 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         return getID() + "DataSets";
     }
 
+    public String getType()
+    {
+        return getInitialOptions().getType();
+    }
+
     @Override
     protected void init()
     {
-        registerWebSocketListeners();
+        if (!isInitialized())
+        {
+            addConfiguration(AnnotationUtils.getNgField("readonly chartType : ChartType = '" + getType() + "'"));
+            registerWebSocketListeners();
+        }
         super.init();
     }
 
@@ -235,11 +383,11 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         {
             out = new ArrayList<>();
         }
-        out.add(" private listenerName = '" + getID() + "';\n");
+        out.add(" readonly listenerName = '" + getID() + "';\n");
         return out;
     }
 
-    @Override
+    /*@Override
     public List<String> methods()
     {
         List<String> out = INgComponent.super.methods();
@@ -301,7 +449,7 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
                              }
                          }""");
         return out;
-    }
+    }*/
 
     public abstract Chart<D, O> getInitialOptions();
 
@@ -315,17 +463,6 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         {
             IGuicedWebSocket.addWebSocketMessageReceiver(new DataSetsReceiver(getListenerNameDataSets(), getClass()));
         }
-    }
-
-    @Override
-    public List<String> afterViewInit()
-    {
-        List<String> out = INgComponent.super.afterViewInit();
-        out.add("this.eventBusService.send(this.listenerName, {\n" +
-                "            className: '" + getClass().getCanonicalName() + "',\n" +
-                "            listenerName: this.listenerName\n" +
-                "        }, this.listenerName);\n");
-        return out;
     }
 
     @Override

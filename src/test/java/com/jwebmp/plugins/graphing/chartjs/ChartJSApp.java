@@ -29,7 +29,6 @@ public class ChartJSApp extends NGApplication<ChartJSApp>
     @Test
     public void testAppSearch() throws IOException, InterruptedException
     {
-        System.out.println("Chart : " + new ChartJSComp().toString(0));
         for (INgApp<?> app : JWebMPTypeScriptCompiler.getAllApps())
         {
             JWebMPTypeScriptCompiler compiler = new JWebMPTypeScriptCompiler(app);

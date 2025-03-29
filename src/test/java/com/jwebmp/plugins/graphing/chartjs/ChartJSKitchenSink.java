@@ -8,13 +8,11 @@ import com.jwebmp.core.base.html.*;
 public class ChartJSKitchenSink extends DivSimple<ChartJSKitchenSink>
         implements INgComponent<ChartJSKitchenSink>
 {
-    @Override
-    protected void init()
+
+    public ChartJSKitchenSink()
     {
         add(new ChartJSComp());
         add(new ChartJSLineComp());
         add(new ChartJSMixedComp());
-
-        super.init();
     }
 }
