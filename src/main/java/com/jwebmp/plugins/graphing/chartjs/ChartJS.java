@@ -277,7 +277,7 @@ import java.util.List;
             })""")
 @NgAfterViewInit("""
         this.eventBusService.send(this.listenerName, {
-                    className: 'com.jwebmp.plugins.graphing.chartjs.ChartJSLineComp',
+                    className: this.clazzName,
                     listenerName: this.listenerName
                 }, this.listenerName);""")
 @NgMethod("""
@@ -347,6 +347,8 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         addAttribute("[labels]", "labels()");
         addAttribute("[type]", "chartType");
         addAttribute("*ngIf", "chartConfiguration() && chartData() && chartOptions() && labels() && chartType");
+
+        addConfiguration(AnnotationUtils.getNgField("readonly clazzName = '%s';".formatted(getClass().getCanonicalName())));
     }
 
     protected String getListenerName()
