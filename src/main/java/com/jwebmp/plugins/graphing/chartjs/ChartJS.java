@@ -198,6 +198,7 @@ import java.util.List;
                   this.eventBusService.unregisterListener(this.listenerName +'Datasets', this.datasetHandlerId);
         """)
 
+@NgImportReference(value = "BaseChartDirective", reference = "ng2-charts")
 public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, J>> extends Canvas<J> implements
         INgComponent<J>
 {
@@ -380,7 +381,8 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
                 listenerName = call.getUnknownFields()
                         .get("listenerName")
                         .toString();
-            } catch (ClassNotFoundException e)
+            }
+            catch (ClassNotFoundException e)
             {
                 e.printStackTrace();
             }
@@ -425,7 +427,8 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
                 listenerName = call.getUnknownFields()
                         .get("listenerName")
                         .toString();
-            } catch (ClassNotFoundException e)
+            }
+            catch (ClassNotFoundException e)
             {
                 e.printStackTrace();
             }
