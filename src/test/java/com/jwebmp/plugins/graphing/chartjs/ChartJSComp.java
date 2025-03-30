@@ -21,6 +21,12 @@ public class ChartJSComp extends ChartJS<BarData, BarChart, ChartJSComp> impleme
     }
 
     @Override
+    public String getType()
+    {
+        return "bar";
+    }
+
+    @Override
     public Chart<BarData, BarChart> getInitialOptions()
     {
         return new BarChart(new BarData().addLabel("Category 1")

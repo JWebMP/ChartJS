@@ -36,189 +36,222 @@ import com.jwebmp.plugins.graphing.chartjs.options.ticks.LinearTicks;
 
 @JsonInclude(Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = Visibility.ANY, getterVisibility = Visibility.NONE, setterVisibility = Visibility.NONE, isGetterVisibility = Visibility.NONE)
-public class BarChart extends Chart<BarData,BarChart> {
+public class BarChart extends Chart<BarData, BarChart>
+{
 
-	private static final ObjectWriter WRITER = new ObjectMapper()
-			.writerWithDefaultPrettyPrinter()
-			.forType(BarChart.class);
+    private static final ObjectWriter WRITER = new ObjectMapper()
+            .writerWithDefaultPrettyPrinter()
+            .forType(BarChart.class);
 
-	/**
-	 * Static factory, constructs an {@link Data} implementation appropriate for
-	 * a {@link BarChart}.
-	 * 
-	 * @return a new {@link BarData} instance
-	 */
-	public static BarData data() {
-		return new BarData();
-	}
+    /**
+     * Static factory, constructs an {@link Data} implementation appropriate for
+     * a {@link BarChart}.
+     *
+     * @return a new {@link BarData} instance
+     */
+    public static BarData data()
+    {
+        return new BarData();
+    }
 
-	/**
-	 * Static factory, constructs an {@link Options} implementation appropriate
-	 * for a {@link BarChart}.
-	 * 
-	 * @return a new {@link BarOptions} instance
-	 */
-	public static BarOptions options() {
-		return new BarOptions();
-	}
+    /**
+     * Static factory, constructs an {@link Options} implementation appropriate
+     * for a {@link BarChart}.
+     *
+     * @return a new {@link BarOptions} instance
+     */
+    public static BarOptions options()
+    {
+        return new BarOptions();
+    }
 
-	@JsonIgnore
-	private boolean vertical = true;
+    @JsonIgnore
+    private boolean vertical = true;
 
-	private BarData data;
+    private BarData data;
 
-	private BarOptions options;
+    private BarOptions options;
 
-	public BarChart() {
-	}
+    public BarChart()
+    {
+    }
 
-	public BarChart(BarData data) {
-		this.data = data;
-	}
+    public BarChart(BarData data)
+    {
+        this.data = data;
+    }
 
-	public BarChart(BarData data, BarOptions options) {
-		this.data = data;
-		this.options = options;
-	}
+    public BarChart(BarData data, BarOptions options)
+    {
+        this.data = data;
+        this.options = options;
+    }
 
-	public BarData getData() {
-		return data;
-	}
+    public BarData getData()
+    {
+        return data;
+    }
 
-	public BarChart setData(BarData data) {
-		this.data = data;
-		return this;
-	}
+    public BarChart setData(BarData data)
+    {
+        this.data = data;
+        return this;
+    }
 
-	public BarOptions getOptions() {
-		return options;
-	}
+    public BarOptions getOptions()
+    {
+        return options;
+    }
 
-	public BarChart setOptions(BarOptions options) {
-		this.options = options;
-		return this;
-	}
+    public BarChart setOptions(BarOptions options)
+    {
+        this.options = options;
+        return this;
+    }
 
-	/**
-	 * <p>
-	 * Draw this {@code BarChart} horizontally.
-	 * </p>
-	 * <p>
-	 * Default is to draw a vertical {@code BarChart}.
-	 * </p>
-	 * 
-	 * @return this {@link BarChart} for method chaining
-	 * @see #setVertical()
-	 */
-	public BarChart setHorizontal() {
-		this.vertical = false;
-		return this;
-	}
+    /**
+     * <p>
+     * Draw this {@code BarChart} horizontally.
+     * </p>
+     * <p>
+     * Default is to draw a vertical {@code BarChart}.
+     * </p>
+     *
+     * @return this {@link BarChart} for method chaining
+     * @see #setVertical()
+     */
+    public BarChart setHorizontal()
+    {
+        this.vertical = false;
+        return this;
+    }
 
-	/**
-	 * @return true if this {@code BarChart} is set to be drawn horizontally
-	 * @see #setHorizontal()
-	 */
-	public boolean isHorizontal() {
-		return !this.vertical;
-	}
+    /**
+     * @return true if this {@code BarChart} is set to be drawn horizontally
+     * @see #setHorizontal()
+     */
+    public boolean isHorizontal()
+    {
+        return !this.vertical;
+    }
 
-	/**
-	 * <p>
-	 * Draw this {@code BarChart} vertically.
-	 * </p>
-	 * <p>
-	 * Vertical drawing is the default for {@code BarChart}.
-	 * </p>
-	 * 
-	 * @return this {@link BarChart} for method chaining
-	 * @see #setHorizontal()
-	 */
-	public BarChart setVertical() {
-		this.vertical = true;
-		return this;
-	}
+    /**
+     * <p>
+     * Draw this {@code BarChart} vertically.
+     * </p>
+     * <p>
+     * Vertical drawing is the default for {@code BarChart}.
+     * </p>
+     *
+     * @return this {@link BarChart} for method chaining
+     * @see #setHorizontal()
+     */
+    public BarChart setVertical()
+    {
+        this.vertical = true;
+        return this;
+    }
 
-	/**
-	 * @return true if this {@code BarChart} is set to be drawn vertically
-	 * @see #setVertical()
-	 */
-	public boolean isVertical() {
-		return this.vertical;
-	}
+    /**
+     * @return true if this {@code BarChart} is set to be drawn vertically
+     * @see #setVertical()
+     */
+    public boolean isVertical()
+    {
+        return this.vertical;
+    }
 
-	@Override
-	@JsonProperty("type")
-	public String getType() {
-		return this.vertical ? "bar" : "horizontalBar";
-	}
+    @Override
+    @JsonProperty("type")
+    public String getType()
+    {
+        return this.vertical ? "bar" : "horizontalBar";
+    }
 
-	@Override
-	public String toJson() {
-		try {
-			return WRITER.writeValueAsString(this);
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    @Override
+    public String toJson()
+    {
+        try
+        {
+            return WRITER.writeValueAsString(this);
+        }
+        catch (JsonProcessingException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * <p>
-	 * A {@code BarChart} is drawable if:
-	 * </p>
-	 * <ul>
-	 * <li>at least one dataset has at least one data point
-	 * <li>an xAxis scale exists with the id of the xAxisID set on a dataset, if
-	 * such an id set
-	 * <li>a yAxis scale exists with the id of the yAxisID set on a dataset, if
-	 * such an id is set
-	 * <li>there is at least one label in the {@link BarData}
-	 * </ul>
-	 * 
-	 * @return true if this {@link BarChart} is drawable in its current state
-	 */
-	@Override
-	public boolean isDrawable() {
-		if (data.getLabels().isEmpty()) {
-			return false;
-		}
-		boolean sufficientData = false;
-		for (BarDataset dataset : data.getDatasets()) {
-			if (dataset.getXAxisID() != null && !hasXAxisWithId(dataset.getXAxisID())) {
-				return false;
-			}
-			if (dataset.getYAxisID() != null && !hasYAxisWithId(dataset.getYAxisID())) {
-				return false;
-			}
-			if (dataset.getData().size() > 0) {
-				sufficientData = true;
-			}
-		}
-		return sufficientData;
-	}
+    /**
+     * {@inheritDoc}
+     *
+     * <p>
+     * A {@code BarChart} is drawable if:
+     * </p>
+     * <ul>
+     * <li>at least one dataset has at least one data point
+     * <li>an xAxis scale exists with the id of the xAxisID set on a dataset, if
+     * such an id set
+     * <li>a yAxis scale exists with the id of the yAxisID set on a dataset, if
+     * such an id is set
+     * <li>there is at least one label in the {@link BarData}
+     * </ul>
+     *
+     * @return true if this {@link BarChart} is drawable in its current state
+     */
+    @Override
+    public boolean isDrawable()
+    {
+        if (data.getLabels().isEmpty())
+        {
+            return false;
+        }
+        boolean sufficientData = false;
+        for (BarDataset dataset : data.getDatasets())
+        {
+            if (dataset.getXAxisID() != null && !hasXAxisWithId(dataset.getXAxisID()))
+            {
+                return false;
+            }
+            if (dataset.getYAxisID() != null && !hasYAxisWithId(dataset.getYAxisID()))
+            {
+                return false;
+            }
+            if (dataset.getData().size() > 0)
+            {
+                sufficientData = true;
+            }
+        }
+        return sufficientData;
+    }
 
-	private boolean hasXAxisWithId(String id) {
-		if (options != null && options.getScales() != null && options.getScales().getxAxes() != null) {
-			for (XAxis<LinearTicks> xAxis : options.getScales().getxAxes()) {
-				if (id.equals(xAxis.getId())) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    private boolean hasXAxisWithId(String id)
+    {
+        if (options != null && options.getScales() != null && options.getScales().getxAxes() != null)
+        {
+            for (XAxis<LinearTicks> xAxis : options.getScales().getxAxes())
+            {
+                if (id.equals(xAxis.getId()))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-	private boolean hasYAxisWithId(String id) {
-		if (options != null && options.getScales() != null && options.getScales().getyAxes() != null) {
-			for (YAxis<LinearTicks> yAxis : options.getScales().getyAxes()) {
-				if (id.equals(yAxis.getId())) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    private boolean hasYAxisWithId(String id)
+    {
+        if (options != null && options.getScales() != null && options.getScales().getyAxes() != null)
+        {
+            for (YAxis<LinearTicks> yAxis : options.getScales().getyAxes())
+            {
+                if (id.equals(yAxis.getId()))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 }

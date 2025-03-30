@@ -347,8 +347,6 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         addAttribute("[labels]", "labels()");
         addAttribute("[type]", "chartType");
         addAttribute("*ngIf", "chartConfiguration() && chartData() && chartOptions() && labels() && chartType");
-
-        addConfiguration(AnnotationUtils.getNgField("readonly clazzName = '%s';".formatted(getClass().getCanonicalName())));
     }
 
     protected String getListenerName()
@@ -361,10 +359,7 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         return getID() + "DataSets";
     }
 
-    public String getType()
-    {
-        return getInitialOptions().getType();
-    }
+    public abstract String getType();
 
     @Override
     protected void init()
@@ -372,86 +367,13 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         if (!isInitialized())
         {
             addConfiguration(AnnotationUtils.getNgField("readonly chartType : ChartType = '" + getType() + "'"));
+            addConfiguration(AnnotationUtils.getNgField("readonly listenerName = '" + getID() + "';"));
+            addConfiguration(AnnotationUtils.getNgField("readonly clazzName = '%s';".formatted(getClass().getCanonicalName())));
+
             registerWebSocketListeners();
         }
         super.init();
     }
-
-    @Override
-    public List<String> fields()
-    {
-        List<String> out = INgComponent.super.fields();
-        if (out == null)
-        {
-            out = new ArrayList<>();
-        }
-        out.add(" readonly listenerName = '" + getID() + "';\n");
-        return out;
-    }
-
-    /*@Override
-    public List<String> methods()
-    {
-        List<String> out = INgComponent.super.methods();
-        out.add("""
-                \t\t\tupdateDataset(label: string, dataset: ChartDataset) {
-                             let found: boolean = false;
-                             let index: number = -1;
-                             let existingDataSet = undefined;
-                             if (this.chart?.data.datasets)
-                                 for (let i = 0; i < this.chart?.data.datasets.length; i++) {
-                                     const dataset1 = this.chart?.data.datasets[i];
-                                     if (dataset1.label == label) {
-                                     	//console.log('dataset equals [' + dataset1.label+ ']/[' + label+ ']');
-                                         index = i;
-                                         existingDataSet = dataset1;
-                                         found = true;
-                                         break;
-                                     }
-                                 }
-                             if (found && existingDataSet) {
-                                 for (let i = 0; i < dataset.data.length; i++) {
-                
-                                     if(this.labels && this.chartConfiguration?.data?.labels) {
-                                         for (let j = 0; j < this.labels.length; j++) {
-                                             var labelPositionJ = this.labels[j];
-                
-                                             for (let k = 0; k < this.chartConfiguration?.data?.labels?.length; k++) {
-                                                 var labelPositionK = this.chartConfiguration?.data?.labels[k];
-                                                 if(labelPositionJ == labelPositionK)
-                                                 {
-                                                   //  console.log('match station label update - ' + labelPositionJ + "/" + labelPositionK);
-                                                     let d = existingDataSet.data[j];
-                                                     let d2 = dataset.data[k];
-                                                     if (d != d2 && index != -1) {
-                                                      //   console.log('updating [' + label + '][' + index + '] to ' + d2 + '[' + j + ']');
-                                                         this.chart?.data.datasets[index].data.splice(j, 1, d2);
-                                                     }
-                                                     break;
-                                                 }
-                                             }
-                
-                                         }
-                                     }else {
-                                         console.log('no labels and chart data labels to compare');
-                                     }
-                
-                                     //if (d2)
-                
-                                 }
-                                 if (dataset.data.length != existingDataSet?.data.length) {
-                                     console.log('lengths are not equal  = ' + dataset.data.length + ' / existing in array = ' + existingDataSet?.data.length);
-                                 }
-                                 try {
-                                 	this.chart?.update();
-                                 }catch(e)
-                                 {
-                                 	console.log(e);
-                                 }
-                             }
-                         }""");
-        return out;
-    }*/
 
     public abstract Chart<D, O> getInitialOptions();
 
