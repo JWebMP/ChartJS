@@ -195,8 +195,8 @@ import java.util.List;
              }
          }""")
 @NgOnDestroy("""
-        \tthis.eventBusService.unregisterListener(this.listenerName, this.handlerId);
-                  this.eventBusService.unregisterListener(this.listenerName +'Datasets', this.datasetHandlerId);
+        this.eventBusService.unregisterListener(this.listenerName, this.handlerId);
+        this.eventBusService.unregisterListener(this.listenerName +'Datasets', this.datasetHandlerId);
         """)
 
 
