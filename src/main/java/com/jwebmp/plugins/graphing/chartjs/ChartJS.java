@@ -230,7 +230,12 @@ import java.util.List;
                                   else
                                       this.chartConfiguration.set(m);
                               }
-                          }
+                          }else {
+                             if (typeof message == 'string')
+                                  this.chartConfiguration.set(JSON.parse(message));
+                              else
+                                  this.chartConfiguration.set(message);
+                         }
                       }else {
                           if (typeof message == 'string')
                               this.chartConfiguration.set(JSON.parse(message));
@@ -440,15 +445,15 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
             {
                 actionClass = (Class<? extends ChartJS>) Class.forName(call.getClassName());
                 listenerName = call.getUnknownFields()
-                        .get("listenerName")
-                        .toString();
+                                   .get("listenerName")
+                                   .toString();
             }
             catch (ClassNotFoundException e)
             {
                 e.printStackTrace();
             }
             var initialEvents = IGuiceContext.get(actionClass)
-                    .getInitialOptions();
+                                             .getInitialOptions();
             if (initialEvents == null)
             {
                 return null;
@@ -486,15 +491,15 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
             {
                 actionClass = (Class<? extends ChartJS>) Class.forName(call.getClassName());
                 listenerName = call.getUnknownFields()
-                        .get("listenerName")
-                        .toString();
+                                   .get("listenerName")
+                                   .toString();
             }
             catch (ClassNotFoundException e)
             {
                 e.printStackTrace();
             }
             var initialEvents = IGuiceContext.get(actionClass)
-                    .getListenerNameDataSets();
+                                             .getListenerNameDataSets();
             if (initialEvents == null)
             {
                 return null;
