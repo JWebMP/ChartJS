@@ -40,6 +40,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.guicedee</groupId>
+            <artifactId>guiced-vertx-web</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.jwebmp.core</groupId>
             <artifactId>jwebmp-testlib</artifactId>
             <scope>test</scope>
