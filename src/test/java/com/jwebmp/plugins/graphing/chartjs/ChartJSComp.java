@@ -27,14 +27,13 @@ public class ChartJSComp extends ChartJS<BarData, BarChart, ChartJSComp> impleme
     }
 
     @Override
-    public Chart<BarData, BarChart> getInitialOptions()
+    public io.smallrye.mutiny.Uni<BarChart> getInitialOptions()
     {
-        return new BarChart(new BarData().addLabel("Category 1")
+        return io.smallrye.mutiny.Uni.createFrom().item(() -> new BarChart(new BarData().addLabel("Category 1")
                 .addLabel("Category 2")
                 .addLabel("Category 3")
                 .addDataset(new BarDataset()
                         .setLabel("Data Label 1"))
-        )
-                ;
+        ));
     }
 }

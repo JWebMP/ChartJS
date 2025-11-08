@@ -380,7 +380,7 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         super.init();
     }
 
-    public abstract Chart<D, O> getInitialOptions();
+    public abstract io.smallrye.mutiny.Uni<O> getInitialOptions();
 
     protected void registerWebSocketListeners()
     {
@@ -392,6 +392,15 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         {
             IGuicedWebSocket.addWebSocketMessageReceiver(new DataSetsReceiver(getListenerNameDataSets(), getClass()));
         }
+    }
+
+    /**
+     * Server-side: provide initial chart data separately from options (optional), reactively.
+     * If the emitted item is null, no data message will be sent unless the server pushes later.
+     */
+    public io.smallrye.mutiny.Uni<Object> getInitialData()
+    {
+        return io.smallrye.mutiny.Uni.createFrom().nullItem();
     }
 
     @Override
@@ -439,27 +448,19 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         }
 
         @Override
-        public AjaxResponse<?> action(AjaxCall<?> call, AjaxResponse<?> response)
+        public io.smallrye.mutiny.Uni<AjaxResponse<?>> action(AjaxCall<?> call, AjaxResponse<?> response)
         {
-            try
-            {
-                actionClass = (Class<? extends ChartJS>) Class.forName(call.getClassName());
-                listenerName = call.getUnknownFields()
-                                   .get("listenerName")
-                                   .toString();
-            }
-            catch (ClassNotFoundException e)
-            {
-                e.printStackTrace();
-            }
-            var initialEvents = IGuiceContext.get(actionClass)
-                                             .getInitialOptions();
-            if (initialEvents == null)
-            {
-                return null;
-            }
-            response.addDataResponse(listenerName, initialEvents);
-            return response;
+            return IGuiceContext.get(actionClass)
+                                .getInitialOptions()
+                                .onItem()
+                                .transform(options -> {
+                                    if (options == null)
+                                    {
+                                        return null;
+                                    }
+                                    response.addDataResponse(listenerName, (com.guicedee.services.jsonrepresentation.IJsonRepresentation) options);
+                                    return response;
+                                });
         }
     }
 
@@ -485,27 +486,16 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         }
 
         @Override
-        public AjaxResponse<?> action(AjaxCall<?> call, AjaxResponse<?> response)
+        public io.smallrye.mutiny.Uni<AjaxResponse<?>> action(AjaxCall<?> call, AjaxResponse<?> response)
         {
-            try
-            {
-                actionClass = (Class<? extends ChartJS>) Class.forName(call.getClassName());
-                listenerName = call.getUnknownFields()
-                                   .get("listenerName")
-                                   .toString();
-            }
-            catch (ClassNotFoundException e)
-            {
-                e.printStackTrace();
-            }
-            var initialEvents = IGuiceContext.get(actionClass)
-                                             .getListenerNameDataSets();
-            if (initialEvents == null)
-            {
-                return null;
-            }
-            response.addDataResponse(listenerName, initialEvents);
-            return response;
+            return IGuiceContext.get(actionClass)
+                                .getInitialData()
+                                .onItem()
+                                .transform(data -> {
+                                    DynamicData dd = new DynamicData().addData(data);
+                                    response.addDataResponse(listenerName, dd);
+                                    return response;
+                                });
         }
     }
 

@@ -13,14 +13,14 @@ public class ChartJSLineComp extends ChartJS<LineData, LineChart, ChartJSLineCom
     }
 
     @Override
-    public Chart<LineData, LineChart> getInitialOptions()
+    public io.smallrye.mutiny.Uni<LineChart> getInitialOptions()
     {
-        return new LineChart(new LineData().addLabel("Category 1")
+        return io.smallrye.mutiny.Uni.createFrom().item(() -> new LineChart(new LineData()
+                .addLabel("Category 1")
                 .addLabel("Category 2")
                 .addLabel("Category 3")
-                .addDataset(new LineDataset()
-                        .setLabel("Data Label 1")
-                ));
+                .addDataset(new LineDataset().setLabel("Data Label 1"))
+        ));
     }
 
     @Override
