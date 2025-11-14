@@ -23,37 +23,9 @@ import com.jwebmp.core.base.html.Canvas;
 import java.util.ArrayList;
 import java.util.List;
 
-//@NgImportReference(value = "Chart,Point,ChartDataset,DefaultDataPoint,registerables,ChartConfiguration",
-//        reference = "chart.js")
-//@NgImportReference(value = "AfterViewInit", reference = "@angular/core")
-//@NgImportReference(value = "ElementRef", reference = "@angular/core")
 @NgImportReference(value = "ViewChild", reference = "@angular/core")
 @NgImportReference(value = "HostListener", reference = "@angular/core")
-//@NgImportReference(value = "HostBinding", reference = "@angular/core")
-//@NgImportReference(value = "Injectable", reference = "@angular/core")
-//@NgImportReference(value = "Observable", reference = "rxjs")
-//@NgImportReference(value = "Observer", reference = "rxjs")
 @NgImportReference(value = "Subscription", reference = "rxjs")
-//@NgImportReference(value = "Subject", reference = "rxjs")
-//@NgImportReference(value = "bufferTime", reference = "rxjs")
-
-
-//@NgImportReference(value = "inject", reference = "@angular/core")
-//@NgField(value = "private readonly eventBusService = inject(EventBusService); // Injected EventBus service.")
-
-//@NgConstructorParameter("private socketClientService : SocketClientService")
-//@NgComponentReference(DynamicData.class)
-
-//@NgField("private chart?: Chart;")
-
-//@NgField("private chartConfiguration? : ChartConfiguration;")
-
-//@NgField("private datasets?: ChartDataset[];")
-//@NgField("private labels?: string[];")
-
-//@NgOnDestroy("this.chart?.destroy();")
-//@NgOnDestroy("this.datasets = [];")
-
 
 @NgField("readonly subscription?: Subscription;")
 @NgField("readonly subscriptionDataSets?: Subscription;")
@@ -65,121 +37,12 @@ import java.util.List;
 
 @NgOnDestroy("this.subscription?.unsubscribe();")
 @NgOnDestroy("this.subscriptionDataSets?.unsubscribe();")
-//@NgOnDestroy("this.eventBusService.unregisterListener(this.listenerName);")
-//@NgOnDestroy("this.eventBusService.unregisterListener(this.listenerName + 'DataSets');")
-
-//@NgConstructorBody("Chart.register(...registerables);")
-
 @NgImportReference(value = "v4 as uuidv4", reference = "uuid")
 @NgMethod("""
         private generateHandlerId(): string {
             return `${this.listenerName}-${uuidv4()}`;
         }
         """)
-
-/*
-@NgAfterViewInit("""
-        this.subscription = this.eventBusService.listen(this.listenerName,this.handlerId)
-                           //        .pipe(bufferTime(100))
-                                   .subscribe((message: any) => {
-                                       if (message) {
-                                           if (Array.isArray(message)) {
-                                               for (let m of message) {
-                       							if(typeof m == 'string')
-                                                    this.chartConfiguration = JSON.parse(m);
-                                               else
-                                                   this.chartConfiguration = m;
-                       								if (this.chartConfiguration) {
-                       									if (!this.chart) {
-                       										this.chart = new Chart(this.chartRef?.nativeElement, this.chartConfiguration);
-                       										this.datasets = this.chart?.data.datasets;
-                       										this.labels = this.chart?.data.labels as string[];
-                       									} else {
-                       										this.datasets = this.chartConfiguration?.data.datasets;
-                       										for (const dataset of this.datasets) {
-                       											if (dataset && dataset.label) {
-                       												this.updateDataset(dataset.label, dataset);
-                       											}
-                       										}
-                       									}
-                       								}
-        
-                                               }
-                                           } else {
-                                               if (this.chartRef) {
-                       							if (this.chartConfiguration) {
-                       								if (!this.chart) {
-                       									this.chart = new Chart(this.chartRef?.nativeElement, this.chartConfiguration);
-                       									this.datasets = this.chartConfiguration?.data.datasets;
-                       								} else {
-                       									if(typeof message == 'string')
-                                                           this.chartConfiguration = JSON.parse(message);
-                                                       else
-                                                        this.chartConfiguration = message;
-                       									this.datasets = this.chartConfiguration?.data.datasets;
-                       									if(this.datasets)
-                       									for (const dataset of this.datasets) {
-                       										if (dataset && dataset.label) {
-                       											this.updateDataset(dataset.label, dataset);
-                       										}
-                       									}
-                       								}
-                       							}
-                       							else {
-                                                      if (typeof message == 'string')
-                                                          this.chartConfiguration = JSON.parse(message);
-                                                      else
-                                                          this.chartConfiguration = message;
-                                                      if (this.chartConfiguration) {
-                                                          if (!this.chart) {
-                                                              this.chart = new Chart(this.chartRef?.nativeElement, this.chartConfiguration);
-                                                              this.datasets = this.chart?.data.datasets;
-                                                              this.labels = this.chart?.data.labels as string[];
-                                                          } else {
-                                                              this.datasets = this.chartConfiguration?.data.datasets;
-                                                              for (const dataset of this.datasets) {
-                                                                  if (dataset && dataset.label) {
-                                                                      this.updateDataset(dataset.label, dataset);
-                                                                  }
-                                                              }
-                                                          }
-                                                      }
-                                                  }
-                                               }
-                                           }
-                                       }
-                                   });
-        """)*/
-
-/*@NgAfterViewInit("""
-        this.subscriptionDataSets = this.eventBusService.listen(this.listenerName + 'DataSets',this.datasetHandlerId)
-                             //      .pipe(bufferTime(100))
-                                   .subscribe((message: any) => {
-                                       if (message) {
-                                           if (Array.isArray(message)) {
-                                               for (let m of message) {
-                       							for (const messageElement of message) {
-                       							let m;
-                                                  if (typeof messageElement == 'string') {
-                                                      m = JSON.parse(messageElement);
-                                                  } else {
-                                                      m = messageElement;
-                                                  }
-                       								if (m && m.label) {
-                       									this.updateDataset(m.label, m);
-                       								}
-                       							}
-                                               }
-                                           } else {
-                                           let m;
-                                               if(typeof message == 'string')
-                                                   m = JSON.parse(message);
-                                               else m = message;
-                       							this.updateDataset(m.label, m);
-                                           }
-                                       }
-                                   });
-        """)*/
 @NgMethod("""
         @HostListener('window:beforeprint')
          beforePrintHandler() {
@@ -400,7 +263,8 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
      */
     public io.smallrye.mutiny.Uni<Object> getInitialData()
     {
-        return io.smallrye.mutiny.Uni.createFrom().nullItem();
+        return io.smallrye.mutiny.Uni.createFrom()
+                                     .nullItem();
     }
 
     @Override
