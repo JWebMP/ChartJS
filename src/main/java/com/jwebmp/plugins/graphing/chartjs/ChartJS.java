@@ -290,7 +290,7 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         return (J) this;
     }
 
-    protected static class InitialOptionsReceiver extends WebSocketAbstractCallReceiver
+    protected static class InitialOptionsReceiver extends WebSocketAbstractCallReceiver<InitialOptionsReceiver>
     {
         private String listenerName;
         private Class<? extends ChartJS> actionClass;
@@ -328,7 +328,7 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         }
     }
 
-    protected static class DataSetsReceiver extends WebSocketAbstractCallReceiver
+    protected static class DataSetsReceiver extends WebSocketAbstractCallReceiver<DataSetsReceiver>
     {
         private String listenerName;
         private Class<? extends ChartJS> actionClass;
