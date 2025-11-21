@@ -234,9 +234,9 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
     {
         if (!isInitialized())
         {
-            addConfiguration(AnnotationUtils.getNgField("readonly chartType : ChartType = '" + getType() + "'"));
-            addConfiguration(AnnotationUtils.getNgField("readonly listenerName = '" + getID() + "';"));
-            addConfiguration(AnnotationUtils.getNgField("readonly clazzName = '%s';".formatted(getClass().getCanonicalName())));
+            addConfiguration(AnnotationUtils.getNgField("readonly chartType : ChartType = '" + getType() + "'",false,true));
+            addConfiguration(AnnotationUtils.getNgField("readonly listenerName = '" + getID() + "';",false,true));
+            addConfiguration(AnnotationUtils.getNgField("readonly clazzName = '%s';".formatted(getClass().getCanonicalName()),false,true));
 
             registerWebSocketListeners();
         }
@@ -284,7 +284,7 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         return (O) options;
     }
 
-    public J setOptions(Chart<D, O> options)
+    public @org.jspecify.annotations.NonNull J setOptions(Chart<D, O> options)
     {
         this.options = options;
         return (J) this;
