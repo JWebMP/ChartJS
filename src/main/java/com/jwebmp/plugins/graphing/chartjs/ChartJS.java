@@ -1,7 +1,7 @@
 package com.jwebmp.plugins.graphing.chartjs;
 
 import com.guicedee.client.IGuiceContext;
-import com.guicedee.guicedservlets.websockets.options.IGuicedWebSocket;
+import com.guicedee.client.services.websocket.IGuicedWebSocket;
 import com.jwebmp.core.base.ajax.AjaxCall;
 import com.jwebmp.core.base.ajax.AjaxResponse;
 import com.jwebmp.core.base.angular.client.DynamicData;
@@ -20,7 +20,6 @@ import com.jwebmp.core.base.angular.client.services.interfaces.INgComponent;
 import com.jwebmp.core.base.angular.implementations.WebSocketAbstractCallReceiver;
 import com.jwebmp.core.base.html.Canvas;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @NgImportReference(value = "ViewChild", reference = "@angular/core")

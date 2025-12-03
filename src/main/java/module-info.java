@@ -1,3 +1,5 @@
+import com.guicedee.client.services.config.IGuiceScanModuleInclusions;
+
 module com.jwebmp.plugins.graphing.chartjs {
     exports com.jwebmp.plugins.graphing.chartjs;
     exports com.jwebmp.plugins.graphing.chartjs.color;
@@ -15,7 +17,7 @@ module com.jwebmp.plugins.graphing.chartjs {
     exports com.jwebmp.plugins.graphing.chartjs.options.ticks;
 
     provides com.jwebmp.core.services.IPageConfigurator with com.jwebmp.plugins.graphing.chartjs.component.ChartJSPageConfigurator;
-    provides com.guicedee.guicedinjection.interfaces.IGuiceScanModuleInclusions with com.jwebmp.plugins.graphing.chartjs.component.ChartJSInclusionsModule;
+    provides IGuiceScanModuleInclusions with com.jwebmp.plugins.graphing.chartjs.component.ChartJSInclusionsModule;
 
     requires com.fasterxml.jackson.databind;
     requires transitive com.jwebmp.core.base.angular.client;
