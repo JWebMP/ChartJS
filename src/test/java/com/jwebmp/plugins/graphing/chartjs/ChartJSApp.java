@@ -5,7 +5,7 @@ import com.jwebmp.core.base.angular.client.annotations.angular.NgApp;
 import com.jwebmp.core.base.angular.client.services.interfaces.IComponent;
 import com.jwebmp.core.base.angular.client.services.interfaces.INgApp;
 import com.jwebmp.core.base.angular.services.NGApplication;
-import com.jwebmp.core.base.angular.services.compiler.JWebMPTypeScriptCompiler;
+import com.jwebmp.core.base.angular.services.compiler.TypeScriptCompiler;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -29,9 +29,9 @@ public class ChartJSApp extends NGApplication<ChartJSApp>
     @Test
     public void testAppSearch() throws IOException, InterruptedException
     {
-        for (INgApp<?> app : JWebMPTypeScriptCompiler.getAllApps())
+        for (INgApp<?> app : TypeScriptCompiler.getAllApps())
         {
-            JWebMPTypeScriptCompiler compiler = new JWebMPTypeScriptCompiler(app);
+            TypeScriptCompiler compiler = new TypeScriptCompiler(app);
 
             System.out.println("Generating @NgApp (" + getTsFilename(app.getClass()) + ") " +
                     "in folder " + IComponent.getClassDirectory(app.getClass()));

@@ -321,7 +321,7 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
                                     {
                                         return null;
                                     }
-                                    response.addDataResponse(listenerName, (com.guicedee.services.jsonrepresentation.IJsonRepresentation) options);
+                                    response.addDataResponse(listenerName, (com.guicedee.modules.services.jsonrepresentation.IJsonRepresentation) options);
                                     return response;
                                 });
         }
