@@ -17,6 +17,7 @@ import com.jwebmp.core.base.angular.client.annotations.structures.NgSignal;
 import com.jwebmp.core.base.angular.client.services.EventBusService;
 import com.jwebmp.core.base.angular.client.services.interfaces.AnnotationUtils;
 import com.jwebmp.core.base.angular.client.services.interfaces.INgComponent;
+import com.jwebmp.core.base.angular.components.NgIf;
 import com.jwebmp.core.base.angular.implementations.WebSocketAbstractCallReceiver;
 import com.jwebmp.core.base.html.Canvas;
 
@@ -202,6 +203,7 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         INgComponent<J>
 {
     private Chart<D, O> options;
+    private NgIf ngIfWrapper;
 
     public ChartJS(String id)
     {
@@ -213,7 +215,23 @@ public abstract class ChartJS<D, O extends Chart<D, O>, J extends ChartJS<D, O, 
         addAttribute("[options]", "chartOptions()");
         addAttribute("[labels]", "labels()");
         addAttribute("[type]", "chartType");
-        addAttribute("*ngIf", "chartConfiguration() && chartData() && chartOptions() && labels() && chartType");
+        ngIfWrapper = new NgIf("chartConfiguration() && chartData() && chartOptions() && labels() && chartType");
+    }
+
+    @Override
+    protected StringBuilder renderHTML(int tabCount)
+    {
+        if (ngIfWrapper != null)
+        {
+            NgIf wrapper = ngIfWrapper;
+            ngIfWrapper = null;
+            wrapper.add(this);
+            StringBuilder result = new StringBuilder(wrapper.toString(tabCount));
+            wrapper.getChildren().clear();
+            ngIfWrapper = wrapper;
+            return result;
+        }
+        return super.renderHTML(tabCount);
     }
 
     protected String getListenerName()
