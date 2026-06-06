@@ -47,7 +47,6 @@ public abstract class Dataset<T extends Dataset<T, O>, O> implements Serializabl
     /**
      * @see #setData(Collection)
      */
-    @SuppressWarnings("DefaultAnnotationParam")
     @JsonInclude(JsonInclude.Include.ALWAYS)
     protected final List<O> data = new ArrayList<>();
 
