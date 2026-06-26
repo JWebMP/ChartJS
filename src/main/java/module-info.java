@@ -19,7 +19,7 @@ module com.jwebmp.plugins.graphing.chartjs {
     provides com.jwebmp.core.services.IPageConfigurator with com.jwebmp.plugins.graphing.chartjs.component.ChartJSPageConfigurator;
     provides IGuiceScanModuleInclusions with com.jwebmp.plugins.graphing.chartjs.component.ChartJSInclusionsModule;
 
-    requires com.fasterxml.jackson.databind;
+    requires tools.jackson.databind;
     requires transitive com.jwebmp.core.base.angular.client;
 
     requires com.jwebmp.client;
@@ -30,21 +30,21 @@ module com.jwebmp.plugins.graphing.chartjs {
     requires com.jwebmp.vertx;
     //requires com.guicedee.guicedservlets.websockets;
 
-    opens com.jwebmp.plugins.graphing.chartjs to com.google.guice, com.fasterxml.jackson.databind, com.jwebmp.core;
-    // opens com.jwebmp.plugins.graphing.chartjs.angularjs to com.google.guice,com.fasterxml.jackson.databind,com.jwebmp.core.angular,com.jwebmp.core;
-    opens com.jwebmp.plugins.graphing.chartjs.component to com.google.guice, com.fasterxml.jackson.databind;
-    opens com.jwebmp.plugins.graphing.chartjs.color to com.google.guice, com.fasterxml.jackson.databind;
-    opens com.jwebmp.plugins.graphing.chartjs.data to com.google.guice, com.fasterxml.jackson.databind;
-    opens com.jwebmp.plugins.graphing.chartjs.datapoint to com.google.guice, com.fasterxml.jackson.databind;
-    opens com.jwebmp.plugins.graphing.chartjs.dataset to com.google.guice, com.fasterxml.jackson.databind;
-    opens com.jwebmp.plugins.graphing.chartjs.javascript to com.google.guice, com.fasterxml.jackson.databind;
-    opens com.jwebmp.plugins.graphing.chartjs.enums to com.google.guice, com.fasterxml.jackson.databind;
-    opens com.jwebmp.plugins.graphing.chartjs.objects to com.google.guice, com.fasterxml.jackson.databind;
-    opens com.jwebmp.plugins.graphing.chartjs.options to com.google.guice, com.fasterxml.jackson.databind;
-    opens com.jwebmp.plugins.graphing.chartjs.options.animation to com.google.guice, com.fasterxml.jackson.databind;
-    opens com.jwebmp.plugins.graphing.chartjs.options.elements to com.google.guice, com.fasterxml.jackson.databind;
-    opens com.jwebmp.plugins.graphing.chartjs.options.layout to com.google.guice, com.fasterxml.jackson.databind;
-    opens com.jwebmp.plugins.graphing.chartjs.options.scales to com.google.guice, com.fasterxml.jackson.databind;
-    opens com.jwebmp.plugins.graphing.chartjs.options.ticks to com.google.guice, com.fasterxml.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs to com.google.guice, tools.jackson.databind, com.jwebmp.core;
+    // opens com.jwebmp.plugins.graphing.chartjs.angularjs to com.google.guice,tools.jackson.databind,com.jwebmp.core.angular,com.jwebmp.core;
+    opens com.jwebmp.plugins.graphing.chartjs.component to com.google.guice, tools.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs.color to com.google.guice, tools.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs.data to com.google.guice, tools.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs.datapoint to com.google.guice, tools.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs.dataset to com.google.guice, tools.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs.javascript to com.google.guice, tools.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs.enums to com.google.guice, tools.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs.objects to com.google.guice, tools.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs.options to com.google.guice, tools.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs.options.animation to com.google.guice, tools.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs.options.elements to com.google.guice, tools.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs.options.layout to com.google.guice, tools.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs.options.scales to com.google.guice, tools.jackson.databind;
+    opens com.jwebmp.plugins.graphing.chartjs.options.ticks to com.google.guice, tools.jackson.databind;
 
 }

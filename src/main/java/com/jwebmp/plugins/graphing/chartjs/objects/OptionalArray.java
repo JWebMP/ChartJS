@@ -18,11 +18,11 @@ package com.jwebmp.plugins.graphing.chartjs.objects;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ValueSerializer;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 /**
  * {@link ArrayList} subclass with special serialization behavior: if only one
@@ -33,22 +33,22 @@ public class OptionalArray<E> extends ArrayList<E> {
 
 	private static final long serialVersionUID = 1470940649764L;
 
-	public static class Serializer<T> extends JsonSerializer<OptionalArray<T>> {
+	public static class Serializer<T> extends ValueSerializer<OptionalArray<T>> {
 
 		@Override
-		public boolean isEmpty(SerializerProvider provider, OptionalArray<T> value) {
+		public boolean isEmpty(SerializationContext provider, OptionalArray<T> value) {
 			return value == null || value.isEmpty();
 		}
 
 		@Override
-		public void serialize(OptionalArray<T> value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonProcessingException {
+		public void serialize(OptionalArray<T> value, JsonGenerator jgen, SerializationContext provider) throws JacksonException {
 			if (value != null && !value.isEmpty()) {
 				if (value.size() == 1) {
-					jgen.writeObject(value.get(0));
+					jgen.writePOJO(value.get(0));
 				} else {
 					jgen.writeStartArray();
 					for (T t : value) {
-						jgen.writeObject(t);
+						jgen.writePOJO(t);
 					}
 					jgen.writeEndArray();
 				}

@@ -17,11 +17,11 @@ package com.jwebmp.plugins.graphing.chartjs.javascript;
 
 import java.io.IOException;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ValueSerializer;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using = JavaScriptFunction.Serializer.class)
 public class JavaScriptFunction {
@@ -36,10 +36,10 @@ public class JavaScriptFunction {
 		return function;
 	}
 
-	public static class Serializer extends JsonSerializer<JavaScriptFunction> {
+	public static class Serializer extends ValueSerializer<JavaScriptFunction> {
 
 		@Override
-		public void serialize(JavaScriptFunction value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+		public void serialize(JavaScriptFunction value, JsonGenerator gen, SerializationContext serializers) throws JacksonException {
 			gen.writeRawValue(value.function);
 		}
 

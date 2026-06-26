@@ -18,8 +18,8 @@ package com.jwebmp.plugins.graphing.chartjs;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.*;
 import com.fasterxml.jackson.annotation.JsonInclude.*;
-import com.fasterxml.jackson.core.*;
-import com.fasterxml.jackson.databind.*;
+import tools.jackson.core.*;
+import tools.jackson.databind.*;
 import com.jwebmp.plugins.graphing.chartjs.data.*;
 import com.jwebmp.plugins.graphing.chartjs.dataset.*;
 import com.jwebmp.plugins.graphing.chartjs.options.*;
@@ -166,7 +166,7 @@ public class MixedChart extends Chart<Data, MixedChart>
         {
             return WRITER.writeValueAsString(this);
         }
-        catch (JsonProcessingException e)
+        catch (JacksonException e)
         {
             throw new RuntimeException(e);
         }
